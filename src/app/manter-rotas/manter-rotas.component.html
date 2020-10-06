@@ -1,0 +1,97 @@
+<h2>Cadastro de Rotas</h2>
+
+<form id="form">
+    <div class="form-row">
+
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="data">Data</label>
+            <input id="data" name="data" placeholder="DD/MM/AAAA" class="form-control input-md" required="" type="date"
+                maxlength="10" OnKeyPress="formatar('##/##/####', this)" onBlur="showhide()">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="data">Horário</label>
+            <input id="horario" name="horario" placeholder="HH/MM/SS" class="form-control input-md" required=""
+                type="time" maxlength="10" OnKeyPress="formatar('##:##:##', this)" onBlur="showhide()">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="placa">Veiculo(Placa)</label>
+            <input id="placa" name="placa" type="text" placeholder="XXX-0000" class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="col-md-6 control-label" for="pontoEncontro">Saída</label>
+            <input id="pontoEncontro" name="pontoEncontro" type="text" class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label class="col-md-6 control-label" for="localDestino">Destino</label>
+            <input id="localDestino" name="localDestino" type="text" class="form-control input-md" required="">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="status">Status</label>
+            <select id="status" name="status" class="form-control">
+                <option value="1">Disponivel</option>
+                <option value="2">Indisponivel</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="contribuicao">Contribuição</label>
+            <select id="contribuicao" name="contribuicao" class="form-control">
+                <option value="1">Dinheiro - 15R$</option>
+                <option value="2">Gasolina</option>
+                <option value="3">De graça</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <button type="button" class="btn btn-info" routerLink="/manter-contribuições" id="add-cont">
+                <svg width="32px" height="22px" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path fill-rule="evenodd"
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg>
+            </button>
+        </div>
+        <div class="form-group col-md-1" id="posi-veri">
+            <label class="col-md-1 control-label" for="codVerificador">Verificador</label>
+            <input id="codVerificador" name="codVerificador" type="text" class="form-control input-md" required="">
+        </div>
+        <div class="form-group col-md-1">
+            <button type="button" class="btn btn-info" id="gerar-ver">
+                <svg width="32px" height="22px" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z" />
+                    <path fill-rule="evenodd"
+                        d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="form-row" id="consulta">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="con-vei">Consultar </label>
+            <input id="con-vei" name="con-vei" type="text" placeholder="Código Verificador"
+                class="form-control input-md" required="">
+
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-info" id="btnPesquisar">Pesquisar</button>
+</form>
+
+<div class="container">
+    <button type="button" class="btn btn-success medio">Salvar</button>
+    <button type="button" class="btn btn-danger medio">Remover</button>
+    <button type="button" class="btn btn-primary medio">Editar</button>
+    <button type="button" class="btn btn-secondary medio">Limpar</button>
+</div>

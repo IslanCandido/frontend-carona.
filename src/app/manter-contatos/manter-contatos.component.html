@@ -1,0 +1,54 @@
+<h3>Cadastro de Contatos</h3>
+
+<form id="form" #frm="ngForm">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="tipo">Tipo</label>
+            <select [(ngModel)]="contato.tipo" id="tipo" name="tipo" class="form-control" required>
+                <option value="Residencial">Residencial</option>
+                <option value="Celular">Celular</option>
+                <option value="Fixo">Fixo</option>
+                <option value="Serviço">Serviço</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="telefone">Telefone</label>
+            <input [(ngModel)]="contato.telefone" id="telefone" name="telefone" type="tel"
+                placeholder="(XX)XXXXX-XXXX" maxlength="15" class="form-control input-md" required>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="Nome">CPF</label>
+            <input [(ngModel)]="contato.usuario" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" class="form-control input-md" type="text"
+                maxlength="11" pattern="[0-9]+$" required>
+        </div>
+    </div>
+
+    <div class="table-overflow">
+        <table class="table table-bordered-sm table-hover table-active" id="tabela">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Telefone</th>
+                    <th scope="col">Usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let contato of contatos">
+                    <td>{{ contato.id }}</td>
+                    <td> {{ contato.tipo }}</td>
+                    <td> {{ contato.telefone }}</td>
+                    <td> {{ contato.usuario.nome }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+
+
+<div class="container" id="btn-prin">
+    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid">Remover</button>
+    <button type="button" class="btn btn-primary medio" [disabled]="frm.invalid">Editar</button>
+    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+</div>

@@ -1,0 +1,47 @@
+<h3>Cadastro de Contribuições</h3>
+
+<form id="form" #frm="ngForm">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" class="form-control" [(ngModel)]="contribuicao.tipo" required>
+                <option value="Somente Dinheiro">Somente Dinheiro</option>
+                <option value="Somente Cartão">Somente Cartão</option>
+                <option value="Qualquer tipo">Qualquer tipo</option>
+                <option value="Outro">Outro</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3">
+            <label class="col-md-3 control-label" for="valor">Valor</label>
+            <input id="valor" name="valor" maxlength="60" [(ngModel)]="contribuicao.valor" class="form-control input-md" type="text"
+                 required>
+        </div>
+    </div>
+
+    <div class="table-overflow">
+        <table class="table table-bordered-sm table-hover table-active" id="tabela">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let contribuicao of contribuicoes">
+                    <td>{{ contribuicao.id }}</td>
+                    <td> {{ contribuicao.tipo }}</td>
+                    <td> {{ contribuicao.valor }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+
+
+<div class="container" id="btn-prin">
+    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid">Remover</button>
+    <button type="button" class="btn btn-primary medio" [disabled]="frm.invalid">Editar</button>
+    <button type="button" class="btn btn-secondary medio">Limpar</button>
+</div>

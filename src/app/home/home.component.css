@@ -1,0 +1,9 @@
+#imgpos {
+    position: absolute;
+    left: 550px;
+    top: 250px;
+}
+.img-fluid{
+    max-width: 100%;
+    height: auto;
+}

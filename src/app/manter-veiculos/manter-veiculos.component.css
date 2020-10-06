@@ -1,0 +1,35 @@
+h2 {
+    position: relative;
+    text-align: center;
+    top: 20px;
+}
+
+#form {
+    position: relative;
+    left: 345px;
+    top: 50px;
+}
+
+.medio{
+    position: relative;
+    left: 510px;
+    top: 88px;
+    width: 8%;
+    margin: 5px;
+}
+
+#consulta {
+    position: relative;
+    top: 40px;
+}
+
+#btnPesquisar {
+    position: relative;
+    left: 230px;
+    top: -13px;
+}
+
+label {
+    position: relative;
+    right: 13px;
+}

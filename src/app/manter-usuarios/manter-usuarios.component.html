@@ -1,0 +1,84 @@
+<div class="container">
+    <h2>Cadastro de Usuários</h2>
+</div>
+
+<form id="form" #frm="ngForm">
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label class="col-md-4 control-label" for="nome">Nome</label>
+            <input [(ngModel)]="usuario.nome" id="nome" name="nome" type="text" placeholder="Digite o seu nome completo"
+                class="form-control input-md" maxlength="60" required />
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="cpf">CPF</label>
+            <input [(ngModel)]="usuario.cpf" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX"
+                class="form-control input-md" type="text" maxlength="11" pattern="[0-9]+$" required />
+            <small id="passwordHelpInline" class="text-muted">
+                Somente Numeros!
+            </small>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label class="col-md-4 control-label" for="email">Email</label>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                <input [(ngModel)]="usuario.email" id="email" name="email" class="form-control"
+                    placeholder="email@email.com" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                    maxlength="60" required email />
+            </div>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="dt_nascimento">Nascimento</label>
+            <input [(ngModel)]="usuario.dt_nascimento" id="dt_nascimento" name="dt_nascimento" placeholder="DD/MM/AAAA"
+                class="form-control input-md" type="date" maxlength="10" OnKeyPress="formatar('##/##/####', this)"
+                onBlur="showhide()" required />
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="sexo">Sexo</label>
+            <select [(ngModel)]="usuario.sexo" id="sexo" name="sexo" class="form-control" required>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Prefiro não dizer">Prefiro não dizer</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="senha">Senha</label>
+            <input [(ngModel)]="usuario.senha" id="senha" name="senha" type="password" placeholder="senha de acesso"
+                class="form-control input-md" minlength="8" maxlength="20" required />
+            <small id="passwordHelpInline" class="text-muted">
+                Deve ter entre 8 e 20 caracteres.
+            </small>
+        </div>
+        <div class="form-group col-md-2">
+            <button type="button" class="btn btn-primary contato" routerLink="/manter-contatos" id="add-con">
+                <svg width="30px" height="20px" viewBox="0 0 16 16" class="bi bi-telephone-plus-fill"
+                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511zM12.5 1a.5.5 0 0 1 .5.5V3h1.5a.5.5 0 0 1 0 1H13v1.5a.5.5 0 0 1-1 0V4h-1.5a.5.5 0 0 1 0-1H12V1.5a.5.5 0 0 1 .5-.5z" />
+                </svg>
+                ADICIONAR CONTATO
+            </button>
+        </div>
+    </div>
+    <div class="form-row" id="consulta">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
+            <input (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" type="text"
+                placeholder="digite seu cpf" class="form-control input-md">
+        </div>
+
+    </div>
+</form>
+
+<div class="container">
+    <button type="submit" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid"
+        (click)="delete(usuario.id)">Remover</button>
+    <button type="button" class="btn btn-primary medio" [disabled]="frm.invalid">Editar</button>
+    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+</div>

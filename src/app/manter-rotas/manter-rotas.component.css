@@ -1,0 +1,52 @@
+h2 {
+    position: relative;
+    text-align: center;
+    top: 15px;
+}
+
+#form {
+    position: relative;
+    left: 350px;
+    top: 40px;
+}
+
+.medio {
+    position: relative;
+    left: 540px;
+    top: 90px;
+    width: 8%;
+    margin: 4px;
+}
+
+#posi-veri{
+    position: relative;
+    left: -167px;
+}
+
+#gerar-ver{
+    position: relative;
+    top: 32px;
+    left: -174px;
+}
+
+#add-cont{
+    position: relative;
+    top: 32px;
+    left: -7px;
+}
+
+#consulta {
+    position: relative;
+    top: 45px;
+}
+
+#btnPesquisar {
+    position: relative;
+    left: 230px;
+    top: -8px;
+}
+
+label {
+    position: relative;
+    right: 13px;
+}

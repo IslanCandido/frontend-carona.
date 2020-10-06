@@ -1,0 +1,86 @@
+<div class="container">
+    <h2>Cadastro de Veículos</h2>
+</div>
+
+<form id="form">
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="placa">Placa</label>
+            <input id="placa" name="placa" type="text" placeholder="Ex: XXX-0000" class="form-control input-md" required="">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="renavam">Renavam</label>
+            <input id="renavam" name="renavam" placeholder="Renavam do veículo" class="form-control input-md"
+                required="" type="text" maxlength="9">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="usu_cpf">Usuário(CPF)</label>
+            <input id="usu_cpf" name="usu_cpf" placeholder="XXX.XXX.XXX-XX" class="form-control input-md" required=""
+                type="text" maxlength="11" pattern="[0-9]+$">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label class="col-md-3 control-label" for="modelo">Modelo</label>
+            <input id="modelo" name="modelo" type="text" placeholder="Modelo do veículo"
+                class="form-control input-md" required="">
+        </div>
+        <div class="form-group col-md-3">
+            <label class="col-md-3 control-label" for="cor">Cor</label>
+            <input id="cor" name="cor" type="text" placeholder="Cor do veículo" class="form-control input-md"
+                required="">
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-3">
+            <label class="col-md-3 control-label" for="tipo">Tipo</label>
+            <select id="tipo" name="tipo" class="form-control">
+                <option value="1">Carro</option>
+                <option value="2">Moto</option>
+                <option value="3">Caminhonete</option>
+                <option value="4">Ônibus</option>
+                <option value="4">Combi</option>
+            </select>
+        </div>
+        <div class="form-group col-md-1">
+            <label class="col-md-1 control-label" for="anoFabricacao">Ano</label>
+            <input id="anoFabricacao" name="anoFabricacao" type="text" placeholder="EX: 1111"
+                class="form-control input-md" required="">
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="capacidade">Capacidade</label>
+            <select id="capacidade" name="capacidade" class="form-control">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="8">9</option>
+                <option value="10">10</option>
+            </select>
+        </div>
+            
+    </div>
+
+    <div class="form-row" id="consulta">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="con-vei">Consultar </label>
+            <input id="con-vei" name="con-vei" type="text" placeholder="Placa do veículo" class="form-control input-md"
+                required="">
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-info" id="btnPesquisar">Pesquisar</button>
+</form>
+
+<div class="container">
+    <button type="button" class="btn btn-success medio">Salvar</button>
+    <button type="button" class="btn btn-danger medio">Remover</button>
+    <button type="button" class="btn btn-primary medio">Editar</button>
+    <button type="button" class="btn btn-secondary medio">Limpar</button>
+</div>
