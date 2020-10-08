@@ -76,9 +76,7 @@
 </form>
 
 <div class="container">
-    <button type="submit" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid"
-        (click)="delete(usuario.id)">Remover</button>
-    <button type="button" class="btn btn-primary medio" [disabled]="frm.invalid">Editar</button>
+    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

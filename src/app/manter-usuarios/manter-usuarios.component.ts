@@ -26,13 +26,10 @@ export class ManterUsuariosComponent implements OnInit {
     alert("Usuário cadastrado com sucesso!");
   }
 
-  limpar() {
-    this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
-  }
-
-  delete(id) {
-    this.usuarioService.delete(id).subscribe(r => {this.usuarioService.get().subscribe(resultado => {this.usuarios = resultado});});  
-    this.limpar()
+  excluir(id) {
+    this.usuarioService.delete(this.usuario.id).subscribe(resultado => {
+      this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+    });
   }
 
   consultar(cpf) {
@@ -50,8 +47,12 @@ export class ManterUsuariosComponent implements OnInit {
           senha: dados.senha
         };
       });
-    } else{
+    } else {
       this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     }
+  }
+
+  limpar() {
+    this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
   }
 }

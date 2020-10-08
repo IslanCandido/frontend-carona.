@@ -17,7 +17,7 @@
                 placeholder="(XX)XXXXX-XXXX" maxlength="15" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="Nome">CPF</label>
+            <label class="col-md-2 control-label" for="Nome">CPF(Usuário)</label>
             <input [(ngModel)]="contato.usuario" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" class="form-control input-md" type="text"
                 maxlength="11" pattern="[0-9]+$" required>
         </div>
@@ -31,6 +31,7 @@
                     <th scope="col">Tipo</th>
                     <th scope="col">Telefone</th>
                     <th scope="col">Usuário</th>
+                    <th scope="col">Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +40,7 @@
                     <td> {{ contato.tipo }}</td>
                     <td> {{ contato.telefone }}</td>
                     <td> {{ contato.usuario.nome }}</td>
+                    <td><button type="button" (click)="consultar(contato.id)" class="btn btn-info" id="btnPesquisar">Selecionar</button></td>
                 </tr>
             </tbody>
         </table>
@@ -47,8 +49,7 @@
 
 
 <div class="container" id="btn-prin">
-    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid">Remover</button>
-    <button type="button" class="btn btn-primary medio" [disabled]="frm.invalid">Editar</button>
+    <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
+    <button type="button" class="btn btn-danger medio" (click)="excluir(contato.id)" [disabled]="frm.invalid">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

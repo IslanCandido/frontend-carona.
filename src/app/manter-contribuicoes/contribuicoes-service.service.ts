@@ -14,6 +14,10 @@ export class ContribuicoesServiceService {
     return this.http.get("http://localhost:8080/contribuições");
   }
 
+  public getById(id):Observable<any>{
+    return this.http.get(`http://localhost:8080/contribuições/${id}`);
+  }
+
   public post(contribuicoes: {id, tipo, valor}) : Observable<any>{
     return this.http.post("http://localhost:8080/contribuições", contribuicoes);
   }

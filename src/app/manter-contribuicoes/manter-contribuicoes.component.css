@@ -10,15 +10,11 @@ h3 {
     top: 70px;
 }
 
-.ng-invalid.ng-touched:not(form) {
-    border: 1px solid red;
-}
-
 .table-overflow{
     position: relative;
     top: 40px;
     left: -70px;
-    max-height:200px;
+    max-height:250px;
     max-width: 700px;
     overflow-y:auto;
     text-align: center;
@@ -26,8 +22,8 @@ h3 {
 
 .medio{
     position: relative;
-    left: 130px;
-    top: 200px;
+    left: 220px;
+    top: 150px;
     width: 8%;
     margin: 4px;
 }

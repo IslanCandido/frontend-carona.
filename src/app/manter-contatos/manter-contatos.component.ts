@@ -9,18 +9,12 @@ import { ContatoServiceService } from '../manter-contatos/contato-service.servic
 export class ManterContatosComponent implements OnInit {
 
   contato: { id, tipo, telefone, usuario } = { id: null, tipo: "", telefone: "", usuario: null };
-
   contatos;
-  contatoSelecionado;
 
   constructor(private contatoService: ContatoServiceService) { }
 
   ngOnInit(): void {
     this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
-  }
-
-  selecionarContato(contato) {
-    this.contatoSelecionado = contato;
   }
 
   salvar() {
@@ -30,14 +24,26 @@ export class ManterContatosComponent implements OnInit {
     });
   }
 
+  excluir(id) {
+    this.contatoService.delete(this.contato.id).subscribe(resultado => {
+      this.contato = { id: null, tipo: "", telefone: "", usuario: "" };
+    });
+  }
+
+  consultar(id) {
+    this.contatoService.getById(id).subscribe(dados => {
+      this.contato = {
+        id: dados.id,
+        tipo: dados.tipo,
+        telefone: dados.telefone,
+        usuario: dados.usuario.cpf
+      };
+    });
+  }
+
   limpar() {
     console.log(this.contato);
     this.contato = { id: null, tipo: "", telefone: "", usuario: "" };
   }
-
-  delete(id) {
-    this.contatoService.delete(id).subscribe(r => { this.contatoService.get().subscribe(resultado => { this.contatos = resultado }); });
-  }
-
 
 }
