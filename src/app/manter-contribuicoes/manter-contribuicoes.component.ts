@@ -41,9 +41,8 @@ export class ManterContribuicoesComponent implements OnInit {
       });
   }
 
-  limpar() {
-    console.log(this.contribuicao);
-    this.contribuicao = { id: null, tipo: "", valor: "" };
+  limpar(form) {
+    form.reset();
   }
 
 }

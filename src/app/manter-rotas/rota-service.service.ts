@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,15 @@ export class RotaServiceService {
     return this.http.get("http://localhost:8080/rotas");
   }
 
-  public post(rotas: {id, data, horario, inicio, fim, status, verificador, contribuicao}) : Observable<any>{
+  public getContribuicoes():Observable<any>{
+    return this.http.get("http://localhost:8080/contribuições");
+  }
+
+  public getVeiculos():Observable<any>{
+    return this.http.get("http://localhost:8080/veiculos");
+  }
+
+  public post(rotas: {id, data, horario, inicio, fim, status, verificador, veiculo, contribuicao}) : Observable<any>{
     return this.http.post("http://localhost:8080/rotas", rotas);
   }
 

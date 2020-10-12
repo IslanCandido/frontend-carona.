@@ -1,52 +1,56 @@
 <h2>Cadastro de Rotas</h2>
 
-<form id="form">
+<form id="form" #frm="ngForm">
     <div class="form-row">
-
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="data">Data</label>
-            <input id="data" name="data" placeholder="DD/MM/AAAA" class="form-control input-md" required="" type="date"
-                maxlength="10" OnKeyPress="formatar('##/##/####', this)" onBlur="showhide()">
+            <input [(ngModel)]="rota.data" id="data" name="data" placeholder="DD/MM/AAAA" class="form-control input-md"
+                type="date" maxlength="10" OnKeyPress="formatar('##/##/####', this)" onBlur="showhide()" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="data">Horário</label>
-            <input id="horario" name="horario" placeholder="HH/MM/SS" class="form-control input-md" required=""
-                type="time" maxlength="10" OnKeyPress="formatar('##:##:##', this)" onBlur="showhide()">
+            <input [(ngModel)]="rota.horario" id="horario" name="horario" placeholder="HH/MM/SS"
+                class="form-control input-md" type="time" maxlength="10" OnKeyPress="formatar('##:##:##', this)"
+                onBlur="showhide()" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="placa">Veiculo(Placa)</label>
-            <input id="placa" name="placa" type="text" placeholder="XXX-0000" class="form-control input-md" required="">
+            <input [(ngModel)]="rota.veiculo.placa" id="placa" name="placa" type="text" placeholder="XXX-0000"
+                minlength="8" maxlength="8" class="form-control input-md" required />
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="col-md-6 control-label" for="pontoEncontro">Saída</label>
-            <input id="pontoEncontro" name="pontoEncontro" type="text" class="form-control input-md" required="">
+            <input [(ngModel)]="rota.inicio" id="pontoEncontro" name="pontoEncontro" type="text" minlength="20"
+                maxlength="100" placeholder="endereço, ponto de referencia e cidade da sua saída"
+                class="form-control input-md" required />
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="col-md-6 control-label" for="localDestino">Destino</label>
-            <input id="localDestino" name="localDestino" type="text" class="form-control input-md" required="">
+            <input [(ngModel)]="rota.fim" id="localDestino" name="localDestino" type="text" minlength="20"
+                maxlength="100" placeholder="endereço, ponto de referencia e cidade do seu destino"
+                class="form-control input-md" required />
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="status">Status</label>
-            <select id="status" name="status" class="form-control">
-                <option value="1">Disponivel</option>
-                <option value="2">Indisponivel</option>
+            <select [(ngModel)]="rota.status" id="status" name="status" class="form-control" required>
+                <option value="Disponivel">Disponivel</option>
+                <option value="Indisponivel">Indisponivel</option>
             </select>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="contribuicao">Contribuição</label>
-            <select id="contribuicao" name="contribuicao" class="form-control">
-                <option value="1">Dinheiro - 15R$</option>
-                <option value="2">Gasolina</option>
-                <option value="3">De graça</option>
+            <select [(ngModel)]="rota.contribuicao" id="contribuicao" name="contribuicao" class="form-control" required>
+                <option *ngFor="let contribuicao of contribuicoes" value="contribuicao">{{ contribuicao.tipo }} -
+                    {{ contribuicao.valor }}</option>
             </select>
         </div>
         <div class="form-group col-md-2">
@@ -61,11 +65,12 @@
             </button>
         </div>
         <div class="form-group col-md-1" id="posi-veri">
-            <label class="col-md-1 control-label" for="codVerificador">Verificador</label>
-            <input id="codVerificador" name="codVerificador" type="text" class="form-control input-md" required="">
+            <label class="col-md-1 control-label" for="verificador">Verificador</label>
+            <input [(ngModel)]="rota.verificador" id="verificador" name="verificador" type="text"
+                class="form-control input-md" required />
         </div>
         <div class="form-group col-md-1">
-            <button type="button" class="btn btn-info" id="gerar-ver">
+            <button (click)="gerarVerificador(10)" type="button" class="btn btn-info" id="gerar-ver">
                 <svg width="32px" height="22px" viewBox="0 0 16 16" class="bi bi-arrow-repeat" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -79,18 +84,16 @@
 
     <div class="form-row" id="consulta">
         <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="con-vei">Consultar </label>
-            <input id="con-vei" name="con-vei" type="text" placeholder="Código Verificador"
-                class="form-control input-md" required="">
-
+            <label class="col-md-2 control-label" for="con_rota">CONSULTAR</label>
+            <input (blur)="consultar($event.target.value)" id="con_rota" name="con_rota" type="text"
+                placeholder="digite o codigo verificador da rota" class="form-control input-md">
         </div>
     </div>
-
-    <button type="button" class="btn btn-info" id="btnPesquisar">Pesquisar</button>
 </form>
 
 <div class="container">
-    <button type="button" class="btn btn-success medio">Salvar</button>
-    <button type="button" class="btn btn-danger medio">Remover</button>
-    <button type="button" class="btn btn-secondary medio">Limpar</button>
+    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid"
+        (click)="excluir(rota.id)">Remover</button>
+    <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
 </div>

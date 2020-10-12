@@ -10,10 +10,6 @@ h2 {
     top: 35px;
 }
 
-.ng-invalid.ng-touched:not(form) {
-    border: 1px solid red;
-}
-
 #consulta {
     position: relative;
     top: 25px;

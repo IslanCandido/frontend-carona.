@@ -17,6 +17,10 @@ export class ContatoServiceService {
     return this.http.get(`http://localhost:8080/contatos/${id}`);
   }
 
+  public getUsuarios():Observable<any>{
+    return this.http.get("http://localhost:8080/usuarios");
+  }
+
   public post(contatos: {id, tipo, telefone, usuario}) : Observable<any>{
     return this.http.post("http://localhost:8080/contatos", contatos);
   }

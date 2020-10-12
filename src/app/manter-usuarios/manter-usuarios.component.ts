@@ -19,11 +19,9 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   salvar() {
-    console.log(this.usuario);
     this.usuarioService.post(this.usuario).subscribe(resultado => {
       this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     });
-    alert("Usuário cadastrado com sucesso!");
   }
 
   excluir(id) {
@@ -52,7 +50,7 @@ export class ManterUsuariosComponent implements OnInit {
     }
   }
 
-  limpar() {
-    this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+  limpar(form) {
+    form.reset();
   }
 }

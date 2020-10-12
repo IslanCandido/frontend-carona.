@@ -6,37 +6,39 @@
     <div class="form-row">
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="placa">Placa</label>
-            <input [(ngModel)]="veiculo.placa" id="placa" name="placa" type="text" placeholder="Ex: XXX-0000" class="form-control input-md" required="">
+            <input [(ngModel)]="veiculo.placa" id="placa" name="placa" type="text" placeholder="Ex: XXX-0000"
+                minlength="8" maxlength="8" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="renavam">Renavam</label>
-            <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo" class="form-control input-md"
-                required="" type="text" maxlength="9">
+            <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo"
+                class="form-control input-md" type="text" minlength="11" maxlength="11" required>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">Usuário(CPF)</label>
-            <input [(ngModel)]="veiculo.usuario.cpf" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" class="form-control input-md" required=""
-                type="text" maxlength="11" pattern="[0-9]+$">
+            <input [(ngModel)]="veiculo.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf"
+                placeholder="EX: XXXXXXXXXXX" class="form-control input-md" type="text" minlength="11" maxlength="11"
+                pattern="[0-9]+$" required>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="modelo">Modelo</label>
-            <input [(ngModel)]="veiculo.modelo" id="modelo" name="modelo" type="text" placeholder="Modelo do veículo"
-                class="form-control input-md" required="">
+            <input [(ngModel)]="veiculo.modelo" id="modelo" name="modelo" type="text" maxlength="40"
+                placeholder="Modelo do veículo" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="cor">Cor</label>
-            <input [(ngModel)]="veiculo.cor" id="cor" name="cor" type="text" placeholder="Cor do veículo" class="form-control input-md"
-                required="">
+            <input [(ngModel)]="veiculo.cor" id="cor" name="cor" maxlength="40" type="text" placeholder="Cor do veículo"
+                class="form-control input-md" required>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="tipo">Tipo</label>
-            <select [(ngModel)]="veiculo.tipo" id="tipo" name="tipo" class="form-control">
+            <select [(ngModel)]="veiculo.tipo" id="tipo" name="tipo" class="form-control" required>
                 <option value="Carro">Carro</option>
                 <option value="Moto">Moto</option>
                 <option value="Caminhonete">Caminhonete</option>
@@ -44,14 +46,14 @@
                 <option value="Kombi">Kombi</option>
             </select>
         </div>
-        <div class="form-group col-md-1">
-            <label class="col-md-1 control-label" for="anoFabricacao">Ano</label>
-            <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="text" placeholder="EX: 1111"
-                class="form-control input-md" required="">
-        </div>
         <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="capacidade">Capacidade</label>
-            <select [(ngModel)]="veiculo.capacidade" id="capacidade" name="capacidade" class="form-control">
+            <label class="col-md-2 control-label" for="anoFabricacao">Ano</label>
+            <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="number"
+                placeholder="EX: 1111" pattern="([0-9]{4})" class="form-control input-md" required>
+        </div>
+        <div class="form-group col-md-1">
+            <label class="col-md-1 control-label" for="capacidade">Capacidade</label>
+            <select [(ngModel)]="veiculo.capacidade" id="capacidade" name="capacidade" class="form-control" required>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -64,21 +66,21 @@
                 <option value="10">10</option>
             </select>
         </div>
-            
+
     </div>
 
     <div class="form-row" id="consulta">
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
-            <input (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="text" placeholder="digite a placa do veículo" class="form-control input-md"
-                required="">
+            <input (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="text"
+                placeholder="digite a placa do veículo" class="form-control input-md">
         </div>
     </div>
 </form>
 
 <div class="container">
-    <button type="button" class="btn btn-success medio">Salvar</button>
-    <button type="button" class="btn btn-danger medio">Remover</button>
-    <button type="button" class="btn btn-primary medio">Editar</button>
-    <button type="button" class="btn btn-secondary medio">Limpar</button>
+    <button type="submit" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
+    <button type="button" class="btn btn-danger medio" (click)="excluir(veiculo.id)"
+        [disabled]="frm.invalid">Remover</button>
+    <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
 </div>
