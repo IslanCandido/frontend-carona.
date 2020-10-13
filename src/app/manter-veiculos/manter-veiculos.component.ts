@@ -9,7 +9,7 @@ import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.servic
 export class ManterVeiculosComponent implements OnInit {
 
   veiculo: { id, placa, renavam, modelo, cor, ano_fabricacao, tipo, capacidade, usuario } =
-    { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null,  usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null,  usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
 
   veiculos;
   usuarios;
@@ -22,15 +22,23 @@ export class ManterVeiculosComponent implements OnInit {
 
   salvar() {
     this.veiculoService.post(this.veiculo).subscribe(resultado => {
-      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
     });
+    alert("Veículo salvo com sucesso!");
   }
 
   excluir(id) {
-    this.veiculoService.delete(this.veiculo.id).subscribe(resultado => {
-      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    var r = confirm("Você realmente deseja remover esse veículo?");
 
-    });
+    if (r == true) {
+      this.veiculoService.delete(this.veiculo.id).subscribe(resultado => {
+        this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+      });
+      alert("Veículo removido com sucesso!");
+    } else {
+      alert("Veículo não foi removido!");
+    }
+
   }
 
   consultar(placa) {
@@ -49,7 +57,7 @@ export class ManterVeiculosComponent implements OnInit {
         };
       });
     } else {
-      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: "", tipo: "", capacidade: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: "", tipo: "", capacidade: "", usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
     }
   }
 
@@ -59,7 +67,7 @@ export class ManterVeiculosComponent implements OnInit {
     if (cpf != null && cpf !== '') {
       this.veiculoService.getByCpf(cpf).subscribe(dados => {
         this.veiculo.usuario = {
-          id_usu: dados.id_usu,
+          id: dados.id,
           nome: dados.nome,
           email: dados.email,
           cpf: dados.cpf,
@@ -69,10 +77,8 @@ export class ManterVeiculosComponent implements OnInit {
         };
       });
     } else {
-      this.veiculo.usuario = { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+      this.veiculo.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     }
-
-    console.log(this.veiculo.usuario);
   }
 
   limpar(form) {

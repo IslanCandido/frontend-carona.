@@ -8,37 +8,45 @@ import { ContribuicoesServiceService } from '../manter-contribuicoes/contribuico
 })
 export class ManterContribuicoesComponent implements OnInit {
 
-  contribuicao: { id, tipo, valor } = { id: null, tipo: "", valor: ""};
+  contribuicao: { id, tipo, valor } = { id: null, tipo: "", valor: "" };
 
   contribuicoes;
 
   constructor(private contribuicoesService: ContribuicoesServiceService) { }
 
   ngOnInit(): void {
-    this.contribuicoesService.get().subscribe(resultado => {this.contribuicoes = resultado});
+    this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
   }
- 
+
   salvar() {
-    console.log(this.contribuicao);
     this.contribuicoesService.post(this.contribuicao).subscribe(resultado => {
       this.contribuicao = { id: null, tipo: "", valor: "" };
     });
+    alert("Contribuição salva com sucesso!");
   }
 
   excluir(id) {
-    this.contribuicoesService.delete(this.contribuicao.id).subscribe(resultado => {
-      this.contribuicao = { id: null, tipo: "", valor: "" };
-    });
+    var r = confirm("Você realmente deseja remover essa contribuição?");
+
+    if (r == true) {
+      this.contribuicoesService.delete(this.contribuicao.id).subscribe(resultado => {
+        this.contribuicao = { id: null, tipo: "", valor: "" };
+      });
+      alert("Contribuição removida com sucesso!");
+    } else {
+      alert("Contribuição não foi removida!");
+    }
+
   }
 
   consultar(id) {
-      this.contribuicoesService.getById(id).subscribe(dados => {
-        this.contribuicao = {
-          id: dados.id,
-          tipo: dados.tipo,
-          valor: dados.valor
-        };
-      });
+    this.contribuicoesService.getById(id).subscribe(dados => {
+      this.contribuicao = {
+        id: dados.id,
+        tipo: dados.tipo,
+        valor: dados.valor
+      };
+    });
   }
 
   limpar(form) {

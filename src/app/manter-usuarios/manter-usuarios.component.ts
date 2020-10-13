@@ -22,12 +22,21 @@ export class ManterUsuariosComponent implements OnInit {
     this.usuarioService.post(this.usuario).subscribe(resultado => {
       this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     });
+    alert("Usuário salvo com sucesso!");
   }
 
   excluir(id) {
-    this.usuarioService.delete(this.usuario.id).subscribe(resultado => {
-      this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
-    });
+    var r = confirm("Você realmente deseja remover esse usuário?");
+
+    if (r == true) {
+      this.usuarioService.delete(this.usuario.id).subscribe(resultado => {
+        this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+      });
+      alert("Usuário removido com sucesso!");
+    } else {
+      alert("Usuário não foi removido!");
+    }
+
   }
 
   consultar(cpf) {
@@ -53,4 +62,5 @@ export class ManterUsuariosComponent implements OnInit {
   limpar(form) {
     form.reset();
   }
+
 }

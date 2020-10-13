@@ -7,31 +7,31 @@
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="placa">Placa</label>
             <input [(ngModel)]="veiculo.placa" id="placa" name="placa" type="text" placeholder="Ex: XXX-0000"
-                minlength="8" maxlength="8" class="form-control input-md" required>
+                minlength="8" maxlength="8" autocomplete="off" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="renavam">Renavam</label>
             <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo"
-                class="form-control input-md" type="text" minlength="11" maxlength="11" required>
+                class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11" required>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">Usuário(CPF)</label>
             <input [(ngModel)]="veiculo.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf"
-                placeholder="EX: XXXXXXXXXXX" class="form-control input-md" type="text" minlength="11" maxlength="11"
-                pattern="[0-9]+$" required>
+                placeholder="EX: XXXXXXXXXXX" autocomplete="off" class="form-control input-md" type="text"
+                minlength="11" maxlength="11" pattern="[0-9]+$" required>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="modelo">Modelo</label>
-            <input [(ngModel)]="veiculo.modelo" id="modelo" name="modelo" type="text" maxlength="40"
+            <input [(ngModel)]="veiculo.modelo" autocomplete="off" id="modelo" name="modelo" type="text" maxlength="40"
                 placeholder="Modelo do veículo" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="cor">Cor</label>
-            <input [(ngModel)]="veiculo.cor" id="cor" name="cor" maxlength="40" type="text" placeholder="Cor do veículo"
-                class="form-control input-md" required>
+            <input [(ngModel)]="veiculo.cor" autocomplete="off" id="cor" name="cor" maxlength="40" type="text"
+                placeholder="Cor do veículo" class="form-control input-md" required>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="anoFabricacao">Ano</label>
             <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="number"
-                placeholder="EX: 1111" pattern="([0-9]{4})" class="form-control input-md" required>
+                placeholder="EX: 1111" autocomplete="off" pattern="([0-9]{4})" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-1">
             <label class="col-md-1 control-label" for="capacidade">Capacidade</label>
@@ -73,7 +73,7 @@
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
             <input (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="text"
-                placeholder="digite a placa do veículo" class="form-control input-md">
+                placeholder="digite a placa do veículo" autocomplete="off" class="form-control input-md">
         </div>
     </div>
 </form>
