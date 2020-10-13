@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RotaServiceService } from '../manter-rotas/rota-service.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-manter-rotas',
@@ -35,10 +36,11 @@ export class ManterRotasComponent implements OnInit {
         contribuicao: { id: null, tipo: "", valor: "" }
       };
     });
+    alert("Rota salva com sucesso!");
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover esse usuário?");
+    var r = confirm("Você realmente deseja remover essa rota?");
 
     if (r == true) {
       this.rotaService.delete(this.rota.id).subscribe(resultado => {
@@ -48,9 +50,9 @@ export class ManterRotasComponent implements OnInit {
           contribuicao: { id: null, tipo: "", valor: "" }
         };
       });
-      alert("Usuário removido com sucesso!");
+      alert("Rota removida com sucesso!");
     } else {
-      alert("Usuário não foi removido!");
+      alert("Rota não foi removida!");
     }
   }
 
@@ -98,16 +100,6 @@ export class ManterRotasComponent implements OnInit {
     }
   }
 
-  consultarContribuicao(id) {
-    this.rotaService.getByIdContribuicoes(id).subscribe(dados => {
-      this.rota.contribuicao = {
-        id: dados.id,
-        tipo: dados.tipo,
-        valor: dados.valor
-      };
-    });
-  }
-
   limpar(form) {
     form.reset();
   }
@@ -122,7 +114,8 @@ export class ManterRotasComponent implements OnInit {
     cod = cod.substr(0, tamanho);
     cod.toLowerCase();
 
-    console.log(cod);
+    this.rota.verificador = cod;
+
   }
 
 }
