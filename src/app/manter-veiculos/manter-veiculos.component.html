@@ -2,6 +2,14 @@
     <h2>Cadastro de Veículos</h2>
 </div>
 
+<div class="form-row" id="consulta">
+    <div class="form-group col-md-2">
+        <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
+        <input (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="text"
+            placeholder="placa do veículo" autocomplete="off" class="form-control input-md">
+    </div>
+</div>
+
 <form id="form" #frm="ngForm">
     <div class="form-row">
         <div class="form-group col-md-2">
@@ -67,14 +75,6 @@
             </select>
         </div>
 
-    </div>
-
-    <div class="form-row" id="consulta">
-        <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
-            <input (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="text"
-                placeholder="digite a placa do veículo" autocomplete="off" class="form-control input-md">
-        </div>
     </div>
 </form>
 

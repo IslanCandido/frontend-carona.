@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ManterContatosComponent } from './manter-contatos/manter-contatos.component';
 import { LoginComponent } from './login/login.component';
 import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-contribuicoes.component';
+import { ManterCaronasComponent } from './manter-caronas/manter-caronas.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-cont
     ManterRotasComponent,
     ManterContatosComponent,
     LoginComponent,
-    ManterContribuicoesComponent
+    ManterContribuicoesComponent,
+    ManterCaronasComponent
   ],
   imports: [
     BrowserModule,

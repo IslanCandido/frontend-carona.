@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
-import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.service';
 
 @Injectable({
   providedIn: 'root'

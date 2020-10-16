@@ -1,13 +1,19 @@
 h2 {
     position: relative;
     text-align: center;
-    top: 15px;
+    top: 70px;
+    left: 140px;
 }
 
 #form {
     position: relative;
     left: 350px;
     top: 40px;
+}
+
+#consulta {
+    position: relative;
+    left: 345px;
 }
 
 .medio {
@@ -33,17 +39,6 @@ h2 {
     position: relative;
     top: 32px;
     left: -7px;
-}
-
-#consulta {
-    position: relative;
-    top: 45px;
-}
-
-#btnPesquisar {
-    position: relative;
-    left: 230px;
-    top: -8px;
 }
 
 label {

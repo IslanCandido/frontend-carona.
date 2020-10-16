@@ -1,5 +1,13 @@
 <h2>Cadastro de Rotas</h2>
 
+<div class="form-row" id="consulta">
+    <div class="form-group col-md-2">
+        <label class="col-md-2 control-label" for="con_rota">CONSULTAR</label>
+        <input (blur)="consultar($event.target.value)" id="con_rota" name="con_rota" type="text" autocomplete="off"
+            placeholder="codigo verificador da rota" class="form-control input-md">
+    </div>
+</div>
+
 <form id="form" #frm="ngForm">
     <div class="form-row">
         <div class="form-group col-md-2">
@@ -68,7 +76,7 @@
         </div>
         <div class="form-group col-md-1" id="posi-veri">
             <label class="col-md-1 control-label" for="verificador">Verificador</label>
-            <input [(ngModel)]="rota.verificador" autocomplete="off" id="verificador" name="verificador" type="text"
+            <input [(ngModel)]="rota.verificador" readonly=“true” autocomplete="off" id="verificador" name="verificador" type="text"
                 class="form-control input-md" required />
         </div>
         <div class="form-group col-md-1">
@@ -81,14 +89,6 @@
                         d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z" />
                 </svg>
             </button>
-        </div>
-    </div>
-
-    <div class="form-row" id="consulta">
-        <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="con_rota">CONSULTAR</label>
-            <input (blur)="consultar($event.target.value)" id="con_rota" name="con_rota" type="text" autocomplete="off"
-                placeholder="digite o codigo verificador da rota" class="form-control input-md">
         </div>
     </div>
 </form>

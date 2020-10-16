@@ -1,0 +1,106 @@
+<form>
+    <div class="form-row" id="consulta-local">
+        <div class="form-group col-md-3">
+            <input id="con-vei" name="con-vei" type="text" placeholder="Pesquisar Local de destino"
+                class="form-control input-md" required="">
+        </div>
+
+    </div>
+    <button type="button" class="btn btn-info" id="btnPesquisarLocal">Pesquisar</button>
+</form>
+
+<div class="form-group col-md-11">
+    <div class="table-overflow">
+        <table class="table table-bordered table-active" id="tabela">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Horário</th>
+                    <th scope="col">Local de Saída</th>
+                    <th scope="col">Local de Destino</th>
+                    <th scope="col">Contribuição</th>
+                    <th scope="col">Verificador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let rota of rotas">
+                    <td>{{ rota.id }}</td>
+                    <td>{{ rota.data }}</td>
+                    <td>{{ rota.horario }}</td>
+                    <td>{{ rota.inicio }}</td>
+                    <td>{{ rota.fim }}</td>
+                    <td>{{ rota.contribuicao.valor }}</td>
+                    <td><button class="btn btn-info" (click)="consultarRota(rota.verificador)">Selecionar</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<h2>Registrar Carona</h2>
+
+<div class="form-row" id="consulta">
+    <div class="form-group col-md-2">
+        <label class="col-md-2 control-label" for="con-vei">CONSULTAR</label>
+        <input id="con-vei" name="con-vei" type="text" placeholder="Código Verificador" class="form-control input-md"
+            required="">
+    </div>
+</div>
+
+<form id="form" #frm="ngForm">
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <label class="col-md-1 control-label" for="codVerificador">Código</label>
+            <input [(ngModel)]="carona.rota.verificador" id="codVerificador" name="codVerificador" type="text"
+                class="form-control input-md" required />
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="cpf">Usuário(CPF)</label>
+            <input [(ngModel)]="carona.usuario.cpf" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX"
+                class="form-control input-md" type="text" maxlength="11" pattern="[0-9]+$" required />
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="acompanhantes">Acompanhantes</label>
+            <input [(ngModel)]="carona.acompanhantes" id="acompanhantes" name="acompanhantes"
+                placeholder="Nº acompanhantes" class="form-control input-md" type="number" required />
+        </div>
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="contribuicao">Contribuição</label>
+            <select [(ngModel)]="carona.contribuicao.id" id="contribuicao" name="contribuicao" class="form-control" required >
+                <option *ngFor="let contribuicao of contribuicoes" value="{{ contribuicao.id }}">{{ contribuicao.tipo }}
+                    -
+                    {{ contribuicao.valor }}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-2">
+            <button type="button" class="btn btn-info" routerLink="/manter-contribuições" id="add-cont">
+                <svg width="32px" height="22px" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path fill-rule="evenodd"
+                        d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group col-md-2">
+            <label class="col-md-2 control-label" for="data">Horário</label>
+            <input [(ngModel)]="carona.horario_aproximado" id="horario" name="horario" placeholder="00:00:00"
+                class="form-control time-mask" autocomplete="off" type="text" minlength="8" maxlength="8" required />
+        </div>
+        <div class="form-group col-md-6">
+            <label class="col-md-6 control-label" for="pontoEncontro">Ponto de Encontro</label>
+            <input [(ngModel)]="carona.ponto_encontro" id="pontoEncontro" name="pontoEncontro" type="text"
+                class="form-control input-md" required />
+        </div>
+    </div>
+    <div class="container">
+        <button type="button" class="btn btn-success medio">Salvar</button>
+        <button type="button" class="btn btn-danger medio">Remover</button>
+        <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
+    </div>
+</form>

@@ -2,6 +2,14 @@
     <h2>Cadastro de Usuários</h2>
 </div>
 
+<div class="form-row" id="consulta">
+    <div class="form-group col-md-2">
+        <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
+        <input (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário"
+            class="form-control input-md" type="text" autocomplete="off" maxlength="11" pattern="[0-9]+$" required />
+    </div>
+</div>
+
 <form id="form" #frm="ngForm">
     <div class="form-row">
         <div class="form-group col-md-4">
@@ -11,7 +19,7 @@
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">CPF</label>
-            <input [(ngModel)]="usuario.cpf" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX"
+            <input [(ngModel)]="usuario.cpf" (blur)="isCpf($event.target.value)" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX"
                 class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11"
                 pattern="[0-9]+$" required />
             <small id="passwordHelpInline" class="text-muted">
@@ -64,15 +72,6 @@
                 ADICIONAR CONTATO
             </button>
         </div>
-    </div>
-    <div class="form-row" id="consulta">
-        <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
-            <input (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="digite seu cpf"
-                class="form-control input-md" type="text" autocomplete="off" maxlength="11" pattern="[0-9]+$"
-                required />
-        </div>
-
     </div>
 </form>
 

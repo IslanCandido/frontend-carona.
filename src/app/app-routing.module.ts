@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { ManterCaronasComponent } from './manter-caronas/manter-caronas.component';
 import { ManterContatosComponent } from './manter-contatos/manter-contatos.component';
 import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-contribuicoes.component';
 import { ManterRotasComponent } from './manter-rotas/manter-rotas.component';
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: "manter-veículos", component: ManterVeiculosComponent },
   { path: "manter-rotas", component: ManterRotasComponent },
   { path: "manter-contatos", component: ManterContatosComponent},
-  { path: "manter-contribuições", component: ManterContribuicoesComponent}
+  { path: "manter-contribuições", component: ManterContribuicoesComponent},
+  { path: "manter-caronas", component: ManterCaronasComponent }
 ];
 
 @NgModule({

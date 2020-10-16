@@ -1,0 +1,58 @@
+h2 {
+    position: relative;
+    text-align: center;
+    top: 40px;
+    left: 80px;
+}
+
+#form {
+    position: relative;
+    left: 230px;
+    top: 5px;
+}
+
+#btnPesquisarLocal {
+    position: relative;
+    left: 1150px;
+    top: -24px;
+}
+
+#consulta-local {
+    position: relative;
+    top: 30px;
+    left: 800px;
+}
+
+.table-overflow {
+    position: relative;
+    top: 5px;
+    left: 50px;
+    max-height:250px;
+    overflow-y:auto;
+}
+
+#add-cont{
+    position: relative;
+    top: 32px;
+    left: -3px;
+    width: 35%;
+}
+
+.medio {
+    position: relative;
+    left: 480px;
+    top: 40px;
+    width: 8%;
+    margin: 4px;
+}
+
+#consulta {
+    position: relative;
+    top: -30px;
+    left: 230px;
+}
+
+label {
+    position: relative;
+    right: 13px;
+}
