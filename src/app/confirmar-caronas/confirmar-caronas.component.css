@@ -1,0 +1,32 @@
+.table-overflow {
+    position: relative;
+    top: 65px;
+    left: 100px;
+    max-height:250px;
+    overflow-y:auto;
+}
+
+h3 {
+    position: relative;
+    text-align: center;
+    top: 40px;
+}
+
+#form {
+    position: relative;
+    left: 150px;
+    top: 100px;
+}
+
+.medio{
+    position: relative;
+    left: 580px;
+    top: 80px;
+    width: 10%;
+    margin: 4px;
+}
+
+label {
+    position: relative;
+    right: 13px;
+}

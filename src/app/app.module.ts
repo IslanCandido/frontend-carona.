@@ -14,6 +14,7 @@ import { ManterContatosComponent } from './manter-contatos/manter-contatos.compo
 import { LoginComponent } from './login/login.component';
 import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-contribuicoes.component';
 import { ManterCaronasComponent } from './manter-caronas/manter-caronas.component';
+import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ManterCaronasComponent } from './manter-caronas/manter-caronas.componen
     ManterContatosComponent,
     LoginComponent,
     ManterContribuicoesComponent,
-    ManterCaronasComponent
+    ManterCaronasComponent,
+    ConfirmarCaronasComponent
   ],
   imports: [
     BrowserModule,

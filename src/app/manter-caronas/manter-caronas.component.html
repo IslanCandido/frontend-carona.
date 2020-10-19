@@ -14,7 +14,6 @@
         <table class="table table-bordered table-active" id="tabela">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Data</th>
                     <th scope="col">Horário</th>
                     <th scope="col">Local de Saída</th>
@@ -25,12 +24,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let rota of rotas">
-                    <td>{{ rota.id }}</td>
                     <td>{{ rota.data }}</td>
                     <td>{{ rota.horario }}</td>
                     <td>{{ rota.inicio }}</td>
                     <td>{{ rota.fim }}</td>
-                    <td>{{ rota.contribuicao.valor }}</td>
+                    <td>{{ rota.contribuicao.tipo }} - {{ rota.contribuicao.valor }}</td>
                     <td><button class="btn btn-info" (click)="consultarRota(rota.verificador)">Selecionar</button></td>
                 </tr>
             </tbody>
@@ -52,12 +50,12 @@
     <div class="form-row">
         <div class="form-group col-md-1">
             <label class="col-md-1 control-label" for="codVerificador">Código</label>
-            <input [(ngModel)]="carona.rota.verificador" id="codVerificador" name="codVerificador" type="text"
+            <input [(ngModel)]="carona.rota.verificador" (blur)="consultarRota($event.target.value)" id="codVerificador" name="codVerificador" type="text"
                 class="form-control input-md" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">Usuário(CPF)</label>
-            <input [(ngModel)]="carona.usuario.cpf" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX"
+            <input [(ngModel)]="carona.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX"
                 class="form-control input-md" type="text" maxlength="11" pattern="[0-9]+$" required />
         </div>
         <div class="form-group col-md-2">
@@ -99,7 +97,7 @@
         </div>
     </div>
     <div class="container">
-        <button type="button" class="btn btn-success medio">Salvar</button>
+        <button type="button" class="btn btn-success medio" (click)="salvar()">Salvar</button>
         <button type="button" class="btn btn-danger medio">Remover</button>
         <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
     </div>

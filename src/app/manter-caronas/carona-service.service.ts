@@ -14,6 +14,10 @@ export class CaronaServiceService {
     return this.http.get("http://localhost:8080/caronas");
   }
 
+  public getById(id):Observable<any>{
+    return this.http.get(`http://localhost:8080/caronas/${id}`);
+  }
+
   public post(caronas: {id, horario_aproximado, ponto_encontro, acompanhantes, situacao, observacao, rota, usuario, contribuicao}) : Observable<any>{
     return this.http.post("http://localhost:8080/caronas", caronas);
   }
@@ -41,6 +45,7 @@ export class CaronaServiceService {
   public getContribuicoes():Observable<any>{
     return this.http.get("http://localhost:8080/contribuições");
   }
+
   public getByIdContribuicoes(id):Observable<any>{
     return this.http.get(`http://localhost:8080/contribuições/${id}`);
   }

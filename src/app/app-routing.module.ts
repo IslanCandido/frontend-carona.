@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas.component';
 import { HomeComponent } from './home/home.component';
 import { ManterCaronasComponent } from './manter-caronas/manter-caronas.component';
 import { ManterContatosComponent } from './manter-contatos/manter-contatos.component';
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: "manter-rotas", component: ManterRotasComponent },
   { path: "manter-contatos", component: ManterContatosComponent},
   { path: "manter-contribuições", component: ManterContribuicoesComponent},
-  { path: "manter-caronas", component: ManterCaronasComponent }
+  { path: "manter-caronas", component: ManterCaronasComponent },
+  { path: "confirmar-caronas", component: ConfirmarCaronasComponent }
 ];
 
 @NgModule({
