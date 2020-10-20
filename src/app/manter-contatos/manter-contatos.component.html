@@ -1,3 +1,34 @@
+<div class="modal fade" id="men-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Contato salvo com sucesso!</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="men-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Contato removido com sucesso!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h3>Cadastro de Contatos</h3>
 
 <form id="form" #frm="ngForm">
@@ -18,8 +49,9 @@
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="Nome">CPF(Usuário)</label>
-            <input [(ngModel)]="contato.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf" placeholder="EX: XXXXXXXXXXX"
-                class="form-control input-md" type="text" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required>
+            <input [(ngModel)]="contato.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf"
+                placeholder="EX: XXXXXXXXXXX" class="form-control input-md" type="text" autocomplete="off"
+                minlength="11" maxlength="11" pattern="[0-9]+$" required>
         </div>
     </div>
 
@@ -27,7 +59,6 @@
         <table class="table table-bordered-sm table-hover table-active" id="tabela">
             <thead class="table-dark">
                 <tr>
-                    <th scope="col">#</th>
                     <th scope="col">Tipo</th>
                     <th scope="col">Telefone</th>
                     <th scope="col">Usuário</th>
@@ -36,7 +67,6 @@
             </thead>
             <tbody>
                 <tr *ngFor="let contato of contatos">
-                    <td>{{ contato.id }}</td>
                     <td> {{ contato.tipo }}</td>
                     <td> {{ contato.telefone }}</td>
                     <td> {{ contato.usuario.nome }}</td>
@@ -50,8 +80,9 @@
 
 
 <div class="container" id="btn-prin">
-    <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
-    <button type="button" class="btn btn-danger medio" (click)="excluir(contato.id)"
-        [disabled]="frm.invalid">Remover</button>
+    <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal"
+        data-target="#men-success">Salvar</button>
+    <button type="button" class="btn btn-danger medio" (click)="excluir(contato.id)" [disabled]="frm.invalid"
+        data-toggle="modal" data-target="#men-danger">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
 </div>

@@ -30,7 +30,9 @@ export class ManterCaronasComponent implements OnInit {
   }
 
   salvar() {
-    console.log(this.carona);
+    if(this.carona.situacao == ""){
+      this.carona.situacao = "Em andamento";
+    }
     this.caronaService.post(this.carona).subscribe(resultado => {
       this.carona = {
         id: null, horario_aproximado: '', ponto_encontro: '', acompanhantes: '', situacao: '', observacao: '',

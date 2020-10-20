@@ -22,21 +22,14 @@ export class ManterContribuicoesComponent implements OnInit {
     this.contribuicoesService.post(this.contribuicao).subscribe(resultado => {
       this.contribuicao = { id: null, tipo: "", valor: "" };
     });
-    alert("Contribuição salva com sucesso!");
+    this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover essa contribuição?");
-
-    if (r == true) {
-      this.contribuicoesService.delete(this.contribuicao.id).subscribe(resultado => {
-        this.contribuicao = { id: null, tipo: "", valor: "" };
-      });
-      alert("Contribuição removida com sucesso!");
-    } else {
-      alert("Contribuição não foi removida!");
-    }
-
+    this.contribuicoesService.delete(this.contribuicao.id).subscribe(resultado => {
+      this.contribuicao = { id: null, tipo: "", valor: "" };
+    });
+    this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
   }
 
   consultar(id) {

@@ -9,7 +9,7 @@ import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.servic
 export class ManterVeiculosComponent implements OnInit {
 
   veiculo: { id, placa, renavam, modelo, cor, ano_fabricacao, tipo, capacidade, usuario } =
-    { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null,  usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
 
   veiculos;
   usuarios;
@@ -24,21 +24,12 @@ export class ManterVeiculosComponent implements OnInit {
     this.veiculoService.post(this.veiculo).subscribe(resultado => {
       this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
     });
-    alert("Veículo salvo com sucesso!");
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover esse veículo?");
-
-    if (r == true) {
-      this.veiculoService.delete(this.veiculo.id).subscribe(resultado => {
-        this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
-      });
-      alert("Veículo removido com sucesso!");
-    } else {
-      alert("Veículo não foi removido!");
-    }
-
+    this.veiculoService.delete(this.veiculo.id).subscribe(resultado => {
+      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    });
   }
 
   consultar(placa) {
@@ -84,4 +75,5 @@ export class ManterVeiculosComponent implements OnInit {
   limpar(form) {
     form.reset();
   }
+
 }

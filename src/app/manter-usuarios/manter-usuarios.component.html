@@ -1,3 +1,34 @@
+<div class="modal fade" id="men-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Usuário salvo com sucesso!</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="men-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Usuário foi removido!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <h2>Cadastro de Usuários</h2>
 </div>
@@ -6,7 +37,8 @@
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
         <input (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário"
-            class="form-control input-md" type="text" autocomplete="off" maxlength="11" pattern="[0-9]+$" required />
+            class="form-control input-md" type="text" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$"
+            required />
     </div>
 </div>
 
@@ -19,7 +51,7 @@
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">CPF</label>
-            <input [(ngModel)]="usuario.cpf" (blur)="isCpf($event.target.value)" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX"
+            <input [(ngModel)]="usuario.cpf" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX"
                 class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11"
                 pattern="[0-9]+$" required />
             <small id="passwordHelpInline" class="text-muted">
@@ -76,8 +108,9 @@
 </form>
 
 <div class="container">
-    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid"
-        (click)="excluir(usuario.id)">Remover</button>
+    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal"
+        data-target="#men-success">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)"
+        data-toggle="modal" data-target="#men-danger">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
 </div>

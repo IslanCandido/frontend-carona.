@@ -24,7 +24,7 @@
                     <td>{{ carona.acompanhantes }}</td>
                     <td>{{ carona.contribuicao.tipo }} - {{ carona.contribuicao.valor }}</td>
                     <td>{{ carona.usuario.cpf }}</td>
-                    <td><button class="btn btn-info" (click)="consultar(carona.id)">Selecionar</button></td>
+                <td><button class="btn btn-info" (click)="consultar(carona.id)">Selecionar</button></td>
                 </tr>
             </tbody>
         </table>
@@ -35,17 +35,18 @@
     <div class="form-row">
         <div class="form-group col-md-1">
             <label class="col-md-1 control-label" for="codCarona">Carona</label>
-            <input [(ngModel)]="carona.id" id="codCarona" name="codCarona" type="text" class="form-control input-md">
+            <input [(ngModel)]="carona.id" id="codCarona" name="codCarona" type="text" class="form-control input-md" disabled>
         </div>
         <div class="form-group col-md-8">
             <label class="col-md-8 control-label" for="observacao">Observação</label>
-            <input [(ngModel)]="carona.observacao" id="observacao" name="observacao" type="text" class="form-control input-md">
+            <input [(ngModel)]="carona.observacao" id="observacao" name="observacao" type="text" 
+            minlength="10" maxlength="100" class="form-control input-md" required>
         </div>
     </div>
     
     <div class="container">
-        <button type="button" class="btn btn-success medio">Confirmar</button>
-        <button type="button" class="btn btn-danger medio">Cancelar</button>
+        <button type="button" class="btn btn-success medio" [disabled]="frm.invalid">Confirmar</button>
+        <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid">Cancelar</button>
         <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
     </div>
 </form>

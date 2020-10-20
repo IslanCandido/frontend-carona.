@@ -8,10 +8,10 @@ import { ContatoServiceService } from '../manter-contatos/contato-service.servic
 })
 export class ManterContatosComponent implements OnInit {
 
-  contato: { id, tipo, telefone, usuario } = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }};
-  
+  contato: { id, tipo, telefone, usuario } = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+
   contatos;
-  usuarios; 
+  usuarios;
 
   constructor(private contatoService: ContatoServiceService) { }
 
@@ -22,22 +22,16 @@ export class ManterContatosComponent implements OnInit {
 
   salvar() {
     this.contatoService.post(this.contato).subscribe(resultado => {
-      this.contato = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }};
+      this.contato = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
     });
-    alert("Contato salvo com sucesso!");
+    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover esse contato?");
-
-    if (r == true) {
-      this.contatoService.delete(this.contato.id).subscribe(resultado => {
-        this.contato = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }};
-      });
-      alert("Contato removido com sucesso!");
-    } else {
-      alert("Contato não foi removido!");
-    }
+    this.contatoService.delete(this.contato.id).subscribe(resultado => {
+      this.contato = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    });
+    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
   }
 
   consultar(id) {

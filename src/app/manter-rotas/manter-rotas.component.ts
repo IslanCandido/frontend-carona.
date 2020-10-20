@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RotaServiceService } from '../manter-rotas/rota-service.service';
-import * as $ from 'jquery';
+//import * as $ from 'jquery';
 
 @Component({
   selector: 'app-manter-rotas',
@@ -28,7 +28,6 @@ export class ManterRotasComponent implements OnInit {
   }
 
   salvar() {
-    console.log(this.rota);
     this.rotaService.post(this.rota).subscribe(resultado => {
       this.rota = {
         id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
@@ -36,24 +35,16 @@ export class ManterRotasComponent implements OnInit {
         contribuicao: { id: null, tipo: "", valor: "" }
       };
     });
-    alert("Rota salva com sucesso!");
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover essa rota?");
-
-    if (r == true) {
-      this.rotaService.delete(this.rota.id).subscribe(resultado => {
-        this.rota = {
-          id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
-          veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
-          contribuicao: { id: null, tipo: "", valor: "" }
-        };
-      });
-      alert("Rota removida com sucesso!");
-    } else {
-      alert("Rota não foi removida!");
-    }
+    this.rotaService.delete(this.rota.id).subscribe(resultado => {
+      this.rota = {
+        id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
+        veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
+        contribuicao: { id: null, tipo: "", valor: "" }
+      };
+    });
   }
 
   consultar(verificador) {

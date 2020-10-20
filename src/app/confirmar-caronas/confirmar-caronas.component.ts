@@ -25,14 +25,14 @@ export class ConfirmarCaronasComponent implements OnInit {
   constructor(private caronaService: CaronaServiceService) { }
 
   ngOnInit(): void {
-    this.caronaService.get().subscribe(resultado => {this.caronas = resultado});
+    this.caronaService.getBySituacao("Em andamento").subscribe(resultado => {this.caronas = resultado});
     this.caronaService.getRotas().subscribe(resultado => { this.rotas = resultado });
     this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
   }
 
   consultar(id) {
-    this.caronaService.getById(id).subscribe(dados => {
+    this.caronaService.getBySituacao(id).subscribe(dados => {
       this.carona = {
         id: dados.id, 
         horario_aproximado: dados.horario_aproximado, 
