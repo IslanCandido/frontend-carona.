@@ -20,30 +20,30 @@ export class ManterContribuicoesComponent implements OnInit {
 
   salvar() {
     this.contribuicoesService.post(this.contribuicao).subscribe(resultado => {
-      this.contribuicao = { id: null, tipo: "", valor: "" };
+      this.limpar();
     });
-    this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
+
   }
 
   excluir(id) {
-    this.contribuicoesService.delete(this.contribuicao.id).subscribe(resultado => {
-      this.contribuicao = { id: null, tipo: "", valor: "" };
-    });
-    this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
-  }
+    this.contribuicoesService.delete(id).subscribe(resultado => {
+      this.limpar();
+    });  
+}
 
-  consultar(id) {
-    this.contribuicoesService.getById(id).subscribe(dados => {
-      this.contribuicao = {
-        id: dados.id,
-        tipo: dados.tipo,
-        valor: dados.valor
-      };
-    });
-  }
+consultar(id) {
+  this.contribuicoesService.getById(id).subscribe(dados => {
+    this.contribuicao = {
+      id: dados.id,
+      tipo: dados.tipo,
+      valor: dados.valor
+    };
+  });
+}
 
-  limpar(form) {
-    form.reset();
-  }
+limpar() {
+  this.contribuicao = { id: null, tipo: "", valor: "" };
+  this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
+}
 
 }

@@ -36,7 +36,7 @@
 <div class="form-row" id="consulta">
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
-        <input (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário"
+        <input [(ngModel)]="consultaCPF" (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário"
             class="form-control input-md" type="text" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$"
             required />
     </div>
@@ -112,5 +112,5 @@
         data-target="#men-success">Salvar</button>
     <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)"
         data-toggle="modal" data-target="#men-danger">Remover</button>
-    <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
+    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

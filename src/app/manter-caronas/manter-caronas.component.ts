@@ -21,6 +21,9 @@ export class ManterCaronasComponent implements OnInit {
   usuarios
   contribuicoes
 
+  consultaDestino: '';
+  consultaCarona: '';
+
   constructor(private caronaService: CaronaServiceService) { }
 
   ngOnInit(): void {
@@ -30,36 +33,19 @@ export class ManterCaronasComponent implements OnInit {
   }
 
   salvar() {
-    if(this.carona.situacao == ""){
+    if (this.carona.situacao == "") {
       this.carona.situacao = "Em andamento";
     }
     this.caronaService.post(this.carona).subscribe(resultado => {
-      this.carona = {
-        id: null, horario_aproximado: '', ponto_encontro: '', acompanhantes: '', situacao: '', observacao: '',
-        rota: { id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "", veiculo: null, contribuicao: null },
-        usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
-        contribuicao: { id: null, tipo: "", valor: "" }
-      };
+      this.limpar();
     });
-    alert("Carona salva com sucesso!");
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover essa carona?");
+    this.caronaService.delete(id).subscribe(resultado => {
+      this.limpar();
+    });
 
-    if (r == true) {
-      this.caronaService.delete(this.carona.id).subscribe(resultado => {
-        this.carona = {
-          id: null, horario_aproximado: '', ponto_encontro: '', acompanhantes: '', situacao: '', observacao: '',
-          rota: { id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "", veiculo: null, contribuicao: null },
-          usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
-          contribuicao: { id: null, tipo: "", valor: "" }
-        };
-      });
-      alert("Carona removida com sucesso!");
-    } else {
-      alert("Carona não foi removida!");
-    }
   }
 
   consultarRota(verificador) {
@@ -106,8 +92,16 @@ export class ManterCaronasComponent implements OnInit {
     }
   }
 
-  limpar(form) {
-    form.reset();
+  limpar() {
+    this.carona = {
+      id: null, horario_aproximado: '', ponto_encontro: '', acompanhantes: '', situacao: '', observacao: '',
+      rota: { id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "", veiculo: null, contribuicao: null },
+      usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
+      contribuicao: { id: null, tipo: "", valor: "" }
+    };
+
+    this.consultaDestino = '';
+    this.consultaCarona = '';
   }
 
 }

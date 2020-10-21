@@ -34,6 +34,10 @@ export class CaronaServiceService {
     return this.http.get("http://localhost:8080/rotas");
   }
 
+  public getRotasPesquisada(fim){
+    return this.http.get(`http://localhost:8080/rotas/filter/${fim}`)
+  }
+
   public getByVerificador(verificador):Observable<any>{
     return this.http.get(`http://localhost:8080/rotas/${verificador}`);
   }

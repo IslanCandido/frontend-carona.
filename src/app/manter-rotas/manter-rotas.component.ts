@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RotaServiceService } from '../manter-rotas/rota-service.service';
-//import * as $ from 'jquery';
 
 @Component({
   selector: 'app-manter-rotas',
@@ -20,6 +19,9 @@ export class ManterRotasComponent implements OnInit {
   veiculos;
   contribuicoes;
 
+  consultaCodVer: '';
+
+
   constructor(private rotaService: RotaServiceService) { }
 
   ngOnInit(): void {
@@ -29,21 +31,13 @@ export class ManterRotasComponent implements OnInit {
 
   salvar() {
     this.rotaService.post(this.rota).subscribe(resultado => {
-      this.rota = {
-        id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
-        veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
-        contribuicao: { id: null, tipo: "", valor: "" }
-      };
+      this.limpar();
     });
   }
 
   excluir(id) {
-    this.rotaService.delete(this.rota.id).subscribe(resultado => {
-      this.rota = {
-        id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
-        veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
-        contribuicao: { id: null, tipo: "", valor: "" }
-      };
+    this.rotaService.delete(id).subscribe(resultado => {
+      this.limpar();
     });
   }
 
@@ -91,8 +85,13 @@ export class ManterRotasComponent implements OnInit {
     }
   }
 
-  limpar(form) {
-    form.reset();
+  limpar() {
+    this.rota = {
+      id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
+      veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
+      contribuicao: { id: null, tipo: "", valor: "" }
+    }
+    this.consultaCodVer = '';
   }
 
   gerarVerificador(tamanho) {

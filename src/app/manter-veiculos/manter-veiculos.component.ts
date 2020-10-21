@@ -14,6 +14,8 @@ export class ManterVeiculosComponent implements OnInit {
   veiculos;
   usuarios;
 
+  consultaPlaca: '';
+
   constructor(private veiculoService: VeiculoServiceService) { }
 
   ngOnInit(): void {
@@ -22,13 +24,13 @@ export class ManterVeiculosComponent implements OnInit {
 
   salvar() {
     this.veiculoService.post(this.veiculo).subscribe(resultado => {
-      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+      this.limpar();
     });
   }
 
   excluir(id) {
-    this.veiculoService.delete(this.veiculo.id).subscribe(resultado => {
-      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    this.veiculoService.delete(id).subscribe(resultado => {
+      this.limpar();
     });
   }
 
@@ -72,8 +74,12 @@ export class ManterVeiculosComponent implements OnInit {
     }
   }
 
-  limpar(form) {
-    form.reset();
+  limpar() {
+    this.veiculo = { 
+      id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, 
+      usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } 
+    };
+    this.consultaPlaca = '';
   }
 
 }

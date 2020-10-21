@@ -22,16 +22,14 @@ export class ManterContatosComponent implements OnInit {
 
   salvar() {
     this.contatoService.post(this.contato).subscribe(resultado => {
-      this.contato = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+      this.limpar(); 
     });
-    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
   }
 
   excluir(id) {
-    this.contatoService.delete(this.contato.id).subscribe(resultado => {
-      this.contato = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+    this.contatoService.delete(id).subscribe(resultado => {
+      this.limpar();
     });
-    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
   }
 
   consultar(id) {
@@ -63,11 +61,14 @@ export class ManterContatosComponent implements OnInit {
     } else {
       this.contato.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     }
-    console.log(this.contato.usuario);
   }
 
-  limpar(form) {
-    form.reset();
+  limpar() {
+    this.contato = { 
+      id: null, tipo: "", telefone: "", 
+      usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } 
+    };
+    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
   }
 
 }

@@ -1,7 +1,7 @@
 <form>
     <div class="form-row" id="consulta-local">
         <div class="form-group col-md-3">
-            <input id="con-vei" name="con-vei" type="text" placeholder="Pesquisar Local de destino"
+            <input [(ngModel)]="consultaDestino" id="con-vei" name="con-vei" type="text" placeholder="Pesquisar Local de destino"
                 class="form-control input-md" maxlength="100" autocomplete="off">
         </div>
 
@@ -41,7 +41,7 @@
 <div class="form-row" id="consulta">
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con-vei">CONSULTAR</label>
-        <input id="con-vei" name="con-vei" type="text" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md"
+        <input [(ngModel)]="consultaCarona" id="con-vei" name="con-vei" type="text" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md"
             required="">
     </div>
 </div>
@@ -95,13 +95,13 @@
         <div class="form-group col-md-6">
             <label class="col-md-6 control-label" for="pontoEncontro">Ponto de Encontro</label>
             <input [(ngModel)]="carona.ponto_encontro" id="pontoEncontro" name="pontoEncontro" type="text"
-                minlength="10" maxlength="80" autocomplete="off" class="form-control input-md" required />
+                placeholder="colocar ponto de encontro preferivel" minlength="10" maxlength="80" autocomplete="off" class="form-control input-md" required />
         </div>
     </div>
     <div class="container">
         <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
         <button type="button" class="btn btn-danger medio" (click)="excluir(carona.id)"
             [disabled]="frm.invalid">Remover</button>
-        <button type="button" class="btn btn-secondary medio" (click)="limpar(frm)">Limpar</button>
+        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
     </div>
 </form>

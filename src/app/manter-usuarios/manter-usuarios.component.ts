@@ -12,23 +12,23 @@ export class ManterUsuariosComponent implements OnInit {
   usuario: { id, nome, email, cpf, dt_nascimento, sexo, senha } = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
   usuarios;
 
-  constructor(public usuarioService: UsuarioServiceService) { }
+  consultaCPF: '';
 
-  /*@ViewChild('salvo') salvo: any;
-  @ViewChild('delete') delete: any;*/
+  constructor(public usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
   }
 
   salvar() {
     this.usuarioService.post(this.usuario).subscribe(resultado => {
-      this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+      this.limpar();
     });
+    
   }
 
   excluir(id) {
-    this.usuarioService.delete(this.usuario.id).subscribe(resultado => {
-      this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+    this.usuarioService.delete(id).subscribe(resultado => {
+      this.limpar();
     });
   }
 
@@ -52,8 +52,9 @@ export class ManterUsuariosComponent implements OnInit {
     }
   }
 
-  limpar(form) {
-    form.reset();
+  limpar() {
+    this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+    this.consultaCPF = '';
   }
 
   static isValidCpf() {
