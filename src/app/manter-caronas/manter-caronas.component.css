@@ -1,31 +1,25 @@
 h2 {
     position: relative;
     text-align: center;
-    top: 40px;
+    top: 50px;
     left: 80px;
 }
 
 #form {
     position: relative;
     left: 230px;
-    top: 5px;
-}
-
-#btnPesquisarLocal {
-    position: relative;
-    left: 1150px;
-    top: -24px;
+    top: 15px;
 }
 
 #consulta-local {
     position: relative;
-    top: 30px;
+    top: 25px;
     left: 800px;
 }
 
 .table-overflow {
     position: relative;
-    top: 5px;
+    top: 20px;
     left: 50px;
     max-height:250px;
     overflow-y:auto;
@@ -41,14 +35,14 @@ h2 {
 .medio {
     position: relative;
     left: 480px;
-    top: 40px;
+    top: 50px;
     width: 8%;
     margin: 4px;
 }
 
 #consulta {
     position: relative;
-    top: -30px;
+    top: -20px;
     left: 230px;
 }
 

@@ -26,13 +26,26 @@ export class ConfirmarCaronasComponent implements OnInit {
 
   ngOnInit(): void {
     this.caronaService.getBySituacao("Em andamento").subscribe(resultado => { this.caronas = resultado });
-    this.caronaService.getRotas().subscribe(resultado => { this.rotas = resultado });
-    this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
-    this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
+  }
+
+  confirmar(){
+    this.carona.situacao = "Carona confirmada";
+
+    this.caronaService.post(this.carona).subscribe(resultado => {
+      this.limpar();
+    });
+  }
+
+  cancelar(){
+    this.carona.situacao = "Carona cancelada";
+
+    this.caronaService.post(this.carona).subscribe(resultado => {
+      this.limpar();
+    });
   }
 
   consultar(id) {
-    this.caronaService.getBySituacao(id).subscribe(dados => {
+    this.caronaService.getById(id).subscribe(dados => {
       this.carona = {
         id: dados.id,
         horario_aproximado: dados.horario_aproximado,
@@ -45,6 +58,7 @@ export class ConfirmarCaronasComponent implements OnInit {
         contribuicao: dados.contribuicao
       };
     });
+    console.log(this.carona);
   }
 
   limpar() {
@@ -54,6 +68,7 @@ export class ConfirmarCaronasComponent implements OnInit {
       usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
       contribuicao: { id: null, tipo: "", valor: "" }
     };
+    this.caronaService.getBySituacao("Em andamento").subscribe(resultado => { this.caronas = resultado });
   }
 }
 

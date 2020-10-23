@@ -32,6 +32,14 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
   }
 
+  consultarDestino(destino) {
+    if (this.consultaDestino == "") {
+      this.caronaService.getRotas().subscribe(resultado => { this.rotas = resultado });
+    } else {
+      this.caronaService.getRotasPesquisada(destino).subscribe(resultado => { this.rotas = resultado });
+    }
+  }
+
   salvar() {
     if (this.carona.situacao == "") {
       this.carona.situacao = "Em andamento";
@@ -45,7 +53,23 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.delete(id).subscribe(resultado => {
       this.limpar();
     });
+  }
 
+  consultarCarona(id) {
+    this.caronaService.getById(id).subscribe(dados => {
+      this.carona = {
+        id: dados.id,
+        horario_aproximado: dados.horario_aproximado,
+        ponto_encontro: dados.ponto_encontro,
+        acompanhantes: dados.acompanhantes,
+        situacao: dados.situacao,
+        observacao: dados.observacao,
+        rota: dados.rota,
+        usuario: dados.usuario,
+        contribuicao: dados.contribuicao
+      };
+    });
+    console.log(this.carona);
   }
 
   consultarRota(verificador) {
@@ -99,6 +123,7 @@ export class ManterCaronasComponent implements OnInit {
       usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
       contribuicao: { id: null, tipo: "", valor: "" }
     };
+    this.caronaService.getRotas().subscribe(resultado => { this.rotas = resultado });
 
     this.consultaDestino = '';
     this.consultaCarona = '';
