@@ -17,9 +17,14 @@ export class RotaServiceService {
     return this.http.get("http://localhost:8080/rotas");
   }
 
+  public getVerificadorIgual(verificador):Observable<any>{
+    return this.http.get(`http://localhost:8080/rotas/existe/${verificador}`)
+  }
+
   public getContribuicoes():Observable<any>{
     return this.http.get("http://localhost:8080/contribuições");
   }
+
   public getByIdContribuicoes(id):Observable<any>{
     return this.http.get(`http://localhost:8080/contribuições/${id}`);
   }

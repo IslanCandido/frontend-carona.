@@ -17,6 +17,10 @@ export class VeiculoServiceService {
     return this.http.get("http://localhost:8080/veiculos");
   }
 
+  public getRenavamIgual(renavam):Observable<any>{
+    return this.http.get(`http://localhost:8080/veiculos/existe/${renavam}`)
+  }
+
   public getUsuarios():Observable<any>{
     return this.http.get("http://localhost:8080/usuarios");
   }

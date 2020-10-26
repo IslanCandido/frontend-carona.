@@ -1,34 +1,3 @@
-<div class="modal fade" id="men-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Veículo salvo com sucesso!</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="men-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Veículo removido com sucesso!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container">
     <h2>Cadastro de Veículos</h2>
 </div>
@@ -36,8 +5,7 @@
 <div class="form-row" id="consulta">
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
-        <input [(ngModel)]="consultaPlaca" (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="text"
-            placeholder="placa do veículo" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md">
+        <input [(ngModel)]="consultaPlaca" (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="search" placeholder="placa do veículo" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md">
     </div>
 </div>
 
@@ -45,32 +13,26 @@
     <div class="form-row">
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="placa">Placa</label>
-            <input [(ngModel)]="veiculo.placa" id="placa" name="placa" type="text" placeholder="Ex: XXX-0000"
-                minlength="8" maxlength="8" autocomplete="off" class="form-control input-md" required>
+            <input [(ngModel)]="veiculo.placa" id="placa" name="placa" type="text" placeholder="Ex: XXX-0000" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="renavam">Renavam</label>
-            <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo"
-                class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11" required>
+            <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo" class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11" required>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">Usuário(CPF)</label>
-            <input [(ngModel)]="veiculo.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf"
-                placeholder="EX: XXXXXXXXXXX" autocomplete="off" class="form-control input-md" type="text"
-                minlength="11" maxlength="11" pattern="[0-9]+$" required>
+            <input [(ngModel)]="veiculo.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf" placeholder="EX: XXXXXXXXXXX" autocomplete="off" class="form-control input-md" type="text" minlength="11" maxlength="11" pattern="[0-9]+$" required>
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="modelo">Modelo</label>
-            <input [(ngModel)]="veiculo.modelo" autocomplete="off" id="modelo" name="modelo" type="text" maxlength="40"
-                placeholder="Modelo do veículo" class="form-control input-md" required>
+            <input [(ngModel)]="veiculo.modelo" autocomplete="off" id="modelo" name="modelo" type="text" maxlength="40" placeholder="Modelo do veículo" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="cor">Cor</label>
-            <input [(ngModel)]="veiculo.cor" autocomplete="off" id="cor" name="cor" maxlength="40" type="text"
-                placeholder="Cor do veículo" class="form-control input-md" required>
+            <input [(ngModel)]="veiculo.cor" autocomplete="off" id="cor" name="cor" maxlength="40" type="text" placeholder="Cor do veículo" class="form-control input-md" required>
         </div>
     </div>
 
@@ -87,8 +49,7 @@
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="anoFabricacao">Ano</label>
-            <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="number"
-                placeholder="EX: 1111" autocomplete="off" pattern="([0-9]{4})" class="form-control input-md" required>
+            <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="number" placeholder="EX: 1111" autocomplete="off" pattern="([0-9]{4})" class="form-control input-md" required>
         </div>
         <div class="form-group col-md-1">
             <label class="col-md-1 control-label" for="capacidade">Capacidade</label>
@@ -110,9 +71,7 @@
 </form>
 
 <div class="container">
-    <button type="submit" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal"
-        data-target="#men-success">Salvar</button>
-    <button type="button" class="btn btn-danger medio" (click)="excluir(veiculo.id)" [disabled]="frm.invalid"
-        data-toggle="modal" data-target="#men-danger">Remover</button>
+    <button type="submit" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid">Salvar</button>
+    <button type="button" class="btn btn-danger medio" (click)="excluir(veiculo.id)" [disabled]="frm.invalid">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

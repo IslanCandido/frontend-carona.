@@ -1,34 +1,3 @@
-<div class="modal fade" id="men-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Usuário salvo com sucesso!</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="men-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Usuário foi removido!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="container">
     <h2>Cadastro de Usuários</h2>
 </div>
@@ -36,9 +5,7 @@
 <div class="form-row" id="consulta">
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con_usu">CONSULTAR</label>
-        <input [(ngModel)]="consultaCPF" (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário"
-            class="form-control input-md" type="text" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$"
-            required />
+        <input [(ngModel)]="consultaCPF" (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário" class="form-control input-md" type="search" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required />
     </div>
 </div>
 
@@ -46,14 +13,11 @@
     <div class="form-row">
         <div class="form-group col-md-4">
             <label class="col-md-4 control-label" for="nome">Nome</label>
-            <input [(ngModel)]="usuario.nome" autocomplete="off" id="nome" name="nome" type="text"
-                placeholder="Digite o seu nome completo" class="form-control input-md" maxlength="60" required />
+            <input [(ngModel)]="usuario.nome" autocomplete="off" id="nome" name="nome" type="text" placeholder="Digite o seu nome completo" class="form-control input-md" maxlength="60" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">CPF</label>
-            <input [(ngModel)]="usuario.cpf" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX"
-                class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11"
-                pattern="[0-9]+$" required />
+            <input [(ngModel)]="usuario.cpf" id="cpf" name="cpf" placeholder="EX : XXXXXXXXXXX" class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11" pattern="[0-9]+$" required />
             <small id="passwordHelpInline" class="text-muted">
                 Somente Numeros!
             </small>
@@ -65,15 +29,12 @@
             <label class="col-md-4 control-label" for="email">Email</label>
             <div class="input-group">
                 <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                <input [(ngModel)]="usuario.email" id="email" name="email" class="form-control"
-                    placeholder="email@email.com" autocomplete="off" type="text"
-                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="60" required email />
+                <input [(ngModel)]="usuario.email" id="email" name="email" class="form-control" placeholder="email@email.com" autocomplete="off" type="text" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="60" required email />
             </div>
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="dt_nascimento">Nascimento</label>
-            <input [(ngModel)]="usuario.dt_nascimento" id="dt_nascimento" name="dt_nascimento" placeholder="DD/MM/AAAA"
-                class="form-control input-md" type="date" maxlength="10" required />
+            <input [(ngModel)]="usuario.dt_nascimento" id="dt_nascimento" name="dt_nascimento" placeholder="DD/MM/AAAA" class="form-control input-md" type="date" maxlength="10" required />
         </div>
     </div>
 
@@ -88,8 +49,7 @@
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="senha">Senha</label>
-            <input [(ngModel)]="usuario.senha" id="senha" name="senha" type="password" placeholder="senha de acesso"
-                class="form-control input-md" minlength="8" maxlength="20" required />
+            <input [(ngModel)]="usuario.senha" id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20" required />
             <small id="passwordHelpInline" class="text-muted">
                 Deve ter entre 8 e 20 caracteres.
             </small>
@@ -108,9 +68,7 @@
 </form>
 
 <div class="container">
-    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal"
-        data-target="#men-success">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)"
-        data-toggle="modal" data-target="#men-danger">Remover</button>
+    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

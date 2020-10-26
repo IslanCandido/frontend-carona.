@@ -1,41 +1,9 @@
-<div class="modal fade" id="men-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Rota salva com sucesso!</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="men-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Rota removida com sucesso!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <h2>Cadastro de Rotas</h2>
 
 <div class="form-row" id="consulta">
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con_rota">CONSULTAR</label>
-        <input [(ngModel)]="consultaCodVer" (blur)="consultar($event.target.value)" id="con_rota" name="con_rota" type="text" autocomplete="off"
-            placeholder="codigo verificador da rota" minlength="8" maxlength="8" class="form-control input-md">
+        <input [(ngModel)]="consultaCodVer" (blur)="consultar($event.target.value)" id="con_rota" name="con_rota" type="search" autocomplete="off" placeholder="codigo verificador da rota" minlength="8" maxlength="8" class="form-control input-md">
     </div>
 </div>
 
@@ -43,37 +11,29 @@
     <div class="form-row">
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="data">Data</label>
-            <input [(ngModel)]="rota.data" id="data" name="data" placeholder="DD/MM/AAAA" class="form-control input-md"
-                type="date" minlength="10" maxlength="10" required />
+            <input [(ngModel)]="rota.data" id="data" name="data" placeholder="DD/MM/AAAA" class="form-control input-md" type="date" minlength="10" maxlength="10" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="data">Horário</label>
-            <input [(ngModel)]="rota.horario" id="horario" name="horario" placeholder="00:00:00"
-                class="form-control time-mask" autocomplete="off" type="text" minlength="8" maxlength="8" required />
+            <input [(ngModel)]="rota.horario" id="horario" name="horario" placeholder="00:00:00" class="form-control time-mask" autocomplete="off" type="text" minlength="8" maxlength="8" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="placa">Veiculo(Placa)</label>
-            <input [(ngModel)]="rota.veiculo.placa" (blur)="consultarVeiculo($event.target.value)" id="placa"
-                autocomplete="off" name="placa" type="text" placeholder="XXX-0000" minlength="8" maxlength="8"
-                class="form-control input-md" required />
+            <input [(ngModel)]="rota.veiculo.placa" (blur)="consultarVeiculo($event.target.value)" id="placa" autocomplete="off" name="placa" type="text" placeholder="XXX-0000" minlength="8" maxlength="8" class="form-control input-md" required />
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="col-md-6 control-label" for="pontoEncontro">Saída</label>
-            <input [(ngModel)]="rota.inicio" id="pontoEncontro" name="pontoEncontro" type="text" minlength="10"
-                maxlength="100" autocomplete="off" placeholder="endereço, ponto de referencia e cidade da sua saída"
-                class="form-control input-md" required />
+            <input [(ngModel)]="rota.inicio" id="pontoEncontro" name="pontoEncontro" type="text" minlength="10" maxlength="100" autocomplete="off" placeholder="endereço, ponto de referencia e cidade da sua saída" class="form-control input-md" required />
         </div>
     </div>
 
     <div class="form-row">
         <div class="form-group col-md-6">
             <label class="col-md-6 control-label" for="localDestino">Destino</label>
-            <input [(ngModel)]="rota.fim" id="localDestino" name="localDestino" type="text" minlength="10"
-                maxlength="100" autocomplete="off" placeholder="endereço, ponto de referencia e cidade do seu destino"
-                class="form-control input-md" required />
+            <input [(ngModel)]="rota.fim" id="localDestino" name="localDestino" type="text" minlength="10" maxlength="100" autocomplete="off" placeholder="endereço, ponto de referencia e cidade do seu destino" class="form-control input-md" required />
         </div>
     </div>
 
@@ -87,8 +47,7 @@
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="contribuicao">Contribuição</label>
-            <select [(ngModel)]="rota.contribuicao.id" id="contribuicao" name="contribuicao" class="form-control"
-                required>
+            <select [(ngModel)]="rota.contribuicao.id" id="contribuicao" name="contribuicao" class="form-control" required>
                 <option *ngFor="let contribuicao of contribuicoes" value="{{ contribuicao.id }}">{{ contribuicao.tipo }}
                     -
                     {{ contribuicao.valor }}</option>
@@ -107,8 +66,7 @@
         </div>
         <div class="form-group col-md-1" id="posi-veri">
             <label class="col-md-1 control-label" for="verificador">Verificador</label>
-            <input [(ngModel)]="rota.verificador" readonly=“true” autocomplete="off" id="verificador" name="verificador"
-                type="text" class="form-control input-md" required />
+            <input [(ngModel)]="rota.verificador" readonly=“true” autocomplete="off" id="verificador" name="verificador" type="text" class="form-control input-md" required />
         </div>
         <div class="form-group col-md-1">
             <button (click)="gerarVerificador(8)" type="button" class="btn btn-info" id="gerar-ver">
@@ -125,9 +83,7 @@
 </form>
 
 <div class="container">
-    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal"
-        data-target="#men-success">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(rota.id)"
-        data-toggle="modal" data-target="#men-danger">Remover</button>
+    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(rota.id)">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

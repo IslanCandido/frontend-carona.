@@ -9,12 +9,16 @@ export class UsuarioServiceService {
 
   constructor(private http: HttpClient) { }
 
+  public get():Observable<any>{
+    return this.http.get("http://localhost:8080/usuarios");
+  }
+
   public getByCpf(cpf):Observable<any>{
     return this.http.get(`http://localhost:8080/usuarios/${cpf}`);
   }
 
-  public get():Observable<any>{
-    return this.http.get("http://localhost:8080/usuarios");
+  public getCpfIgual(cpf):Observable<any>{
+    return this.http.get(`http://localhost:8080/usuarios/existe/${cpf}`);
   }
 
   public post(usuarios: {id, nome, email, cpf, dt_nascimento, sexo, senha}) : Observable<any>{

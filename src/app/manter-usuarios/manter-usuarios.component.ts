@@ -1,3 +1,4 @@
+import { ParsedVariable } from '@angular/compiler';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, Validators } from '@angular/forms';
 import { UsuarioServiceService } from '../manter-usuarios/usuario-service.service';
@@ -20,15 +21,25 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   salvar() {
-    this.usuarioService.post(this.usuario).subscribe(resultado => {
-      this.limpar();
-    });
-    
+    if (this.isCPF(this.usuario.cpf)) {
+      /*if (this.usuarioService.getCpfIgual(this.usuario.cpf)) {
+      alert('Usuário já é cadastrado!');
+    } else {*/
+      this.usuarioService.post(this.usuario).subscribe(resultado => {
+        this.limpar();
+        alert('Usuário salvo com sucesso!');
+      });
+      //}
+    } else {
+      alert('CPF invalido!');
+    }
+
   }
 
   excluir(id) {
     this.usuarioService.delete(id).subscribe(resultado => {
       this.limpar();
+      alert('Usuário removido!');
     });
   }
 
@@ -57,55 +68,39 @@ export class ManterUsuariosComponent implements OnInit {
     this.consultaCPF = '';
   }
 
-  static isValidCpf() {
-    return (control: AbstractControl): Validators => {
-      const cpf = control.value;
-      if (cpf) {
-        let numbers, digits, sum, i, result, equalDigits;
-        equalDigits = 1;
-        if (cpf.length < 11) {
-          return null;
-        }
-
-        for (i = 0; i < cpf.length - 1; i++) {
-          if (cpf.charAt(i) !== cpf.charAt(i + 1)) {
-            equalDigits = 0;
-            break;
-          }
-        }
-
-        if (!equalDigits) {
-          numbers = cpf.substring(0, 9);
-          digits = cpf.substring(9);
-          sum = 0;
-          for (i = 10; i > 1; i--) {
-            sum += numbers.charAt(10 - i) * i;
-          }
-
-          result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
-
-          if (result !== Number(digits.charAt(0))) {
-            return { cpfNotValid: true };
-          }
-          numbers = cpf.substring(0, 10);
-          sum = 0;
-
-          for (i = 11; i > 1; i--) {
-            sum += numbers.charAt(11 - i) * i;
-          }
-          result = sum % 11 < 2 ? 0 : 11 - (sum % 11);
-
-          if (result !== Number(digits.charAt(1))) {
-            return { cpfNotValid: true };
-          }
-          return null;
-        } else {
-          return { cpfNotValid: true };
-        }
-      }
-      return null;
-    };
+  isCPF(cpf) {
+    if (typeof cpf !== "string") return false
+    cpf = cpf.replace(/[\s.-]*/igm, '')
+    if (
+      !cpf ||
+      cpf.length != 11 ||
+      cpf == "00000000000" ||
+      cpf == "11111111111" ||
+      cpf == "22222222222" ||
+      cpf == "33333333333" ||
+      cpf == "44444444444" ||
+      cpf == "55555555555" ||
+      cpf == "66666666666" ||
+      cpf == "77777777777" ||
+      cpf == "88888888888" ||
+      cpf == "99999999999"
+    ) {
+      return false
+    }
+    var soma = 0
+    var resto
+    for (var i = 1; i <= 9; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i)
+    resto = (soma * 10) % 11
+    if ((resto == 10) || (resto == 11)) resto = 0
+    if (resto != parseInt(cpf.substring(9, 10))) return false
+    soma = 0
+    for (var i = 1; i <= 10; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i)
+    resto = (soma * 10) % 11
+    if ((resto == 10) || (resto == 11)) resto = 0
+    if (resto != parseInt(cpf.substring(10, 11))) return false
+    return true
 
   }
-
 }

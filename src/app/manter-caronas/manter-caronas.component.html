@@ -32,9 +32,7 @@
 <form>
     <div class="form-row" id="consulta-local">
         <div class="form-group col-md-4">
-            <input [(ngModel)]="consultaDestino" (blur)="consultarDestino(consultaDestino)" id="con-destino" name="con-destino"
-                type="text" placeholder="Pesquisar algum destino desejado" class="form-control input-md" maxlength="100"
-                autocomplete="off">
+            <input [(ngModel)]="consultaDestino" (blur)="consultarDestino(consultaDestino)" id="con-destino" name="con-destino" type="search" placeholder="Pesquisar algum destino desejado" class="form-control input-md" maxlength="100" autocomplete="off">
         </div>
 
     </div>
@@ -72,9 +70,7 @@
 <div class="form-row" id="consulta">
     <div class="form-group col-md-2">
         <label class="col-md-2 control-label" for="con-carona">CONSULTAR</label>
-        <input [(ngModel)]="consultaCarona" (blur)="consultarCarona(consultaCarona)" id="con-carona" name="con-carona" type="text"
-            minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador"
-            class="form-control input-md" required="">
+        <input [(ngModel)]="consultaCarona" (blur)="consultarCarona(consultaCarona)" id="con-carona" name="con-carona" type="search" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md" required="">
     </div>
 </div>
 
@@ -82,25 +78,20 @@
     <div class="form-row">
         <div class="form-group col-md-1">
             <label class="col-md-1 control-label" for="codVerificador">Código</label>
-            <input [(ngModel)]="carona.rota.verificador" (blur)="consultarRota($event.target.value)" id="codVerificador"
-                name="codVerificador" autocomplete="off" type="text" class="form-control input-md" disabled=""
-                required />
+            <input [(ngModel)]="carona.rota.verificador" (blur)="consultarRota($event.target.value)" id="codVerificador" name="codVerificador" autocomplete="off" type="text" class="form-control input-md" disabled="" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="cpf">Usuário(CPF)</label>
-            <input [(ngModel)]="carona.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf"
-                placeholder="XXX.XXX.XXX-XX" autocomplete="off" class="form-control input-md" type="text" minlength="11"
-                maxlength="11" pattern="[0-9]+$" required />
+            <input [(ngModel)]="carona.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf" placeholder="XXX.XXX.XXX-XX" autocomplete="off" class="form-control input-md" type="text" minlength="11" maxlength="11" pattern="[0-9]+$" required
+            />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="acompanhantes">Acompanhantes</label>
-            <input [(ngModel)]="carona.acompanhantes" id="acompanhantes" name="acompanhantes"
-                placeholder="Nº acompanhantes" min="0" max="30" class="form-control input-md" type="number" required />
+            <input [(ngModel)]="carona.acompanhantes" id="acompanhantes" name="acompanhantes" placeholder="Nº acompanhantes" min="0" max="30" class="form-control input-md" type="number" required />
         </div>
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="contribuicao">Contribuição</label>
-            <select [(ngModel)]="carona.contribuicao.id" id="contribuicao" name="contribuicao" class="form-control"
-                required>
+            <select [(ngModel)]="carona.contribuicao.id" id="contribuicao" name="contribuicao" class="form-control" required>
                 <option *ngFor="let contribuicao of contribuicoes" value="{{ contribuicao.id }}">{{ contribuicao.tipo }}
                     -
                     {{ contribuicao.valor }}</option>
@@ -122,21 +113,16 @@
     <div class="form-row">
         <div class="form-group col-md-2">
             <label class="col-md-2 control-label" for="data">Horário</label>
-            <input [(ngModel)]="carona.horario_aproximado" id="horario" name="horario" placeholder="00:00:00"
-                class="form-control time-mask" autocomplete="off" type="text" minlength="8" maxlength="8" required />
+            <input [(ngModel)]="carona.horario_aproximado" id="horario" name="horario" placeholder="00:00:00" class="form-control time-mask" autocomplete="off" type="text" minlength="8" maxlength="8" required />
         </div>
         <div class="form-group col-md-6">
             <label class="col-md-6 control-label" for="pontoEncontro">Ponto de Encontro</label>
-            <input [(ngModel)]="carona.ponto_encontro" id="pontoEncontro" name="pontoEncontro" type="text"
-                placeholder="colocar ponto de encontro preferivel" minlength="10" maxlength="80" autocomplete="off"
-                class="form-control input-md" required />
+            <input [(ngModel)]="carona.ponto_encontro" id="pontoEncontro" name="pontoEncontro" type="text" placeholder="colocar ponto de encontro preferivel" minlength="10" maxlength="80" autocomplete="off" class="form-control input-md" required />
         </div>
     </div>
     <div class="container">
-        <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid"
-            data-toggle="modal" data-target="#men-success">Salvar</button>
-        <button type="button" class="btn btn-danger medio" (click)="excluir(carona.id)" [disabled]="frm.invalid"
-            data-toggle="modal" data-target="#men-danger">Remover</button>
+        <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#men-success">Salvar</button>
+        <button type="button" class="btn btn-danger medio" (click)="excluir(carona.id)" [disabled]="frm.invalid" data-toggle="modal" data-target="#men-danger">Remover</button>
         <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
     </div>
 </form>

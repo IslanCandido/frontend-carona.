@@ -23,14 +23,23 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   salvar() {
+    console.log(this.verificaRenavam(this.veiculo.renavam));
+
+    /*if (this.veiculo.id == null && this.veiculoService.getRenavamIgual(this.veiculo.renavam)) {
+      alert('Veículo já foi cadastrado!');
+    } else {*/
     this.veiculoService.post(this.veiculo).subscribe(resultado => {
       this.limpar();
+      alert('Veículo salvo com sucesso!');
     });
+    //}
+
   }
 
   excluir(id) {
     this.veiculoService.delete(id).subscribe(resultado => {
       this.limpar();
+      alert('Veículo removido com sucesso!');
     });
   }
 
@@ -75,11 +84,41 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   limpar() {
-    this.veiculo = { 
-      id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, 
-      usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } 
+    this.veiculo = {
+      id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null,
+      usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }
     };
     this.consultaPlaca = '';
   }
 
+
+  verificaRenavam(renavam) {
+
+    var d = renavam.split("");
+    var soma = 0,
+      valor = 0,
+      digito = 0,
+      x = 0;
+
+    for (var i = 5; i >= 2; i--) {
+      soma += d[x] * i;
+      x++;
+    }
+
+    valor = soma % 11;
+
+    if (valor == 11 || valor == 0 || valor >= 10) {
+      digito = 0;
+    } else {
+      digito = valor;
+    }
+
+    if (digito == d[4]) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
+

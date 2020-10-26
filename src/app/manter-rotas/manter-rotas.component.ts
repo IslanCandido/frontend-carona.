@@ -27,17 +27,24 @@ export class ManterRotasComponent implements OnInit {
   ngOnInit(): void {
     this.rotaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
     this.rotaService.getVeiculos().subscribe(resultado => { this.veiculos = resultado });
+    this.rota.data = this.getDataAtual();
   }
 
   salvar() {
-    this.rotaService.post(this.rota).subscribe(resultado => {
-      this.limpar();
-    });
+    /*if (this.rota.id == null && this.rotaService.getVerificadorIgual(this.rota.verificador)) {
+      alert('Rota já foi cadastrada!');
+    } else {*/
+      this.rotaService.post(this.rota).subscribe(resultado => {
+        this.limpar();
+        alert('Rota salva com sucesso!');
+      });
+    //}
   }
 
   excluir(id) {
     this.rotaService.delete(id).subscribe(resultado => {
       this.limpar();
+      alert('Rota removida com sucesso!');
     });
   }
 
@@ -106,6 +113,14 @@ export class ManterRotasComponent implements OnInit {
 
     this.rota.verificador = cod;
 
+  }
+
+  getDataAtual(){
+    var today = new Date();
+    var dy = today.getDate();
+    var mt = today.getMonth()+1;
+    var yr = today.getFullYear();
+    return yr+"-"+mt+"-"+dy;
   }
 
 }

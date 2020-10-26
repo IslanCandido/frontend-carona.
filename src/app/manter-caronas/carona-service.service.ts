@@ -30,12 +30,12 @@ export class CaronaServiceService {
     return this.http.delete(`http://localhost:8080/caronas/${id}`);
   }
 
-  public getRotas():Observable<any>{
-    return this.http.get("http://localhost:8080/rotas");
+  public getRotasDisponiveis(status, data1, data2):Observable<any>{
+    return this.http.get(`http://localhost:8080/rotas/filter/disponiveis/${status}/${data1}/${data2}`);
   }
 
-  public getRotasPesquisada(fim){
-    return this.http.get(`http://localhost:8080/rotas/filter/${fim}`)
+  public getRotasPesquisada(status, fim, data1, data2){
+    return this.http.get(`http://localhost:8080/rotas/consulta/${status}/${fim}/${data1}/${data2}`)
   }
 
   public getByVerificador(verificador):Observable<any>{
