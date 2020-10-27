@@ -27,7 +27,6 @@ export class ManterRotasComponent implements OnInit {
   ngOnInit(): void {
     this.rotaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
     this.rotaService.getVeiculos().subscribe(resultado => { this.veiculos = resultado });
-    this.rota.data = this.getDataAtual();
   }
 
   salvar() {

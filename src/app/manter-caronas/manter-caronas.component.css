@@ -14,18 +14,18 @@ h2 {
 #consulta-local {
     position: relative;
     top: 25px;
-    left: 800px;
+    left: 830px;
 }
 
 .table-overflow {
     position: relative;
     top: 20px;
     left: 50px;
-    max-height:250px;
-    overflow-y:auto;
+    max-height: 250px;
+    overflow-y: auto;
 }
 
-#add-cont{
+#add-cont {
     position: relative;
     top: 32px;
     left: -3px;

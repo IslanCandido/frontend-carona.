@@ -23,17 +23,23 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   salvar() {
-    console.log(this.verificaRenavam(this.veiculo.renavam));
-
-    /*if (this.veiculo.id == null && this.veiculoService.getRenavamIgual(this.veiculo.renavam)) {
-      alert('Veículo já foi cadastrado!');
-    } else {*/
-    this.veiculoService.post(this.veiculo).subscribe(resultado => {
-      this.limpar();
-      alert('Veículo salvo com sucesso!');
-    });
-    //}
-
+    if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
+      /*if (this.veiculo.id == null && this.veiculoService.getRenavamIgual(this.veiculo.renavam)) {
+        alert('Veículo já foi cadastrado!');
+      } else {*/
+        this.veiculoService.post(this.veiculo).subscribe(resultado => {
+          this.limpar();
+          alert('Veículo salvo com sucesso!');
+        });
+      //}
+    } else {
+      if(!this.isRenavam(this.veiculo.renavam)){
+        alert('Renavam inválido!');
+      }
+      if(!this.isCPF(this.veiculo.usuario.cpf)){
+        alert('CPF inválido!');
+      }
+    }
   }
 
   excluir(id) {
@@ -92,33 +98,68 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
 
-  verificaRenavam(renavam) {
+  isRenavam(renavam) {
+    var renavamSemDigito = renavam.substring(0, 10);
+    var renavamReversoSemDigito = renavamSemDigito.split("").reverse().join("");
 
-    var d = renavam.split("");
-    var soma = 0,
-      valor = 0,
-      digito = 0,
-      x = 0;
+    var soma = 0;
+    var multiplicador = 2;
+    for (var i = 0; i < 10; i++) {
+      var algarismo = renavamReversoSemDigito.substring(i, i + 1);
+      soma += algarismo * multiplicador;
 
-    for (var i = 5; i >= 2; i--) {
-      soma += d[x] * i;
-      x++;
+      if (multiplicador >= 9) {
+        multiplicador = 2;
+      } else {
+        multiplicador++;
+      }
     }
+    var mod11 = soma % 11;
+    var ultimoDigitoCalculado = 11 - mod11;
+    ultimoDigitoCalculado = (ultimoDigitoCalculado >= 10 ? 0 : ultimoDigitoCalculado);
+    var digitoRealInformado = parseInt(renavam.substring(renavam.length - 1, renavam.length));
 
-    valor = soma % 11;
-
-    if (valor == 11 || valor == 0 || valor >= 10) {
-      digito = 0;
-    } else {
-      digito = valor;
-    }
-
-    if (digito == d[4]) {
+    if (ultimoDigitoCalculado === digitoRealInformado) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
+
+  isCPF(cpf) {
+    if (typeof cpf !== "string") return false
+    cpf = cpf.replace(/[\s.-]*/igm, '')
+    if (
+      !cpf ||
+      cpf.length != 11 ||
+      cpf == "00000000000" ||
+      cpf == "11111111111" ||
+      cpf == "22222222222" ||
+      cpf == "33333333333" ||
+      cpf == "44444444444" ||
+      cpf == "55555555555" ||
+      cpf == "66666666666" ||
+      cpf == "77777777777" ||
+      cpf == "88888888888" ||
+      cpf == "99999999999"
+    ) {
+      return false
+    }
+    var soma = 0
+    var resto
+    for (var i = 1; i <= 9; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (11 - i)
+    resto = (soma * 10) % 11
+    if ((resto == 10) || (resto == 11)) resto = 0
+    if (resto != parseInt(cpf.substring(9, 10))) return false
+    soma = 0
+    for (var i = 1; i <= 10; i++)
+      soma = soma + parseInt(cpf.substring(i - 1, i)) * (12 - i)
+    resto = (soma * 10) % 11
+    if ((resto == 10) || (resto == 11)) resto = 0
+    if (resto != parseInt(cpf.substring(10, 11))) return false
+    return true
+  }
+
 
 }
 

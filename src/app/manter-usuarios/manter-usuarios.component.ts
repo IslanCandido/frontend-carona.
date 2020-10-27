@@ -21,6 +21,8 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   salvar() {
+    console.log(this.usuarioService.getCpfIgual(this.usuario.cpf))
+
     if (this.isCPF(this.usuario.cpf)) {
       /*if (this.usuarioService.getCpfIgual(this.usuario.cpf)) {
       alert('Usuário já é cadastrado!');
@@ -31,15 +33,18 @@ export class ManterUsuariosComponent implements OnInit {
       });
       //}
     } else {
-      alert('CPF invalido!');
+      alert('CPF inválido!');
     }
-
   }
 
   excluir(id) {
     this.usuarioService.delete(id).subscribe(resultado => {
       this.limpar();
-      alert('Usuário removido!');
+      if(this.consultaCPF === ''){
+        alert('Usuário removido!');
+      } else{
+        alert('Usuário não pode ser removido!');
+      }
     });
   }
 
@@ -101,6 +106,5 @@ export class ManterUsuariosComponent implements OnInit {
     if ((resto == 10) || (resto == 11)) resto = 0
     if (resto != parseInt(cpf.substring(10, 11))) return false
     return true
-
   }
 }

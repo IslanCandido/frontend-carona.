@@ -34,9 +34,9 @@ export class ManterCaronasComponent implements OnInit {
 
   consultarDestino(destino) {
     if (this.consultaDestino == "") {
-      this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(),  this.getData()).subscribe(resultado => { this.rotas = resultado });
+      this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
     } else {
-      this.caronaService.getRotasPesquisada("Disponivel", destino, this.getDataAtual(),  this.getData()).subscribe(resultado => { this.rotas = resultado });
+      this.caronaService.getRotasPesquisada("Disponivel", destino, this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
     }
   }
 
@@ -44,15 +44,27 @@ export class ManterCaronasComponent implements OnInit {
     if (this.carona.situacao == "") {
       this.carona.situacao = "Em andamento";
     }
-    this.caronaService.post(this.carona).subscribe(resultado => {
-      this.limpar();
-    });
+    if (this.carona.situacao == "Carona confirmada") {
+      alert('Pedido de carona já foi confirmado, então não pode mais ser alterado!');
+    } else if (this.carona.situacao == "Carona cancelada") {
+      alert('Pedido de carona foi cancelado, então não pode mais ser alterado!');
+    } else {
+      this.caronaService.post(this.carona).subscribe(resultado => {
+        this.limpar();
+        alert('Pedido de carona salva com sucesso!');
+      });
+    }
   }
 
   excluir(id) {
-    this.caronaService.delete(id).subscribe(resultado => {
-      this.limpar();
-    });
+    if (this.carona.situacao == "Carona confirmada") {
+      alert('Pedido de carona já foi confirmado, então não pode mais ser removido!');
+    } else {
+      this.caronaService.delete(id).subscribe(resultado => {
+        this.limpar();
+        alert('Pedido de carona removido!');
+      });
+    }
   }
 
   consultarCarona(id) {
@@ -123,26 +135,26 @@ export class ManterCaronasComponent implements OnInit {
       usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
       contribuicao: { id: null, tipo: "", valor: "" }
     };
-    this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(),  this.getData()).subscribe(resultado => { this.rotas = resultado });
+    this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
 
     this.consultaDestino = '';
     this.consultaCarona = '';
   }
 
-  getDataAtual(){
+  getDataAtual() {
     var today = new Date();
     var dy = today.getDate();
-    var mt = today.getMonth()+1;
+    var mt = today.getMonth() + 1;
     var yr = today.getFullYear();
-    return yr+"-"+mt+"-"+dy;
+    return yr + "-" + mt + "-" + dy;
   }
 
-  getData(){
+  getData() {
     var today = new Date();
     var dy = 30;
     var mt = 10;
     var yr = 2021;
-    return yr+"-"+mt+"-"+dy;
+    return yr + "-" + mt + "-" + dy;
   }
 
 }

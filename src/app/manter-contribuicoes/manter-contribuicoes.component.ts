@@ -21,6 +21,7 @@ export class ManterContribuicoesComponent implements OnInit {
   salvar() {
     this.contribuicoesService.post(this.contribuicao).subscribe(resultado => {
       this.limpar();
+      alert('Contribuição salva com sucesso!');
     });
 
   }
@@ -28,6 +29,7 @@ export class ManterContribuicoesComponent implements OnInit {
   excluir(id) {
     this.contribuicoesService.delete(id).subscribe(resultado => {
       this.limpar();
+      alert('Contribuição removida com sucesso!');
     });  
 }
 

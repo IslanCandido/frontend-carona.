@@ -1,34 +1,3 @@
-<div class="modal fade" id="men-success" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Contribuição salva com sucesso!</p>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="men-danger" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Contribuição foi removida!</p>
-            </div>
-        </div>
-    </div>
-</div>
-
 <h3>Cadastro de Contribuições</h3>
 
 <form id="form" #frm="ngForm">
@@ -45,8 +14,7 @@
         </div>
         <div class="form-group col-md-3">
             <label class="col-md-3 control-label" for="valor">Valor</label>
-            <input id="valor" name="valor" autocomplete="off" maxlength="60" [(ngModel)]="contribuicao.valor"
-                placeholder="valor/descrição da contribuição" class="form-control input-md" type="text" required>
+            <input id="valor" name="valor" autocomplete="off" maxlength="60" [(ngModel)]="contribuicao.valor" placeholder="valor/descrição da contribuição" class="form-control input-md" type="text" required>
         </div>
     </div>
 
@@ -63,8 +31,7 @@
                 <tr *ngFor="let contribuicao of contribuicoes">
                     <td> {{ contribuicao.tipo }}</td>
                     <td> {{ contribuicao.valor }}</td>
-                    <td><button type="button" (click)="consultar(contribuicao.id)" class="btn btn-info"
-                            id="btnPesquisar">Selecionar</button></td>
+                    <td><button type="button" (click)="consultar(contribuicao.id)" class="btn btn-info" id="btnPesquisar">Selecionar</button></td>
                 </tr>
             </tbody>
         </table>
@@ -72,9 +39,7 @@
 </form>
 
 <div class="container" id="btn-prin">
-    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal"
-        data-target="#men-success">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(contribuicao.id)"
-        data-toggle="modal" data-target="#men-danger">Remover</button>
+    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#men-success">Salvar</button>
+    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(contribuicao.id)" data-toggle="modal" data-target="#men-danger">Remover</button>
     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
 </div>

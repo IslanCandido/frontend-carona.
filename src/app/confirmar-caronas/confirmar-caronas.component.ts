@@ -33,6 +33,7 @@ export class ConfirmarCaronasComponent implements OnInit {
 
     this.caronaService.post(this.carona).subscribe(resultado => {
       this.limpar();
+      alert('Pedido de carona confirmado com sucesso!');
     });
   }
 
@@ -41,6 +42,7 @@ export class ConfirmarCaronasComponent implements OnInit {
 
     this.caronaService.post(this.carona).subscribe(resultado => {
       this.limpar();
+      alert('Pedido de carona cancelado com sucesso!');
     });
   }
 
