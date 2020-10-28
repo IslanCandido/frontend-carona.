@@ -15,6 +15,7 @@ import { LoginComponent } from './login/login.component';
 import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-contribuicoes.component';
 import { ManterCaronasComponent } from './manter-caronas/manter-caronas.component';
 import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas.component';
+import { LoginGuardGuard } from './login/login-guard.guard';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [LoginGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
