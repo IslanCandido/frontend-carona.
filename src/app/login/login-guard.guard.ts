@@ -11,11 +11,13 @@ export class LoginGuardGuard implements CanActivate {
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-    if (localStorage.getItem('usuario') === null) {
+    const usu = window.localStorage.getItem('usuario');
+
+    if (usu) {
+      return true;
+    } else {
       this.router.navigate(['/login']);
       return false;
-    } else {
-      return true;
     }
   }
 

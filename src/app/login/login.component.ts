@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (this.login_usu.usuario === '07760177135' && this.login_usu.senha === 'root') {
+    if (this.login_usu.usuario === 'admin' && this.login_usu.senha === 'admin') {
       localStorage.setItem('usuario', this.login_usu.usuario);
       this.router.navigate(['/home']);
     } else {

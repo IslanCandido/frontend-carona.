@@ -14,19 +14,19 @@
                         <form id="form" #frm="ngForm">
                             <div class="login-form">
                                 <div class="form-group">
-                                    <input [(ngModel)]="login_usu.usuario" type="text" class="form-control login-field" name="usuario" placeholder="Digite seu CPF" id="login-name">
+                                    <input [(ngModel)]="login_usu.usuario" type="text" class="form-control login-field" name="usuario" placeholder="Digite seu CPF" id="login-name" required>
                                     <label class="login-field-icon fui-user" for="login-name"></label>
                                 </div>
 
                                 <div class="form-group">
-                                    <input [(ngModel)]="login_usu.senha" type="password" class="form-control login-field" name="senha" placeholder="digite sua Senha" id="login-pass">
+                                    <input [(ngModel)]="login_usu.senha" type="password" class="form-control login-field" name="senha" placeholder="digite sua Senha" id="login-pass" required>
                                     <label class="login-field-icon fui-lock" for="login-pass"></label>
                                 </div>
 
                                 <a class="login-link">Esqueceu a
                                 senha?</a>
-                                <a class="btn btn-primary btn-lg btn-block" (click)="login()">Entrar</a>
-                                <a class="btn btn-secondary btn-lg btn-block" [routerLink]="['/manter-usuários']">Me Registrar</a>
+                                <button class="btn btn-primary btn-lg btn-block" (click)="login()" [disabled]="frm.invalid">Entrar</button>
+                                <button class="btn btn-secondary btn-lg btn-block" [routerLink]="['/manter-usuários']">Me Registrar</button>
                             </div>
                         </form>
                     </div>
