@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "login" },
   { path: "login", component: LoginComponent },
   { path: "home", component: HomeComponent, canActivate: [LoginGuardGuard] },
-  { path: "manter-usuários", component: ManterUsuariosComponent, canActivate: [LoginGuardGuard] },
+  { path: "manter-usuários", component: ManterUsuariosComponent },
   { path: "manter-veículos", component: ManterVeiculosComponent, canActivate: [LoginGuardGuard] },
   { path: "manter-rotas", component: ManterRotasComponent, canActivate: [LoginGuardGuard] },
   { path: "manter-contatos", component: ManterContatosComponent, canActivate: [LoginGuardGuard] },
