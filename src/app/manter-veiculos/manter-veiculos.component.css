@@ -1,37 +1,25 @@
 h2 {
     position: relative;
     text-align: center;
-    top: 80px;
+    top: 20px;
     left: 130px;
 }
 
 #form {
     position: relative;
-    left: 345px;
-    top: 45px;
+    left: 130px;
+    top: -60px;
 }
 
 #consulta {
     position: relative;
-    top: 5px;
-    left: 343px;
+    top: -40px;
 }
 
 .medio {
     position: relative;
-    left: 600px;
-    top: 120px;
-    width: 8%;
+    left: 310px;
+    top: 50px;
+    width: 12%;
     margin: 5px;
-}
-
-#btnPesquisar {
-    position: relative;
-    left: 230px;
-    top: -13px;
-}
-
-label {
-    position: relative;
-    right: 13px;
 }

@@ -4,48 +4,58 @@
     </main>
 </section>
 
-<h3>Cadastro de Contribuições</h3>
-
-<form id="form" #frm="ngForm">
-    <div class="form-row">
-        <div class="form-group col-md-2">
-            <label class="col-md-2 control-label" for="tipo">Tipo</label>
-            <select id="tipo" name="tipo" class="form-control" [(ngModel)]="contribuicao.tipo" required>
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="Cartão">Cartão</option>
-                <option value="Dinheiro e Cartão">Dinheiro e Cartão</option>
-                <option value="Gasolina">Gasolina</option>
-                <option value="Outro">Outro</option>
-            </select>
-        </div>
-        <div class="form-group col-md-3">
-            <label class="col-md-3 control-label" for="valor">Valor</label>
-            <input id="valor" name="valor" autocomplete="off" maxlength="60" [(ngModel)]="contribuicao.valor" placeholder="valor/descrição da contribuição" class="form-control input-md" type="text" required>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h3>Cadastro de Contribuições</h3>
         </div>
     </div>
 
-    <div class="table-overflow">
-        <table class="table table-bordered-sm table-hover table-active" id="tabela">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let contribuicao of contribuicoes">
-                    <td> {{ contribuicao.tipo }}</td>
-                    <td> {{ contribuicao.valor }}</td>
-                    <td><button type="button" (click)="consultar(contribuicao.id)" class="btn btn-info" id="btnPesquisar">Selecionar</button></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</form>
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-10 col-lg-10">
 
-<div class="container" id="btn-prin">
-    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#men-success">Salvar</button>
-    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(contribuicao.id)" data-toggle="modal" data-target="#men-danger">Remover</button>
-    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+            <form id="form" #frm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-lg-3">
+                        <label for="tipo">Tipo</label>
+                        <select id="tipo" name="tipo" class="form-control" [(ngModel)]="contribuicao.tipo" required>
+                            <option value="Dinheiro">Dinheiro</option>
+                            <option value="Cartão">Cartão</option>
+                            <option value="Dinheiro e Cartão">Dinheiro e Cartão</option>
+                            <option value="Gasolina">Gasolina</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="valor">Valor</label>
+                        <input id="valor" name="valor" autocomplete="off" maxlength="60" [(ngModel)]="contribuicao.valor" placeholder="valor/descrição da contribuição" class="form-control input-md" type="text" required>
+                    </div>
+                </div>
+
+                <div class="table-overflow">
+                    <table class="table table-bordered-sm table-hover table-active" id="tabela">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let contribuicao of contribuicoes" (click)="consultar(contribuicao.id)">
+                                <td> {{ contribuicao.tipo }}</td>
+                                <td> {{ contribuicao.valor }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-row">
+                    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#men-success">Salvar</button>
+                    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(contribuicao.id)" data-toggle="modal" data-target="#men-danger">Remover</button>
+                    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>

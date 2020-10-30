@@ -1,26 +1,26 @@
 h2 {
     position: relative;
     text-align: center;
-    top: 50px;
-    left: 80px;
+    top: 30px;
+    left: 40px;
 }
 
 #form {
     position: relative;
-    left: 230px;
-    top: 15px;
+    left: 100px;
+    top: -30px;
 }
 
 #consulta-local {
     position: relative;
-    top: 25px;
-    left: 830px;
+    top: 15px;
+    left: 510px;
 }
 
 .table-overflow {
     position: relative;
-    top: 20px;
-    left: 50px;
+    top: 25px;
+    left: -90px;
     max-height: 250px;
     overflow-y: auto;
 }
@@ -29,24 +29,18 @@ h2 {
     position: relative;
     top: 32px;
     left: -3px;
-    width: 35%;
+    width: 45%;
 }
 
 .medio {
     position: relative;
     left: 480px;
     top: 50px;
-    width: 8%;
-    margin: 4px;
+    width: 12%;
+    margin: 5px;
 }
 
 #consulta {
     position: relative;
-    top: -20px;
-    left: 230px;
-}
-
-label {
-    position: relative;
-    right: 13px;
+    top: -40px;
 }

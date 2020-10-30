@@ -4,54 +4,60 @@
     </main>
 </section>
 
-<h3>Caronas Registradas</h3>
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h3>Caronas Registradas</h3>
+        </div>
+    </div>
 
-<div class="form-group col-md-10">
-    <div class="table-overflow">
-        <table class="table table-bordered table-active" id="tabela">
-            <thead class="table-light">
-                <tr>
-                    <th scope="col">Data</th>
-                    <th scope="col">Rota</th>
-                    <th scope="col">Horário</th>
-                    <th scope="col">Ponto Encontro</th>
-                    <th scope="col">Acompanhantes</th>
-                    <th scope="col">Contribuição</th>
-                    <th scope="col">Usuário</th>
-                    <th scope="col">Ação</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let carona of caronas">
-                    <td>{{ carona.rota.data }}</td>
-                    <td>{{ carona.rota.verificador }}</td>
-                    <td>{{ carona.horario_aproximado }}</td>
-                    <td>{{ carona.ponto_encontro }}</td>
-                    <td>{{ carona.acompanhantes }}</td>
-                    <td>{{ carona.contribuicao.tipo }} - {{ carona.contribuicao.valor }}</td>
-                    <td>{{ carona.usuario.cpf }}</td>
-                    <td><button class="btn btn-info" (click)="consultar(carona.id)">Selecionar</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <form id="form" #frm="ngForm">
+                <div class="table-overflow">
+                    <table class="table table-bordered table-active" id="tabela">
+                        <thead class="table-light">
+                            <tr>
+                                <th scope="col">Data</th>
+                                <th scope="col">Rota</th>
+                                <th scope="col">Horário</th>
+                                <th scope="col">Ponto Encontro</th>
+                                <th scope="col">Acompanhantes</th>
+                                <th scope="col">Contribuição</th>
+                                <th scope="col">Usuário</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let carona of caronas" (click)="consultar(carona.id)">
+                                <td>{{ carona.rota.data }}</td>
+                                <td>{{ carona.rota.verificador }}</td>
+                                <td>{{ carona.horario_aproximado }}</td>
+                                <td>{{ carona.ponto_encontro }}</td>
+                                <td>{{ carona.acompanhantes }}</td>
+                                <td>{{ carona.contribuicao.tipo }} - {{ carona.contribuicao.valor }}</td>
+                                <td>{{ carona.usuario.cpf }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-lg-2">
+                        <label for="codCarona">Carona</label>
+                        <input [(ngModel)]="carona.id" id="codCarona" name="codCarona" required type="text" class="form-control input-md">
+                    </div>
+                    <div class="form-group col-lg-10">
+                        <label for="observacao">Observação</label>
+                        <input [(ngModel)]="carona.observacao" autocomplete="off" id="observacao" name="observacao" type="text" minlength="1" maxlength="100" class="form-control input-md">
+                    </div>
+                </div>
+
+                <div class="container">
+                    <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="confirmar()">Confirmar</button>
+                    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="cancelar()">Cancelar</button>
+                    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
-
-<form id="form" #frm="ngForm">
-    <div class="form-row">
-        <div class="form-group col-md-1">
-            <label class="col-md-1 control-label" for="codCarona">Carona</label>
-            <input [(ngModel)]="carona.id" id="codCarona" name="codCarona" required type="text" class="form-control input-md">
-        </div>
-        <div class="form-group col-md-8">
-            <label class="col-md-8 control-label" for="observacao">Observação</label>
-            <input [(ngModel)]="carona.observacao" autocomplete="off" id="observacao" name="observacao" type="text" minlength="1" maxlength="100" class="form-control input-md">
-        </div>
-    </div>
-
-    <div class="container">
-        <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="confirmar()">Confirmar</button>
-        <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="cancelar()">Cancelar</button>
-        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
-    </div>
-</form>

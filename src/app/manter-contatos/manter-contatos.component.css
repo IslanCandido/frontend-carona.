@@ -1,40 +1,28 @@
 h3 {
     position: relative;
     text-align: center;
-    top: 30px;
 }
 
 #form {
     position: relative;
-    left: 350px;
-    top: 70px;
+    left: 120px;
+    top: -20px;
 }
 
-.table-overflow{
+.table-overflow {
     position: relative;
-    top: 30px;
-    left: -35px;
-    max-height:250px;
+    top: 25px;
+    left: -20px;
+    max-height: 250px;
     max-width: 750px;
-    overflow-y:auto;
+    overflow-y: auto;
     text-align: center;
 }
 
-.medio{
+.medio {
     position: relative;
-    left: 240px;
-    top: 100px;
-    width: 8%;
-    margin: 4px;
-}
-
-label {
-    position: relative;
-    right: 13px;
-}
-
-#btn-prin{
-    position: relative;
-    left: 380px;
-    top: 50px;
+    left: 360px;
+    top: 65px;
+    width: 12%;
+    margin: 5px;
 }
