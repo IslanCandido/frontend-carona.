@@ -27,6 +27,7 @@ export class ManterRotasComponent implements OnInit {
   ngOnInit(): void {
     this.rotaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
     this.rotaService.getVeiculos().subscribe(resultado => { this.veiculos = resultado });
+    this.gerarVerificador();
   }
 
   salvar() {
@@ -110,16 +111,17 @@ export class ManterRotasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     }
     this.consultaCodVer = '';
+    this.gerarVerificador();
   }
 
-  gerarVerificador(tamanho) {
+  gerarVerificador() {
     let cod = '';
 
     do {
       cod += Math.random().toString(36).substr(2);
-    } while (cod.length < tamanho);
+    } while (cod.length < 8);
 
-    cod = cod.substr(0, tamanho);
+    cod = cod.substr(0, 8);
     cod.toLowerCase();
 
     this.rota.verificador = cod;
