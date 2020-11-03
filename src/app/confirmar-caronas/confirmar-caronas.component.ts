@@ -28,7 +28,7 @@ export class ConfirmarCaronasComponent implements OnInit {
     this.caronaService.getBySituacao("Em andamento").subscribe(resultado => { this.caronas = resultado });
   }
 
-  confirmar(){
+  confirmar() {
     this.carona.situacao = "Carona confirmada";
 
     this.caronaService.post(this.carona).subscribe(resultado => {
@@ -37,13 +37,20 @@ export class ConfirmarCaronasComponent implements OnInit {
     });
   }
 
-  cancelar(){
-    this.carona.situacao = "Carona cancelada";
+  cancelar() {
+    var r = confirm("Você realmente deseja cancelar essa carona?");
 
-    this.caronaService.post(this.carona).subscribe(resultado => {
-      this.limpar();
-      alert('Pedido de carona cancelado com sucesso!');
-    });
+    if (r) {
+      this.carona.situacao = "Carona cancelada";
+
+      this.caronaService.post(this.carona).subscribe(resultado => {
+        this.limpar();
+        alert('Pedido de carona cancelado com sucesso!');
+      });
+    } else {
+      alert('Pedido de carona não foi cancelado!');
+    }
+
   }
 
   consultar(id) {

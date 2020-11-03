@@ -30,21 +30,33 @@ export class ManterRotasComponent implements OnInit {
   }
 
   salvar() {
-    /*if (this.rota.id == null && this.rotaService.getVerificadorIgual(this.rota.verificador)) {
+    /*if (this.rota.id === null && this.rotaService.getVerificadorIgual(this.rota.verificador)) {
       alert('Rota já foi cadastrada!');
     } else {*/
-      this.rotaService.post(this.rota).subscribe(resultado => {
-        this.limpar();
-        alert('Rota salva com sucesso!');
-      });
+
+    if(this.rota.horario.length === 5){
+      this.rota.horario = this.rota.horario + ":00";
+    }
+
+    this.rotaService.post(this.rota).subscribe(resultado => {
+      this.limpar();
+      alert('Rota salva com sucesso!');
+    });
     //}
   }
 
   excluir(id) {
-    this.rotaService.delete(id).subscribe(resultado => {
-      this.limpar();
-      alert('Rota removida com sucesso!');
-    });
+    var r = confirm("Você realmente deseja remover essa rota?");
+
+    if (r) {
+      this.rotaService.delete(id).subscribe(resultado => {
+        this.limpar();
+        alert('Rota removida com sucesso!');
+      });
+    } else {
+      alert('Rota não foi removida!');
+    }
+
   }
 
   consultar(verificador) {
@@ -114,12 +126,12 @@ export class ManterRotasComponent implements OnInit {
 
   }
 
-  getDataAtual(){
+  getDataAtual() {
     var today = new Date();
     var dy = today.getDate();
-    var mt = today.getMonth()+1;
+    var mt = today.getMonth() + 1;
     var yr = today.getFullYear();
-    return yr+"-"+mt+"-"+dy;
+    return yr + "-" + mt + "-" + dy;
   }
 
 }

@@ -32,10 +32,17 @@ export class ManterContatosComponent implements OnInit {
   }
 
   excluir(id) {
-    this.contatoService.delete(id).subscribe(resultado => {
-      this.limpar();
-      alert('Contato removido com sucesso!');
-    });
+    var r = confirm("Você realmente deseja remover esse contato?");
+
+    if (r) {
+      this.contatoService.delete(id).subscribe(resultado => {
+        this.limpar();
+        alert('Contato removido com sucesso!');
+      });
+    } else {
+      alert('Contato não foi removido!');
+    }
+
   }
 
   consultar(id) {

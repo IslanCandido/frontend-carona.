@@ -38,14 +38,17 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   excluir(id) {
-    this.usuarioService.delete(id).subscribe(resultado => {
+    var r= confirm("Você realmente deseja remover esse usuário?");
+
+    if(r){
+      this.usuarioService.delete(id).subscribe(resultado => {
       this.limpar();
-      if(this.consultaCPF === ''){
-        alert('Usuário removido!');
-      } else{
-        alert('Usuário não pode ser removido!');
-      }
+      alert('Usuário removido!');
     });
+    } else {
+      alert('Usuário não foi removido!');
+    }
+    
   }
 
   consultar(cpf) {

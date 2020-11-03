@@ -24,29 +24,36 @@ export class ManterVeiculosComponent implements OnInit {
 
   salvar() {
     if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
-      /*if (this.veiculo.id == null && this.veiculoService.getRenavamIgual(this.veiculo.renavam)) {
+      /*if (this.veiculo.id === null && this.veiculoService.getRenavamIgual(this.veiculo.renavam)) {
         alert('Veículo já foi cadastrado!');
       } else {*/
-        this.veiculoService.post(this.veiculo).subscribe(resultado => {
-          this.limpar();
-          alert('Veículo salvo com sucesso!');
-        });
+      this.veiculoService.post(this.veiculo).subscribe(resultado => {
+        this.limpar();
+        alert('Veículo salvo com sucesso!');
+      });
       //}
     } else {
-      if(!this.isRenavam(this.veiculo.renavam)){
+      if (!this.isRenavam(this.veiculo.renavam)) {
         alert('Renavam inválido!');
       }
-      if(!this.isCPF(this.veiculo.usuario.cpf)){
+      if (!this.isCPF(this.veiculo.usuario.cpf)) {
         alert('CPF inválido!');
       }
     }
   }
 
   excluir(id) {
-    this.veiculoService.delete(id).subscribe(resultado => {
-      this.limpar();
-      alert('Veículo removido com sucesso!');
-    });
+    var r = confirm("Você realmente deseja remover esse veículo?");
+
+    if (r) {
+      this.veiculoService.delete(id).subscribe(resultado => {
+        this.limpar();
+        alert('Veículo removido com sucesso!');
+      });
+    } else {
+      alert('Veículo não foi removido!');
+    }
+
   }
 
   consultar(placa) {

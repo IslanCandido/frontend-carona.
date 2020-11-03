@@ -27,25 +27,32 @@ export class ManterContribuicoesComponent implements OnInit {
   }
 
   excluir(id) {
-    this.contribuicoesService.delete(id).subscribe(resultado => {
-      this.limpar();
-      alert('Contribuição removida com sucesso!');
-    });  
-}
+    var r = confirm("Você realmente deseja remover essa contribuição?");
 
-consultar(id) {
-  this.contribuicoesService.getById(id).subscribe(dados => {
-    this.contribuicao = {
-      id: dados.id,
-      tipo: dados.tipo,
-      valor: dados.valor
-    };
-  });
-}
+    if (r) {
+      this.contribuicoesService.delete(id).subscribe(resultado => {
+        this.limpar();
+        alert('Contribuição removida com sucesso!');
+      });
+    } else {
+      alert('Contribuição não foi removida!');
+    }
 
-limpar() {
-  this.contribuicao = { id: null, tipo: "", valor: "" };
-  this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
-}
+  }
+
+  consultar(id) {
+    this.contribuicoesService.getById(id).subscribe(dados => {
+      this.contribuicao = {
+        id: dados.id,
+        tipo: dados.tipo,
+        valor: dados.valor
+      };
+    });
+  }
+
+  limpar() {
+    this.contribuicao = { id: null, tipo: "", valor: "" };
+    this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
+  }
 
 }

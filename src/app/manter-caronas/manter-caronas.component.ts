@@ -30,6 +30,10 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
     this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
+
+    if (this.carona.situacao == "") {
+      this.carona.situacao = "Em andamento";
+    }
   }
 
   consultarDestino(destino) {
@@ -41,14 +45,15 @@ export class ManterCaronasComponent implements OnInit {
   }
 
   salvar() {
-    if (this.carona.situacao == "") {
-      this.carona.situacao = "Em andamento";
-    }
     if (this.carona.situacao == "Carona confirmada") {
       alert('Pedido de carona já foi confirmado, então não pode mais ser alterado!');
     } else if (this.carona.situacao == "Carona cancelada") {
       alert('Pedido de carona foi cancelado, então não pode mais ser alterado!');
     } else {
+      if(this.carona.horario_aproximado.length === 5){
+        this.carona.horario_aproximado = this.carona.horario_aproximado + ":00";
+      }
+
       this.caronaService.post(this.carona).subscribe(resultado => {
         this.limpar();
         alert('Pedido de carona salva com sucesso!');
@@ -57,14 +62,30 @@ export class ManterCaronasComponent implements OnInit {
   }
 
   excluir(id) {
-    if (this.carona.situacao == "Carona confirmada") {
-      alert('Pedido de carona já foi confirmado, então não pode mais ser removido!');
+    var r = confirm("Você realmente deseja remover esse pedido de carona?");
+
+    if (r) {
+      if (this.carona.situacao == "Carona confirmada") {
+        var c = confirm("Seu pedido já foi confirmado, tem certeza que deseja cancela-lo?");
+
+        if (c) {
+          this.caronaService.delete(id).subscribe(resultado => {
+            this.limpar();
+            alert('Pedido de carona removido!');
+          });
+        } else {
+          alert('Pedido não foi removido!');
+        }
+      } else {
+        this.caronaService.delete(id).subscribe(resultado => {
+          this.limpar();
+          alert('Pedido de carona removido!');
+        });
+      }
     } else {
-      this.caronaService.delete(id).subscribe(resultado => {
-        this.limpar();
-        alert('Pedido de carona removido!');
-      });
+      alert('Pedido não foi removido!');
     }
+
   }
 
   consultarCarona(id) {
@@ -139,6 +160,7 @@ export class ManterCaronasComponent implements OnInit {
 
     this.consultaDestino = '';
     this.consultaCarona = '';
+    this.carona.situacao = "Em andamento";
   }
 
   getDataAtual() {
