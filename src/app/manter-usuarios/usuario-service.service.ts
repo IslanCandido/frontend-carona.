@@ -18,7 +18,7 @@ export class UsuarioServiceService {
   }
 
   public getCpfIgual(cpf):Observable<any>{
-    return this.http.get(`http://localhost:8080/usuarios/verificar/${cpf}`);
+    return this.http.get(`http://localhost:8080/usuarios/existe/${cpf}`);
   }
 
   public post(usuarios: {id, nome, email, cpf, dt_nascimento, sexo, senha}) : Observable<any>{

@@ -5,52 +5,53 @@
 </section>
 
 <div class="container">
+
+    <div class="form-row" id="consulta-local">
+        <div class="form-group col-lg-5">
+            <input [(ngModel)]="consultaDestino" (blur)="consultarDestino(consultaDestino)" id="con-destino" name="con-destino" type="search" placeholder="Pesquisar destino desejado" class="form-control input-md" maxlength="100" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="form-group col-md-12">
+        <div class="table-overflow">
+            <table class="table table-bordered-sm table-hover table-active" id="tabela">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Horário</th>
+                        <th scope="col">Local de Saída</th>
+                        <th scope="col">Local de Destino</th>
+                        <th scope="col">Contribuição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let rota of rotas" (click)="consultarRota(rota.verificador)">
+                        <td>{{ rota.data }}</td>
+                        <td>{{ rota.horario }}</td>
+                        <td>{{ rota.inicio }}</td>
+                        <td>{{ rota.fim }}</td>
+                        <td>{{ rota.contribuicao.tipo }} - {{ rota.contribuicao.valor }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h2>Registrar Carona</h2>
+        </div>
+    </div>
+
+    <div class="form-row" id="consulta">
+        <div class="form-group col-lg-2">
+            <label for="con-carona">CONSULTAR</label>
+            <input [(ngModel)]="consultaCarona" (blur)="consultarCarona(consultaCarona)" id="con-carona" name="con-carona" type="search" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md" required="">
+        </div>
+    </div>
+
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <form id="form" #frm="ngForm">
-                <div class="form-row" id="consulta-local">
-                    <div class="form-group col-lg-5">
-                        <input [(ngModel)]="consultaDestino" (blur)="consultarDestino(consultaDestino)" id="con-destino" name="con-destino" type="search" placeholder="Pesquisar destino desejado" class="form-control input-md" maxlength="100" autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form-group col-md-12">
-                    <div class="table-overflow">
-                        <table class="table table-bordered-sm table-hover table-active" id="tabela">
-                            <thead class="table-dark">
-                                <tr>
-                                    <th scope="col">Data</th>
-                                    <th scope="col">Horário</th>
-                                    <th scope="col">Local de Saída</th>
-                                    <th scope="col">Local de Destino</th>
-                                    <th scope="col">Contribuição</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let rota of rotas" (click)="consultarRota(rota.verificador)">
-                                    <td>{{ rota.data }}</td>
-                                    <td>{{ rota.horario }}</td>
-                                    <td>{{ rota.inicio }}</td>
-                                    <td>{{ rota.fim }}</td>
-                                    <td>{{ rota.contribuicao.tipo }} - {{ rota.contribuicao.valor }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12 text-center mt-5">
-                        <h2>Registrar Carona</h2>
-                    </div>
-                </div>
-
-                <div class="form-row" id="consulta">
-                    <div class="form-group col-lg-3">
-                        <label for="con-carona">CONSULTAR</label>
-                        <input [(ngModel)]="consultaCarona" (blur)="consultarCarona(consultaCarona)" id="con-carona" name="con-carona" type="search" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md" required="">
-                    </div>
-                </div>
-
                 <div class="form-row">
                     <div class="form-group col-lg-2">
                         <label for="codVerificador">Código</label>

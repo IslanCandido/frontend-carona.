@@ -3,7 +3,8 @@
     left: 550px;
     top: 250px;
 }
-.img-fluid{
+
+.img-fluid {
     max-width: 100%;
     height: auto;
 }

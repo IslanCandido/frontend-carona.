@@ -11,16 +11,16 @@
         </div>
     </div>
 
+    <div class="form-row" id="consulta">
+        <div class="form-group col-lg-2">
+            <label for="con_usu">CONSULTAR</label>
+            <input [(ngModel)]="consultaPlaca" (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="search" placeholder="placa do veículo" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md">
+        </div>
+    </div>
+
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-sm-12 col-md-10 col-lg-10">
-
             <form id="form" #frm="ngForm">
-                <div class="form-row" id="consulta">
-                    <div class="form-group col-lg-3">
-                        <label for="con_usu">CONSULTAR</label>
-                        <input [(ngModel)]="consultaPlaca" (blur)="consultar($event.target.value)" id="con-vei" name="con-vei" type="search" placeholder="placa do veículo" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md">
-                    </div>
-                </div>
                 <div class="form-row">
                     <div class="form-group col-lg-3">
                         <label for="placa">Placa</label>

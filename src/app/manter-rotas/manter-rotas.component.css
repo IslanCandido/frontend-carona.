@@ -2,7 +2,7 @@ h2 {
     position: relative;
     text-align: center;
     top: 15px;
-    left: 130px;
+    left: 110px;
 }
 
 #form {
@@ -13,7 +13,8 @@ h2 {
 
 #consulta {
     position: relative;
-    top: -40px;
+    top: -50px;
+    left: 215px;
 }
 
 .medio {

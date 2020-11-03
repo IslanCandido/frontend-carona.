@@ -8,21 +8,27 @@ h2 {
 #form {
     position: relative;
     left: 100px;
-    top: -30px;
+    top: -40px;
 }
 
 #consulta-local {
     position: relative;
-    top: 15px;
-    left: 510px;
+    top: 25px;
+    left: 620px;
 }
 
 .table-overflow {
     position: relative;
     top: 25px;
-    left: -90px;
+    left: 0px;
     max-height: 250px;
     overflow-y: auto;
+}
+
+#consulta {
+    position: relative;
+    top: -40px;
+    left: 100px;
 }
 
 #add-cont {
@@ -38,9 +44,4 @@ h2 {
     top: 50px;
     width: 12%;
     margin: 5px;
-}
-
-#consulta {
-    position: relative;
-    top: -40px;
 }
