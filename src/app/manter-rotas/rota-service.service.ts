@@ -37,6 +37,10 @@ export class RotaServiceService {
     return this.http.get(`http://localhost:8080/veiculos/${placa}`);
   }
 
+  public getPlacaExiste(placa):Observable<any>{
+    return this.http.get(`http://localhost:8080/veiculos/verificar/existe/${placa}`)
+  }
+
   public post(rotas: {id, data, horario, inicio, fim, status, verificador, veiculo, contribuicao}) : Observable<any>{
     return this.http.post("http://localhost:8080/rotas", rotas);
   }

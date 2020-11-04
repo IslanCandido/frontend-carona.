@@ -31,19 +31,39 @@ export class ManterRotasComponent implements OnInit {
   }
 
   salvar() {
-    /*if (this.rota.id === null && this.rotaService.getVerificadorIgual(this.rota.verificador)) {
-      alert('Rota já foi cadastrada!');
-    } else {*/
-
-    if(this.rota.horario.length === 5){
+    if (this.rota.horario.length === 5) {
       this.rota.horario = this.rota.horario + ":00";
     }
 
-    this.rotaService.post(this.rota).subscribe(resultado => {
-      this.limpar();
-      alert('Rota salva com sucesso!');
+    this.rotaService.getVerificadorIgual(this.rota.verificador).subscribe(r => {
+      if (r) {
+        if (this.rota.id === null) {
+          alert('Código Verificador ja está sendo usado em outra rota!');
+        } else {
+          this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
+            if(p){
+              this.rotaService.post(this.rota).subscribe(resultado => {
+                this.limpar();
+                alert('Rota salva com sucesso!');
+              });
+            } else {
+              alert('Placa não existe no sistema!');
+            }
+          }); 
+        }
+      } else {
+        this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
+          if(p){
+            this.rotaService.post(this.rota).subscribe(resultado => {
+              this.limpar();
+              alert('Rota salva com sucesso!');
+            });
+          } else {
+            alert('Placa não existe no sistema!');
+          }
+        });
+      }
     });
-    //}
   }
 
   excluir(id) {

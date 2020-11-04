@@ -1,3 +1,4 @@
+import { IfStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.service'
 
@@ -23,23 +24,109 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   salvar() {
-    if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
-      /*if (this.veiculo.id === null && this.veiculoService.getRenavamIgual(this.veiculo.renavam)) {
-        alert('Veículo já foi cadastrado!');
-      } else {*/
-      this.veiculoService.post(this.veiculo).subscribe(resultado => {
-        this.limpar();
-        alert('Veículo salvo com sucesso!');
-      });
-      //}
-    } else {
-      if (!this.isRenavam(this.veiculo.renavam)) {
-        alert('Renavam inválido!');
+    this.veiculoService.getPlacaIgual(this.veiculo.placa).subscribe(p => {
+      if (p) {
+        if (this.veiculo.id === null) {
+          alert('Placa ja foi cadastrada no sistema!');
+        } else {
+          this.veiculoService.getRenavamIgual(this.veiculo.renavam).subscribe(r => {
+            if (r) {
+              if (this.veiculo.id === null) {
+                alert('Renavam ja foi cadastrado no sistema!');
+              } else {
+                if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
+                  this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
+                    if (c) {
+                      this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                        this.limpar();
+                        alert('Veículo salvo com sucesso!');
+                      });
+                    } else {
+                      alert('CPF não existe no sistema!');
+                    }
+                  });
+                } else {
+                  if (!this.isRenavam(this.veiculo.renavam)) {
+                    alert('Renavam inválido!');
+                  }
+                  if (!this.isCPF(this.veiculo.usuario.cpf)) {
+                    alert('CPF inválido!');
+                  }
+                }
+              }
+            } else {
+              if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
+                this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
+                  if (c) {
+                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                      this.limpar();
+                      alert('Veículo salvo com sucesso!');
+                    });
+                  } else {
+                    alert('CPF não existe no sistema!');
+                  }
+                });
+              } else {
+                if (!this.isRenavam(this.veiculo.renavam)) {
+                  alert('Renavam inválido!');
+                }
+                if (!this.isCPF(this.veiculo.usuario.cpf)) {
+                  alert('CPF inválido!');
+                }
+              }
+            }
+          });
+        }
+      } else {
+        this.veiculoService.getRenavamIgual(this.veiculo.renavam).subscribe(r => {
+          if (r) {
+            if (this.veiculo.id === null) {
+              alert('Renavam ja foi cadastrado no sistema!');
+            } else {
+              if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
+                this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
+                  if (c) {
+                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                      this.limpar();
+                      alert('Veículo salvo com sucesso!');
+                    });
+                  } else {
+                    alert('CPF não existe no sistema!');
+                  }
+                });
+              } else {
+                if (!this.isRenavam(this.veiculo.renavam)) {
+                  alert('Renavam inválido!');
+                }
+                if (!this.isCPF(this.veiculo.usuario.cpf)) {
+                  alert('CPF inválido!');
+                }
+              }
+            }
+          } else {
+            if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
+              this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
+                if (c) {
+                  this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                    this.limpar();
+                    alert('Veículo salvo com sucesso!');
+                  });
+                } else {
+                  alert('CPF não existe no sistema!');
+                }
+              });
+            } else {
+              if (!this.isRenavam(this.veiculo.renavam)) {
+                alert('Renavam inválido!');
+              }
+              if (!this.isCPF(this.veiculo.usuario.cpf)) {
+                alert('CPF inválido!');
+              }
+            }
+          }
+        });
       }
-      if (!this.isCPF(this.veiculo.usuario.cpf)) {
-        alert('CPF inválido!');
-      }
-    }
+    });
   }
 
   excluir(id) {

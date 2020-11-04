@@ -1,6 +1,4 @@
-import { ParsedVariable } from '@angular/compiler';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { UsuarioServiceService } from '../manter-usuarios/usuario-service.service';
 
 @Component({
@@ -18,43 +16,53 @@ export class ManterUsuariosComponent implements OnInit {
   constructor(public usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
+    this.consultar(localStorage.getItem('usuario'));
+    //this.consultaCPF = localStorage.setItem('usuario').substring();
   }
 
   salvar() {
-    console.log(this.usuarioService.getCpfIgual(this.usuario.cpf))
+    this.usuarioService.getCpfIgual(this.usuario.cpf).subscribe(r => {
+      if (r) {
+        if (this.usuario.id === null) {
+          alert('CPF ja foi cadastrado no sistema!');
+        } else {
+          this.usuarioService.post(this.usuario).subscribe(resultado => {
+            this.limpar();
+            alert('Usuário salvo com sucesso!');
+          });
+        }
+      } else {
+        if (this.isCPF(this.usuario.cpf)) {
+          this.usuarioService.post(this.usuario).subscribe(resultado => {
+            this.limpar();
+            alert('Usuário salvo com sucesso!');
+          });
 
-    if (this.isCPF(this.usuario.cpf)) {
-      /*if (this.usuarioService.getCpfIgual(this.usuario.cpf)) {
-      alert('Usuário já é cadastrado!');
-    } else {*/
-      this.usuarioService.post(this.usuario).subscribe(resultado => {
-        this.limpar();
-        alert('Usuário salvo com sucesso!');
-      });
-      //}
-    } else {
-      alert('CPF inválido!');
-    }
+        } else {
+          alert('CPF inválido!');
+        }
+      }
+    });
+
   }
 
   excluir(id) {
-    var r= confirm("Você realmente deseja remover esse usuário?");
+    var r = confirm("Você realmente deseja remover esse usuário?");
 
-    if(r){
+    if (r) {
       this.usuarioService.delete(id).subscribe(resultado => {
-      this.limpar();
-      alert('Usuário removido!');
-    });
+        this.limpar();
+        alert('Usuário removido!');
+      });
     } else {
       alert('Usuário não foi removido!');
     }
-    
+
   }
 
   consultar(cpf) {
-    cpf = cpf.replace(/\D/g, '');
 
-    if (cpf != null && cpf !== '') {
+    if (cpf !== '') {
       this.usuarioService.getByCpf(cpf).subscribe(dados => {
         this.usuario = {
           id: dados.id,

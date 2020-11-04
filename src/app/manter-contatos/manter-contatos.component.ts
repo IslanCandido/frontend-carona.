@@ -22,9 +22,15 @@ export class ManterContatosComponent implements OnInit {
 
   salvar() {
     if (this.isCPF(this.contato.usuario.cpf)) {
-      this.contatoService.post(this.contato).subscribe(resultado => {
-        this.limpar();
-        alert('Contato salvo com sucesso!');
+      this.contatoService.getCpfExiste(this.contato.usuario.cpf).subscribe(r => {
+        if (r) {
+          this.contatoService.post(this.contato).subscribe(resultado => {
+            this.limpar();
+            alert('Contato salvo com sucesso!');
+          });
+        } else {
+          alert('CPF não existe no sistema!');
+        }
       });
     } else {
       alert('CPF inválido!');
@@ -42,7 +48,6 @@ export class ManterContatosComponent implements OnInit {
     } else {
       alert('Contato não foi removido!');
     }
-
   }
 
   consultar(id) {

@@ -28,4 +28,8 @@ export class UsuarioServiceService {
   public delete(id):Observable<any>{
     return this.http.delete(`http://localhost:8080/usuarios/${id}`);
   }
+
+  public autenticar(cpf, senha):Observable<any>{
+    return this.http.get(`http://localhost:8080/usuarios/autenticar/${cpf}/${senha}`);
+  }
 }

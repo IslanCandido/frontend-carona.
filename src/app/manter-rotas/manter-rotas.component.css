@@ -1,26 +1,26 @@
 h2 {
     position: relative;
     text-align: center;
-    top: 15px;
+    top: 45px;
     left: 110px;
 }
 
 #form {
     position: relative;
     left: 120px;
-    top: -65px;
+    top: -35px;
 }
 
 #consulta {
     position: relative;
-    top: -50px;
+    top: -20px;
     left: 215px;
 }
 
 .medio {
     position: relative;
     left: 320px;
-    top: 40px;
+    top: 60px;
     width: 12%;
     margin: 5px;
 }

@@ -25,6 +25,10 @@ export class ContatoServiceService {
     return this.http.get(`http://localhost:8080/usuarios/${cpf}`);
   }
 
+  public getCpfExiste(cpf):Observable<any>{
+    return this.http.get(`http://localhost:8080/usuarios/existe/${cpf}`);
+  }
+
   public post(contatos: {id, tipo, telefone, usuario}) : Observable<any>{
     return this.http.post("http://localhost:8080/contatos", contatos);
   }
