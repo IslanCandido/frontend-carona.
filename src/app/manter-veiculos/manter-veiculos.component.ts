@@ -15,42 +15,44 @@ export class ManterVeiculosComponent implements OnInit {
   veiculos;
   usuarios;
 
-  consultaPlaca: '';
+  consultaPlaca;
+  mensagem;
 
   constructor(private veiculoService: VeiculoServiceService) { }
 
   ngOnInit(): void {
     this.veiculoService.getUsuarios().subscribe(resultado => { this.usuarios = resultado })
+    this.veiculo.usuario.cpf = localStorage.getItem('usuario');
   }
 
   salvar() {
     this.veiculoService.getPlacaIgual(this.veiculo.placa).subscribe(p => {
       if (p) {
         if (this.veiculo.id === null) {
-          alert('Placa ja foi cadastrada no sistema!');
+          this.mensagem = 'Placa ja foi cadastrada no sistema!';
         } else {
           this.veiculoService.getRenavamIgual(this.veiculo.renavam).subscribe(r => {
             if (r) {
               if (this.veiculo.id === null) {
-                alert('Renavam ja foi cadastrado no sistema!');
+                this.mensagem = 'Renavam ja foi cadastrado no sistema!';
               } else {
                 if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                   this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                     if (c) {
                       this.veiculoService.post(this.veiculo).subscribe(resultado => {
                         this.limpar();
-                        alert('Veículo salvo com sucesso!');
+                        this.mensagem = 'Veículo salvo com sucesso!';
                       });
                     } else {
-                      alert('CPF não existe no sistema!');
+                      this.mensagem = 'CPF não existe no sistema!';
                     }
                   });
                 } else {
                   if (!this.isRenavam(this.veiculo.renavam)) {
-                    alert('Renavam inválido!');
+                    this.mensagem = 'Renavam inválido!';
                   }
                   if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                    alert('CPF inválido!');
+                    this.mensagem = 'CPF inválido!';
                   }
                 }
               }
@@ -60,18 +62,18 @@ export class ManterVeiculosComponent implements OnInit {
                   if (c) {
                     this.veiculoService.post(this.veiculo).subscribe(resultado => {
                       this.limpar();
-                      alert('Veículo salvo com sucesso!');
+                      this.mensagem = 'Veículo salvo com sucesso!';
                     });
                   } else {
-                    alert('CPF não existe no sistema!');
+                    this.mensagem = 'CPF não existe no sistema!';
                   }
                 });
               } else {
                 if (!this.isRenavam(this.veiculo.renavam)) {
-                  alert('Renavam inválido!');
+                  this.mensagem = 'Renavam inválido!';
                 }
                 if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                  alert('CPF inválido!');
+                  this.mensagem = 'CPF inválido!';
                 }
               }
             }
@@ -81,25 +83,25 @@ export class ManterVeiculosComponent implements OnInit {
         this.veiculoService.getRenavamIgual(this.veiculo.renavam).subscribe(r => {
           if (r) {
             if (this.veiculo.id === null) {
-              alert('Renavam ja foi cadastrado no sistema!');
+              this.mensagem = 'Renavam ja foi cadastrado no sistema!';
             } else {
               if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                 this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                   if (c) {
                     this.veiculoService.post(this.veiculo).subscribe(resultado => {
                       this.limpar();
-                      alert('Veículo salvo com sucesso!');
+                      this.mensagem = 'Veículo salvo com sucesso!';
                     });
                   } else {
-                    alert('CPF não existe no sistema!');
+                    this.mensagem = 'CPF não existe no sistema!';
                   }
                 });
               } else {
                 if (!this.isRenavam(this.veiculo.renavam)) {
-                  alert('Renavam inválido!');
+                  this.mensagem = 'Renavam inválido!';
                 }
                 if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                  alert('CPF inválido!');
+                  this.mensagem = 'CPF inválido!';
                 }
               }
             }
@@ -109,18 +111,18 @@ export class ManterVeiculosComponent implements OnInit {
                 if (c) {
                   this.veiculoService.post(this.veiculo).subscribe(resultado => {
                     this.limpar();
-                    alert('Veículo salvo com sucesso!');
+                    this.mensagem = 'Veículo salvo com sucesso!';
                   });
                 } else {
-                  alert('CPF não existe no sistema!');
+                  this.mensagem = 'CPF não existe no sistema!';
                 }
               });
             } else {
               if (!this.isRenavam(this.veiculo.renavam)) {
-                alert('Renavam inválido!');
+                this.mensagem = 'Renavam inválido!';
               }
               if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                alert('CPF inválido!');
+                this.mensagem = 'CPF inválido!';
               }
             }
           }
@@ -130,17 +132,11 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover esse veículo?");
-
-    if (r) {
-      this.veiculoService.delete(id).subscribe(resultado => {
-        this.limpar();
-        alert('Veículo removido com sucesso!');
-      });
-    } else {
-      alert('Veículo não foi removido!');
-    }
-
+    this.veiculoService.delete(id).subscribe(resultado => {
+      this.limpar();
+      this.mensagem = 'Veículo removido com sucesso!';
+    });
+    this.mensagem = 'Veículo não pode ser removido!';
   }
 
   consultar(placa) {

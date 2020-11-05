@@ -13,11 +13,15 @@ export class ManterContatosComponent implements OnInit {
   contatos;
   usuarios;
 
+  mensagem;
+
   constructor(private contatoService: ContatoServiceService) { }
 
   ngOnInit(): void {
-    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
+    this.contatoService.getContatos(localStorage.getItem('usuario')).subscribe(resultado => { this.contatos = resultado });
     this.contatoService.getUsuarios().subscribe(resultado => { this.usuarios = resultado })
+    this.contato.usuario.cpf = localStorage.getItem('usuario');
+
   }
 
   salvar() {
@@ -26,28 +30,23 @@ export class ManterContatosComponent implements OnInit {
         if (r) {
           this.contatoService.post(this.contato).subscribe(resultado => {
             this.limpar();
-            alert('Contato salvo com sucesso!');
+            this.mensagem = 'Contato salvo com sucesso!';
           });
         } else {
-          alert('CPF não existe no sistema!');
+          this.mensagem = 'CPF não existe no sistema!';
         }
       });
     } else {
-      alert('CPF inválido!');
+      this.mensagem = 'CPF inválido!';
     }
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover esse contato?");
-
-    if (r) {
-      this.contatoService.delete(id).subscribe(resultado => {
-        this.limpar();
-        alert('Contato removido com sucesso!');
-      });
-    } else {
-      alert('Contato não foi removido!');
-    }
+    this.contatoService.delete(id).subscribe(resultado => {
+      this.limpar();
+      this.mensagem = 'Contato removido com sucesso!';
+    });
+    this.mensagem = 'Contato não pode ser removido!';
   }
 
   consultar(id) {
@@ -86,7 +85,7 @@ export class ManterContatosComponent implements OnInit {
       id: null, tipo: "", telefone: "",
       usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }
     };
-    this.contatoService.get().subscribe(resultado => { this.contatos = resultado });
+    this.contatoService.getContatos(localStorage.getItem('usuario')).subscribe(resultado => { this.contatos = resultado });
   }
 
   isCPF(cpf) {

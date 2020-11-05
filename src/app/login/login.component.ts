@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   usu: { cpf, senha } = { cpf: "", senha: "" };
 
+  mensagem;
+
   constructor(private router: Router, private usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
@@ -21,17 +23,21 @@ export class LoginComponent implements OnInit {
     if (this.isCPF(this.usu.cpf)) {
       this.usuarioService.autenticar(this.usu.cpf, this.usu.senha).subscribe(r => {
         if (r) {
+          this.mensagem = 'BEM VINDO!';
           localStorage.setItem('usuario', this.usu.cpf);
           this.router.navigate(['/home']);
-          console.log(localStorage.getItem('usuario'));
         } else {
-          alert('Usuário ou senha incorretos!');
+          this.mensagem = 'Usuário ou senha incorretos!';
         }
       });
     } else {
-      alert('CPF inválido!');
+      this.mensagem = 'CPF inválido!';
     }
 
+  }
+
+  registrar(){
+    localStorage.setItem('usuario', '');
   }
 
   isCPF(cpf) {

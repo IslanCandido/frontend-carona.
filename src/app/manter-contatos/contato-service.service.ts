@@ -17,6 +17,10 @@ export class ContatoServiceService {
     return this.http.get(`http://localhost:8080/contatos/${id}`);
   }
 
+  public getContatos(cpf):Observable<any>{
+    return this.http.get(`http://localhost:8080/contatos/filter/${cpf}`);
+  }
+
   public getUsuarios():Observable<any>{
     return this.http.get("http://localhost:8080/usuarios");
   }

@@ -11,6 +11,7 @@ export class ManterContribuicoesComponent implements OnInit {
   contribuicao: { id, tipo, valor } = { id: null, tipo: "", valor: "" };
 
   contribuicoes;
+  mensagem;
 
   constructor(private contribuicoesService: ContribuicoesServiceService) { }
 
@@ -21,23 +22,17 @@ export class ManterContribuicoesComponent implements OnInit {
   salvar() {
     this.contribuicoesService.post(this.contribuicao).subscribe(resultado => {
       this.limpar();
-      alert('Contribuição salva com sucesso!');
+      this.mensagem = 'Contribuição salva com sucesso!';
     });
 
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover essa contribuição?");
-
-    if (r) {
-      this.contribuicoesService.delete(id).subscribe(resultado => {
-        this.limpar();
-        alert('Contribuição removida com sucesso!');
-      });
-    } else {
-      alert('Contribuição não foi removida!');
-    }
-
+    this.contribuicoesService.delete(id).subscribe(resultado => {
+      this.limpar();
+      this.mensagem = 'Contribuição removida com sucesso!';
+    });
+    this.mensagem = 'Contribuição não pode ser removida!';
   }
 
   consultar(id) {

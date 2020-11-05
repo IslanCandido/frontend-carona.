@@ -19,7 +19,8 @@ export class ManterRotasComponent implements OnInit {
   veiculos;
   contribuicoes;
 
-  consultaCodVer: '';
+  consultaCodVer;
+  mensagem;
 
 
   constructor(private rotaService: RotaServiceService) { }
@@ -38,28 +39,28 @@ export class ManterRotasComponent implements OnInit {
     this.rotaService.getVerificadorIgual(this.rota.verificador).subscribe(r => {
       if (r) {
         if (this.rota.id === null) {
-          alert('Código Verificador ja está sendo usado em outra rota!');
+          this.mensagem = 'Código Verificador ja está sendo usado em outra rota!';
         } else {
           this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
-            if(p){
+            if (p) {
               this.rotaService.post(this.rota).subscribe(resultado => {
                 this.limpar();
-                alert('Rota salva com sucesso!');
+                this.mensagem = 'Rota salva com sucesso!';
               });
             } else {
-              alert('Placa não existe no sistema!');
+              this.mensagem = 'Placa não existe no sistema!';
             }
-          }); 
+          });
         }
       } else {
         this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
-          if(p){
+          if (p) {
             this.rotaService.post(this.rota).subscribe(resultado => {
               this.limpar();
-              alert('Rota salva com sucesso!');
+              this.mensagem = 'Rota salva com sucesso!';
             });
           } else {
-            alert('Placa não existe no sistema!');
+            this.mensagem = 'Placa não existe no sistema!';
           }
         });
       }
@@ -67,17 +68,11 @@ export class ManterRotasComponent implements OnInit {
   }
 
   excluir(id) {
-    var r = confirm("Você realmente deseja remover essa rota?");
-
-    if (r) {
-      this.rotaService.delete(id).subscribe(resultado => {
-        this.limpar();
-        alert('Rota removida com sucesso!');
-      });
-    } else {
-      alert('Rota não foi removida!');
-    }
-
+    this.rotaService.delete(id).subscribe(resultado => {
+      this.limpar();
+      this.mensagem = 'Rota removida com sucesso!';
+    });
+    this.mensagem = 'Rota não pode ser removida!';
   }
 
   consultar(verificador) {

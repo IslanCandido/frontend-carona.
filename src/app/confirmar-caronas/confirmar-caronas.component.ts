@@ -16,11 +16,12 @@ export class ConfirmarCaronasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     };
 
-  caronas
-  rotas
-  usuarios
-  contribuicoes
+  caronas;
+  rotas;
+  usuarios;
+  contribuicoes;
 
+  mensagem;
 
   constructor(private caronaService: CaronaServiceService) { }
 
@@ -33,24 +34,18 @@ export class ConfirmarCaronasComponent implements OnInit {
 
     this.caronaService.post(this.carona).subscribe(resultado => {
       this.limpar();
-      alert('Pedido de carona confirmado com sucesso!');
+      this.mensagem ='Pedido de carona confirmado com sucesso!';
     });
   }
 
   cancelar() {
-    var r = confirm("Você realmente deseja cancelar essa carona?");
-
-    if (r) {
       this.carona.situacao = "Carona cancelada";
 
       this.caronaService.post(this.carona).subscribe(resultado => {
         this.limpar();
-        alert('Pedido de carona cancelado com sucesso!');
+        this.mensagem ='Pedido de carona cancelado com sucesso!';
       });
-    } else {
-      alert('Pedido de carona não foi cancelado!');
-    }
-
+      this.mensagem ='Pedido de carona não pode ser cancelada!';
   }
 
   consultar(id) {

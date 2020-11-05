@@ -1,3 +1,19 @@
+<div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{mensagem}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="vs-screen-bg">
     <div class="container">
         <div class="row vertical-center-row">
@@ -25,8 +41,8 @@
 
                                 <a class="login-link">Esqueceu a
                                 senha?</a>
-                                <button class="btn btn-primary btn-lg btn-block" (click)="login()" [disabled]="frm.invalid">Entrar</button>
-                                <button class="btn btn-secondary btn-lg btn-block" [routerLink]="['/manter-usuários']">Me Registrar</button>
+                                <button class="btn btn-primary btn-lg btn-block" (click)="login()" [disabled]="frm.invalid" data-toggle="alert" data-target="#alerta-">Entrar</button>
+                                <button class="btn btn-secondary btn-lg btn-block" (click)="registrar()" [routerLink]="['/manter-usuários']">Me Registrar</button>
                             </div>
                         </form>
                     </div>

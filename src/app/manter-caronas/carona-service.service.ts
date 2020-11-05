@@ -22,6 +22,10 @@ export class CaronaServiceService {
     return this.http.get(`http://localhost:8080/caronas/filter/${situacao}`);
   }
 
+  public getCarona(verificador, cpf):Observable<any>{
+    return this.http.get(`http://localhost:8080/caronas/filter/${verificador}/${cpf}`);
+  }
+
   public post(caronas: {id, horario_aproximado, ponto_encontro, acompanhantes, situacao, observacao, rota, usuario, contribuicao}) : Observable<any>{
     return this.http.post("http://localhost:8080/caronas", caronas);
   }
