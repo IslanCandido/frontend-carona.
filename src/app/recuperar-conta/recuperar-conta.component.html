@@ -1,0 +1,60 @@
+<div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Mensagem...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>{{mensagem}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center mt-5">
+            <h1>Recuperar Conta</h1>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-10 col-lg-10">
+            <form id="form" #frm="ngForm">
+                <div class="form-row">
+                    <div class="form-group col-lg-3" id="usu_cpf">
+                        <label for="con_usu">CPF</label>
+                        <input [(ngModel)]="usuario.cpf" (blur)="consultar(usuario.cpf)" id="cpf" name="cpf" placeholder="digite seu cpf" class="form-control input-md" type="search" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-lg-8">
+                        <label for="nome">Usuário</label>
+                        <input [(ngModel)]="usuario.nome" autocomplete="off" id="nome" name="nome" type="text" readonly="true" placeholder="Nome do usuário" class="form-control input-md" maxlength="60" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-lg-4">
+                        <label for="senha">Nova Senha</label>
+                        <input [(ngModel)]="usuario.senha" id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20" required />
+                        <small id="passwordHelpInline" class="text-muted">
+                            Deve ter entre 8 e 20 caracteres.
+                        </small>
+                    </div>
+                    <div class="form-group col-lg-4">
+                        <label for="senha">Confirme a senha</label>
+                        <input [(ngModel)]="confirmarSenha" id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn btn-success medio" (click)="recuperar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Recuperar</button>
+                    <button type="button" class="btn btn-danger medio" [routerLink]="['/login']">Cancelar</button>
+                    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

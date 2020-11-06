@@ -16,6 +16,7 @@ import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-cont
 import { ManterCaronasComponent } from './manter-caronas/manter-caronas.component';
 import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas.component';
 import { LoginGuardGuard } from './login/login-guard.guard';
+import { RecuperarContaComponent } from './recuperar-conta/recuperar-conta.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { LoginGuardGuard } from './login/login-guard.guard';
     LoginComponent,
     ManterContribuicoesComponent,
     ManterCaronasComponent,
-    ConfirmarCaronasComponent
+    ConfirmarCaronasComponent,
+    RecuperarContaComponent
   ],
   imports: [
     BrowserModule,

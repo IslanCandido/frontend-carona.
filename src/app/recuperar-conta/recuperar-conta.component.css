@@ -1,0 +1,23 @@
+h1 {
+    position: relative;
+    top: 40px;
+}
+
+form {
+    position: relative;
+    top: 70px;
+    left: 150px;
+}
+
+#usu_cpf {
+    position: relative;
+    top: -30px;
+}
+
+.medio {
+    position: relative;
+    top: 40px;
+    left: 170px;
+    width: 15%;
+    margin: 6px;
+}

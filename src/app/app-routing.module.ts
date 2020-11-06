@@ -11,10 +11,12 @@ import { ManterContribuicoesComponent } from './manter-contribuicoes/manter-cont
 import { ManterRotasComponent } from './manter-rotas/manter-rotas.component';
 import { ManterUsuariosComponent } from './manter-usuarios/manter-usuarios.component';
 import { ManterVeiculosComponent } from './manter-veiculos/manter-veiculos.component';
+import { RecuperarContaComponent } from './recuperar-conta/recuperar-conta.component';
 
 const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "login" },
   { path: "login", component: LoginComponent },
+  { path: "recuperar-conta", component: RecuperarContaComponent },
   { path: "home", component: HomeComponent, canActivate: [LoginGuardGuard] },
   { path: "manter-usuários", component: ManterUsuariosComponent },
   { path: "manter-veículos", component: ManterVeiculosComponent, canActivate: [LoginGuardGuard] },
