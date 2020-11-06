@@ -22,7 +22,7 @@ export class ManterVeiculosComponent implements OnInit {
 
   ngOnInit(): void {
     this.veiculoService.getUsuarios().subscribe(resultado => { this.usuarios = resultado })
-    this.veiculo.usuario.cpf = localStorage.getItem('usuario');
+    this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
   salvar() {

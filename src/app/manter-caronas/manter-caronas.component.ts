@@ -33,7 +33,7 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
 
-    this.carona.usuario.cpf = localStorage.getItem('usuario');
+    this.consultarUsuario(localStorage.getItem('usuario'));
 
     if (this.carona.situacao == "") {
       this.carona.situacao = "Em andamento";

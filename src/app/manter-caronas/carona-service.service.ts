@@ -18,8 +18,8 @@ export class CaronaServiceService {
     return this.http.get(`http://localhost:8080/caronas/${id}`);
   }
 
-  public getBySituacao(situacao):Observable<any>{
-    return this.http.get(`http://localhost:8080/caronas/filter/${situacao}`);
+  public getCaronasEmAndamento(cpf, situacao):Observable<any>{
+    return this.http.get(`http://localhost:8080/caronas/consulta/${cpf}/${situacao}`);
   }
 
   public getCarona(verificador, cpf):Observable<any>{

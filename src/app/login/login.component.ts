@@ -23,15 +23,16 @@ export class LoginComponent implements OnInit {
     if (this.isCPF(this.usu.cpf)) {
       this.usuarioService.autenticar(this.usu.cpf, this.usu.senha).subscribe(r => {
         if (r) {
-          this.mensagem = 'BEM VINDO!';
           localStorage.setItem('usuario', this.usu.cpf);
           this.router.navigate(['/home']);
         } else {
           this.mensagem = 'Usuário ou senha incorretos!';
+          alert(this.mensagem);
         }
       });
     } else {
       this.mensagem = 'CPF inválido!';
+      alert(this.mensagem);
     }
 
   }

@@ -20,8 +20,8 @@ export class ManterContatosComponent implements OnInit {
   ngOnInit(): void {
     this.contatoService.getContatos(localStorage.getItem('usuario')).subscribe(resultado => { this.contatos = resultado });
     this.contatoService.getUsuarios().subscribe(resultado => { this.usuarios = resultado })
-    this.contato.usuario.cpf = localStorage.getItem('usuario');
-
+    
+    this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
   salvar() {
