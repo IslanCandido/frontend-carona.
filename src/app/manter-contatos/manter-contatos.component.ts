@@ -86,6 +86,7 @@ export class ManterContatosComponent implements OnInit {
       usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }
     };
     this.contatoService.getContatos(localStorage.getItem('usuario')).subscribe(resultado => { this.contatos = resultado });
+    this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
   isCPF(cpf) {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsuarioServiceService } from '../manter-usuarios/usuario-service.service';
 
 @Component({
@@ -14,7 +15,7 @@ export class ManterUsuariosComponent implements OnInit {
   consultaCPF;
   mensagem;
 
-  constructor(public usuarioService: UsuarioServiceService) { }
+  constructor(public router: Router, public usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
     this.consultar(localStorage.getItem('usuario'));
@@ -49,8 +50,15 @@ export class ManterUsuariosComponent implements OnInit {
 
   excluir(id) {
     this.usuarioService.delete(id).subscribe(resultado => {
-      this.limpar();
-      this.mensagem = 'Usuário removido!';
+      if (localStorage.getItem('usuario') === this.usuario.cpf) {
+        this.limpar();
+        this.mensagem = 'Usuário removido!';
+
+        localStorage.setItem('usuario', '');
+      } else {
+        this.limpar();
+        this.mensagem = 'Usuário removido!';
+      }
     });
     this.mensagem = 'Usuário não pode ser removido!';
   }
@@ -76,6 +84,8 @@ export class ManterUsuariosComponent implements OnInit {
   limpar() {
     this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     this.consultaCPF = '';
+    this.consultar(localStorage.getItem('usuario'));
+    this.consultaCPF = localStorage.getItem('usuario');
   }
 
   isCPF(cpf) {

@@ -185,6 +185,7 @@ export class ManterVeiculosComponent implements OnInit {
       usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }
     };
     this.consultaPlaca = '';
+    this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
 

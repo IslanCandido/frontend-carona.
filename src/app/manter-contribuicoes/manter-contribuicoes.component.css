@@ -1,12 +1,13 @@
-h3 {
+h2 {
     position: relative;
     text-align: center;
+    top: 20px;
 }
 
 #form {
     position: relative;
     left: 130px;
-    top: -10px;
+    top: 20px;
 }
 
 .table-overflow {
@@ -21,7 +22,7 @@ h3 {
 .medio {
     position: relative;
     left: 335px;
-    top: 75px;
+    top: 85px;
     width: 12%;
     margin: 5px;
 }

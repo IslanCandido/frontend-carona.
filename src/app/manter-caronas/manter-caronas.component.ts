@@ -147,6 +147,7 @@ export class ManterCaronasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     };
     this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
+    this.consultarUsuario(localStorage.getItem('usuario'));
 
     this.consultaDestino = '';
     this.consultaCarona = '';
