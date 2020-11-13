@@ -16,6 +16,8 @@ export class ManterCaronasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     };
 
+  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+
   caronas
   rotas
   usuarios
@@ -24,12 +26,12 @@ export class ManterCaronasComponent implements OnInit {
   consultaDestino;
   consultaCarona;
 
-  mensagem;
+  informacao;
 
   constructor(private caronaService: CaronaServiceService) { }
 
   ngOnInit(): void {
-    this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
+    this.caronaService.getRotasDisponiveis("Disponivel", "2050-01-01").subscribe(resultado => { this.rotas = resultado });
     this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
 
@@ -42,40 +44,88 @@ export class ManterCaronasComponent implements OnInit {
 
   consultarDestino(destino) {
     if (this.consultaDestino == "") {
-      this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
+      this.caronaService.getRotasDisponiveis("Disponivel", "2050-01-01").subscribe(resultado => { this.rotas = resultado });
     } else {
-      this.caronaService.getRotasPesquisada("Disponivel", destino, this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
+      this.caronaService.getRotasPesquisada("Disponivel", destino, "2050-01-01").subscribe(resultado => { this.rotas = resultado });
     }
   }
 
   salvar() {
-    if (this.carona.situacao == "Carona confirmada") {
-      this.mensagem = 'Pedido de carona já foi confirmado, então não pode mais ser alterado!';
-    } else if (this.carona.situacao == "Carona cancelada") {
-      this.mensagem = 'Pedido de carona foi cancelado, então não pode mais ser alterado!';
-    } else {
-      if (this.carona.horario_aproximado.length === 5) {
-        this.carona.horario_aproximado = this.carona.horario_aproximado + ":00";
-      }
-
-      this.caronaService.post(this.carona).subscribe(resultado => {
-        this.limpar();
-        this.mensagem = 'Pedido de carona salva com sucesso!';
-      });
+    if (this.carona.horario_aproximado.length === 5) {
+      this.carona.horario_aproximado = this.carona.horario_aproximado + ":00";
     }
+
+    this.caronaService.verificarCarona(this.carona.rota.verificador, this.carona.usuario.cpf).subscribe(r => {
+      if (r) {
+        if (this.carona.id === null) {
+          this.informacao = 'Pedido de Carona já foi feito por esse usuário!';
+        } else {
+          if (this.carona.situacao == "Carona confirmada") {
+            this.informacao = 'Pedido de carona já foi confirmado, então não pode mais ser alterado!';
+          } else {
+            if (this.carona.usuario.cpf === this.carona.rota.veiculo.usuario.cpf) {
+              this.informacao = 'Não é possivel fazer um pedido de carona para a sua rota!';
+            } else {
+              this.caronaService.post(this.carona).subscribe(resultado => {
+                this.limpar();
+                this.informacao = 'Pedido de carona salva com sucesso!';
+              });
+            }
+          }
+        }
+      } else {
+        if (this.carona.situacao == "Carona confirmada") {
+          this.informacao = 'Pedido de carona já foi confirmado, então não pode mais ser alterado!';
+        } else {
+
+          if (this.carona.usuario.cpf === this.carona.rota.veiculo.usuario.cpf) {
+            this.informacao = 'Não é possivel fazer um pedido de carona para a sua rota!';
+          } else {
+            this.caronaService.post(this.carona).subscribe(resultado => {
+              this.mensagem = {
+                remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.rota.veiculo.usuario.email,
+                assunto: 'Novo Pedido de Carona',
+                corpo: 'Olá ' + this.carona.rota.veiculo.usuario.nome + '.' +
+                  '\n\nAviso: Você tem um novo pedido de carona na sua rota ' + this.carona.rota.verificador + ' com destino para '
+                  + this.carona.rota.fim + '.\n\natt: RUN - Sistema de Carona'
+              }
+
+              this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
+                this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+              });
+
+              this.limpar();
+              this.informacao = 'Pedido de carona salva com sucesso!';
+            });
+          }
+        }
+      }
+    });
   }
 
   excluir(id) {
-
     this.caronaService.delete(id).subscribe(resultado => {
-      this.limpar();
+
       if (this.carona.situacao == "Carona confirmada") {
-        this.mensagem = 'Como o seu pedido já havia sido confirmado,\n a exclusão dele faz com que ele seja cancelado automaticamente';
+        this.informacao = 'Como o seu pedido já havia sido confirmado,\n a exclusão dele faz com que ele seja cancelado automaticamente';
+
+        this.mensagem = {
+          remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.rota.veiculo.usuario.email + '.',
+          assunto: 'Carona Cancelada pelo passageiro',
+          corpo: 'Olá ' + this.carona.rota.veiculo.usuario.nome +
+            '\n\nAviso: O passageiro ' + this.carona.usuario.nome + ' cancelou a carona para '
+            + this.carona.rota.fim + '.\n\natt: RUN - Sistema de Carona'
+        }
+
+        this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
+          this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+        });
       } else {
-        this.mensagem = 'Pedido de carona foi removido!';
+        this.informacao = 'Pedido de carona foi removido!';
       }
+      this.limpar();
     });
-    this.mensagem = 'Pedido de carona não pode ser removido!';
+    this.informacao = 'Pedido de carona não pode ser removido!';
   }
 
   consultarCarona(verificador) {
@@ -146,7 +196,7 @@ export class ManterCaronasComponent implements OnInit {
       usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" },
       contribuicao: { id: null, tipo: "", valor: "" }
     };
-    this.caronaService.getRotasDisponiveis("Disponivel", this.getDataAtual(), this.getData()).subscribe(resultado => { this.rotas = resultado });
+    this.caronaService.getRotasDisponiveis("Disponivel", "2050-01-01").subscribe(resultado => { this.rotas = resultado });
     this.consultarUsuario(localStorage.getItem('usuario'));
 
     this.consultaDestino = '';

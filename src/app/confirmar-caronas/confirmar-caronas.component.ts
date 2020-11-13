@@ -21,7 +21,9 @@ export class ConfirmarCaronasComponent implements OnInit {
   usuarios;
   contribuicoes;
 
-  mensagem;
+  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+
+  informacao;
 
   constructor(private caronaService: CaronaServiceService) { }
 
@@ -32,20 +34,52 @@ export class ConfirmarCaronasComponent implements OnInit {
   confirmar() {
     this.carona.situacao = "Carona confirmada";
 
+    if (this.carona.observacao === '') {
+      this.carona.observacao = 'Sem observações.';
+    }
+
     this.caronaService.post(this.carona).subscribe(resultado => {
+      this.mensagem = {
+        remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.usuario.email,
+        assunto: 'Pedido de Carona Confirmado',
+        corpo: 'Olá ' + this.carona.usuario.nome + '.' +
+          '\n\nAviso: Sua carona para ' + this.carona.rota.fim + ' foi confirmada pelo motorista, boa viagem!\n\nStatus da carona: ' + this.carona.situacao + '.'
+          + '\nObservação do motorista: ' + this.carona.observacao + '.'
+          + '\n\natt: RUN - Sistema de Carona.'
+      }
+
       this.limpar();
-      this.mensagem ='Pedido de carona confirmado com sucesso!';
+      this.informacao = 'Pedido de carona confirmado com sucesso!';
+
+      this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
+        this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+      });
     });
   }
 
-  cancelar() {
-      this.carona.situacao = "Carona cancelada";
+  cancelar(id) {
+    if (this.carona.observacao === '') {
+      this.carona.observacao = 'Sem observações.';
+    }
 
-      this.caronaService.post(this.carona).subscribe(resultado => {
-        this.limpar();
-        this.mensagem ='Pedido de carona cancelado com sucesso!';
+    this.caronaService.delete(id).subscribe(resultado => {
+      this.mensagem = {
+        remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.usuario.email,
+        assunto: 'Pedido de Carona Cancelado',
+        corpo: 'Olá ' + this.carona.usuario.nome + '.' +
+          '\n\nAviso: Infelizmente sua carona para ' + this.carona.rota.fim + ' foi cancelada pelo motorista, boa sorte!\n\nStatus da carona: ' + this.carona.situacao + '.'
+          + '\nObservação do motorista: ' + this.carona.observacao + '.'
+          + '\n\natt: RUN - Sistema de Carona.'
+      }
+
+      this.limpar();
+      this.informacao = 'Pedido de carona cancelado com sucesso!';
+
+      this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
+        this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
       });
-      this.mensagem ='Pedido de carona não pode ser cancelada!';
+    });
+    this.informacao = 'Pedido de carona não pode ser cancelada!';
   }
 
   consultar(id) {
@@ -61,8 +95,8 @@ export class ConfirmarCaronasComponent implements OnInit {
         usuario: dados.usuario,
         contribuicao: dados.contribuicao
       };
+      console.log(this.carona.usuario.email);
     });
-    console.log(this.carona);
   }
 
   limpar() {

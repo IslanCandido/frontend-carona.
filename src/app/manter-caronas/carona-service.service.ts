@@ -26,6 +26,10 @@ export class CaronaServiceService {
     return this.http.get(`http://localhost:8080/caronas/filter/${verificador}/${cpf}`);
   }
 
+  public verificarCarona(verificador, cpf):Observable<any>{
+    return this.http.get(`http://localhost:8080/caronas/existe/${verificador}/${cpf}`);
+  }
+
   public post(caronas: {id, horario_aproximado, ponto_encontro, acompanhantes, situacao, observacao, rota, usuario, contribuicao}) : Observable<any>{
     return this.http.post("http://localhost:8080/caronas", caronas);
   }
@@ -34,12 +38,12 @@ export class CaronaServiceService {
     return this.http.delete(`http://localhost:8080/caronas/${id}`);
   }
 
-  public getRotasDisponiveis(status, data1, data2):Observable<any>{
-    return this.http.get(`http://localhost:8080/rotas/filter/disponiveis/${status}/${data1}/${data2}`);
+  public getRotasDisponiveis(status, data):Observable<any>{
+    return this.http.get(`http://localhost:8080/rotas/filter/disponiveis/${status}/${data}`);
   }
 
-  public getRotasPesquisada(status, fim, data1, data2){
-    return this.http.get(`http://localhost:8080/rotas/consulta/${status}/${fim}/${data1}/${data2}`)
+  public getRotasPesquisada(status, fim, data){
+    return this.http.get(`http://localhost:8080/rotas/consulta/${status}/${fim}/${data}`)
   }
 
   public getByVerificador(verificador):Observable<any>{
@@ -60,5 +64,9 @@ export class CaronaServiceService {
 
   public getByIdContribuicoes(id):Observable<any>{
     return this.http.get(`http://localhost:8080/contribuições/${id}`);
+  }
+
+  public enviarMensagem(mensagem: { remetente, destinatario, assunto, corpo }): Observable<any> {
+    return this.http.post("http://localhost:8080/mensagens", mensagem);
   }
 }

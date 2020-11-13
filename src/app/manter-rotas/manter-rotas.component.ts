@@ -143,6 +143,15 @@ export class ManterRotasComponent implements OnInit {
 
   }
 
+  getData(data){
+    data = new Date();
+    var dy = data.getDate() + 1;
+    var mt = data.getMonth() + 1;
+    var yr = data.getFullYear();
+
+    return yr + "-" + mt + "-" + dy;
+  }
+
   getDataAtual() {
     var today = new Date();
     var dy = today.getDate();

@@ -14,7 +14,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>{{mensagem}}</p>
+                <p>{{informacao}}</p>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let carona of caronas" (click)="consultar(carona.id)">
-                                <td>{{ carona.rota.data }}</td>
+                                <td>{{ carona.rota.data | date:"dd/MM/yyyy" }}</td>
                                 <td>{{ carona.rota.verificador }}</td>
                                 <td>{{ carona.horario_aproximado }}</td>
                                 <td>{{ carona.ponto_encontro }}</td>
@@ -70,7 +70,7 @@
 
                 <div class="container">
                     <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="confirmar()" data-toggle="modal" data-target="#mensagem">Confirmar</button>
-                    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="cancelar()" data-toggle="modal" data-target="#mensagem">Cancelar</button>
+                    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="cancelar(carona.id)" data-toggle="modal" data-target="#mensagem">Cancelar</button>
                     <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
                 </div>
             </form>

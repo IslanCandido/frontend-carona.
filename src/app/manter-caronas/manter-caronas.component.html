@@ -14,7 +14,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>{{mensagem}}</p>
+                <p>{{informacao}}</p>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let rota of rotas" (click)="consultarRota(rota.verificador)">
-                        <td>{{ rota.data }}</td>
+                        <td>{{ rota.data | date:"dd/MM/yyyy" }}</td>
                         <td>{{ rota.horario }}</td>
                         <td>{{ rota.inicio }}</td>
                         <td>{{ rota.fim }}</td>

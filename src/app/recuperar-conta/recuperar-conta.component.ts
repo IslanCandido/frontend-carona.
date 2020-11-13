@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioServiceService } from '../manter-usuarios/usuario-service.service';
+import { RecuperarContaService } from '../recuperar-conta/recuperar-conta-service.service';
 
 @Component({
   selector: 'app-recuperar-conta',
@@ -10,29 +10,40 @@ export class RecuperarContaComponent implements OnInit {
 
   usuario: { id, nome, email, cpf, dt_nascimento, sexo, senha } = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
 
-  confirmarSenha;
-  mensagem;
+  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
 
-  constructor(public usuarioService: UsuarioServiceService) { }
+  confirmarSenha;
+  informacao;
+
+  constructor(public recuperarContaService: RecuperarContaService) { }
 
   ngOnInit(): void {
   }
 
 
-  recuperar(){
-    if(this.usuario.senha === this.confirmarSenha){
-      this.usuarioService.post(this.usuario).subscribe(resultado => {
+  recuperar() {
+    if (this.usuario.senha === this.confirmarSenha) {
+      this.recuperarContaService.post(this.usuario).subscribe(resultado => {
+        this.mensagem = {
+          remetente: 'runsistemadecarona@gmail.com', destinatario: this.usuario.email,
+          assunto: 'Recuperação de Conta realizada!',
+          corpo: 'Olá ' + this.usuario.nome + '\n\nAviso: A recuperação da sua conta foi feita com sucesso!\natt: RUN - Sistema de Carona'
+        }
+        this.informacao = 'Conta recuperada com sucesso!';
         this.limpar();
-        this.mensagem = 'Conta recuperada com sucesso!';
+
+        this.recuperarContaService.enviarMensagem(this.mensagem).subscribe(r => {
+          this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+        });
       });
     } else {
-      this.mensagem = "Senhas são incompativeis!";
+      this.informacao = "Senhas são incompativeis!";
     }
   }
 
-  consultar(cpf){
+  consultar(cpf) {
     if (cpf !== '' || cpf.lenght != 9) {
-      this.usuarioService.getByCpf(cpf).subscribe(dados => {
+      this.recuperarContaService.getByCpf(cpf).subscribe(dados => {
         this.usuario = {
           id: dados.id,
           nome: dados.nome,

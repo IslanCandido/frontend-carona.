@@ -15,6 +15,9 @@ export class ManterUsuariosComponent implements OnInit {
   consultaCPF;
   mensagem;
 
+  data = new Date(this.usuario.dt_nascimento);
+  //<p>{{ hoje | date:"dd/MM/yyyy" }}</p>
+
   constructor(public router: Router, public usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
@@ -23,6 +26,13 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   salvar() {
+    //this.usuario.dt_nascimento = 1 + this.usuario.dt_nascimento;
+    this.usuario.dt_nascimento = this.getData(this.usuario.dt_nascimento);
+
+    console.log(this.usuario);
+    //console.log(this.getData(this.usuario.dt_nascimento));
+    //console.log(this.usuario.dt_nascimento);
+
     this.usuarioService.getCpfIgual(this.usuario.cpf).subscribe(r => {
       if (r) {
         if (this.usuario.id === null) {
@@ -39,7 +49,6 @@ export class ManterUsuariosComponent implements OnInit {
             this.limpar();
             this.mensagem = 'Usuário salvo com sucesso!';
           });
-
         } else {
           this.mensagem = 'CPF inválido!';
         }
@@ -121,5 +130,15 @@ export class ManterUsuariosComponent implements OnInit {
     if ((resto == 10) || (resto == 11)) resto = 0
     if (resto != parseInt(cpf.substring(10, 11))) return false
     return true
+  }
+
+  getData(data){
+    var ano = data.substring(0,4);
+    var mes = data.substring(5,7);
+    var dia = data.substring(8,10);
+
+    parseInt(dia + 1);
+
+    return ano+ '-' + mes + '-'+ dia;
   }
 }

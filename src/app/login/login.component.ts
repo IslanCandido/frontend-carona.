@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
         if (r) {
           localStorage.setItem('usuario', this.usu.cpf);
           this.router.navigate(['/home']);
+
+          this.mensagem = '';
         } else {
           this.mensagem = 'Usuário ou senha incorretos!';
           alert(this.mensagem);
