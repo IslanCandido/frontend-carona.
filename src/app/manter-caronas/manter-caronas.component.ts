@@ -203,21 +203,4 @@ export class ManterCaronasComponent implements OnInit {
     this.consultaCarona = '';
     this.carona.situacao = "Em andamento";
   }
-
-  getDataAtual() {
-    var today = new Date();
-    var dy = today.getDate();
-    var mt = today.getMonth() + 1;
-    var yr = today.getFullYear();
-    return yr + "-" + mt + "-" + dy;
-  }
-
-  getData() {
-    var today = new Date();
-    var dy = 30;
-    var mt = 10;
-    var yr = 2021;
-    return yr + "-" + mt + "-" + dy;
-  }
-
 }
