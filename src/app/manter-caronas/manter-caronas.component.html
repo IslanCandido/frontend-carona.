@@ -23,7 +23,15 @@
 <div class="container">
     <div class="form-row" id="consulta-local">
         <div class="form-group col-lg-5">
-            <input [(ngModel)]="consultaDestino" (blur)="consultarDestino(consultaDestino)" id="con-destino" name="con-destino" type="search" placeholder="Pesquisar destino desejado" class="form-control input-md" maxlength="100" autocomplete="off">
+            <input [(ngModel)]="consultaDestino" id="con-destino" name="con-destino" type="search" placeholder="pesquisar destino desejado" class="form-control input-md" maxlength="100" autocomplete="off">
+        </div>
+        <div >
+            <button type="button" (click)="consultarDestino(consultaDestino)" class="btn btn-light">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -51,22 +59,30 @@
             </table>
         </div>
     </div>
-    <div class="row">
-        <div class="col-12 text-center mt-5">
-            <h2>Registrar Carona</h2>
-        </div>
-    </div>
 
-    <div class="form-row" id="consulta">
-        <div class="form-group col-lg-2">
-            <label for="con-carona">CONSULTAR</label>
-            <input [(ngModel)]="consultaCarona" (blur)="consultarCarona($event.target.value)" id="con-carona" name="con-carona" type="search" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md" required="">
-        </div>
-    </div>
+    
 
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <form id="form" #frm="ngForm">
+                <div class="form-row" id="consulta">
+                    <div class="form-group col-lg-2">
+                        <input [(ngModel)]="consultaCarona" id="con-carona" name="con-carona" type="search" minlength="8" maxlength="8" autocomplete="off" placeholder="Código Verificador" class="form-control input-md">
+                    </div>
+                    <div >
+                        <button type="button" (click)="consultarCarona(consultaCarona)" class="btn btn-light">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="form-group col-lg-8">
+                        <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Salvar</button>
+                        <button type="button" class="btn btn-danger medio" (click)="excluir(carona.id)" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Remover</button>
+                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-lg-2">
                         <label for="codVerificador">Rota</label>
@@ -90,7 +106,7 @@
                         </select>
                     </div>
                     <div class="form-group col-lg-2">
-                        <button type="button" class="btn btn-info" routerLink="/manter-contribuições" id="add-cont">
+                        <button type="button" class="btn btn-info" (click)="pegarDados()" routerLink="/manter-contribuições" id="add-cont">
                             <svg width="32px" height="22px" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -115,11 +131,6 @@
                         <label for="situacao">Situação</label>
                         <input [(ngModel)]="carona.situacao" id="situacao" name="situacao" type="text" readonly=“true” placeholder="situação da carona" autocomplete="off" class="form-control input-md" required />
                     </div>
-                </div>
-                <div class="container">
-                    <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Salvar</button>
-                    <button type="button" class="btn btn-danger medio" (click)="excluir(carona.id)" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Remover</button>
-                    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
                 </div>
             </form>
         </div>

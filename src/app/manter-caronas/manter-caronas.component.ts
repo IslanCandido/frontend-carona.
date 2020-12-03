@@ -40,6 +40,8 @@ export class ManterCaronasComponent implements OnInit {
     if (this.carona.situacao == "") {
       this.carona.situacao = "Em andamento";
     }
+
+    this.mostrarDados();
   }
 
   consultarDestino(destino) {
@@ -202,5 +204,41 @@ export class ManterCaronasComponent implements OnInit {
     this.consultaDestino = '';
     this.consultaCarona = '';
     this.carona.situacao = "Em andamento";
+    this.limparDados();
   }
+
+  pegarDados() {
+    localStorage.setItem('rota', this.carona.rota.verificador);
+    localStorage.setItem('acompanhantes', this.carona.acompanhantes);
+    localStorage.setItem('contribuicao', this.carona.contribuicao.id);
+    localStorage.setItem('hora', this.carona.horario_aproximado);
+    localStorage.setItem('encontro', this.carona.ponto_encontro);
+  }
+
+  mostrarDados() {
+      this.carona.rota.verificador = localStorage.getItem('rota');
+      this.carona.acompanhantes = localStorage.getItem('acompanhantes');
+      this.carona.contribuicao.id = localStorage.getItem('contribuicao');
+      this.carona.horario_aproximado = localStorage.getItem('hora');
+      this.carona.ponto_encontro = localStorage.getItem('encontro');
+
+      if (localStorage.getItem('rota') === null) {
+        this.carona.rota.verificador = '';
+      }
+      if (localStorage.getItem('acompanhantes') === null) {
+        this.carona.acompanhantes = '';
+      }
+      if (localStorage.getItem('encontro') === null) {
+        this.carona.ponto_encontro = '';
+      }
+  }
+
+  limparDados() {
+    localStorage.removeItem('rota');
+    localStorage.removeItem('acompanhantes');
+    localStorage.removeItem('contribuicao');
+    localStorage.removeItem('hora');
+    localStorage.removeItem('encontro');
+  }
+
 }

@@ -15,11 +15,12 @@ export class ManterUsuariosComponent implements OnInit {
   consultaCPF;
   mensagem;
 
+  cpfAux;
+
   constructor(public router: Router, public usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
-    this.consultar(localStorage.getItem('usuario'));
-    this.consultaCPF = localStorage.getItem('usuario');
+    this.mostrarDados();
   }
 
   salvar() {
@@ -28,10 +29,14 @@ export class ManterUsuariosComponent implements OnInit {
         if (this.usuario.id === null) {
           this.mensagem = 'CPF ja foi cadastrado no sistema!';
         } else {
-          this.usuarioService.post(this.usuario).subscribe(resultado => {
-            this.limpar();
-            this.mensagem = 'Usuário salvo com sucesso!';
-          });
+          if (this.usuario.cpf !== this.cpfAux) {
+            this.usuarioService.post(this.usuario).subscribe(resultado => {
+              this.limpar();
+              this.mensagem = 'Usuário salvo com sucesso!';
+            });
+          } else {
+            this.mensagem = 'O CPF do usuário não pode ser alterado!';
+          }
         }
       } else {
         if (this.isCPF(this.usuario.cpf)) {
@@ -75,6 +80,7 @@ export class ManterUsuariosComponent implements OnInit {
           senha: dados.senha
         };
       });
+      this.cpfAux = this.usuario.cpf;
     } else {
       this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     }
@@ -85,6 +91,7 @@ export class ManterUsuariosComponent implements OnInit {
     this.consultaCPF = '';
     this.consultar(localStorage.getItem('usuario'));
     this.consultaCPF = localStorage.getItem('usuario');
+    this.limparDados();
   }
 
   isCPF(cpf) {
@@ -121,4 +128,58 @@ export class ManterUsuariosComponent implements OnInit {
     if (resto != parseInt(cpf.substring(10, 11))) return false
     return true
   }
+
+  pegarDados() {
+    localStorage.setItem('nome', this.usuario.nome);
+    localStorage.setItem('cpf', this.usuario.cpf);
+    localStorage.setItem('email', this.usuario.email);
+    localStorage.setItem('data_nascimento', this.usuario.dt_nascimento);
+    localStorage.setItem('sexo', this.usuario.sexo);
+    localStorage.setItem('senha', this.usuario.senha);
+  }
+
+  mostrarDados() {
+    if (localStorage.getItem('usuario') === '') {
+      this.usuario.nome = localStorage.getItem('nome');
+      this.usuario.cpf = localStorage.getItem('cpf');
+      this.usuario.email = localStorage.getItem('email');
+      this.usuario.dt_nascimento = localStorage.getItem('data_nascimento');
+      this.usuario.sexo = localStorage.getItem('sexo');
+      this.usuario.senha = localStorage.getItem('senha');
+
+      if (localStorage.getItem('nome') === null) {
+        this.usuario.nome = '';
+      }
+      if (localStorage.getItem('cpf') === null) {
+        this.usuario.cpf = '';
+      }
+      if (localStorage.getItem('email') === null) {
+        this.usuario.email = '';
+      }
+      if (localStorage.getItem('senha') === null) {
+        this.usuario.senha = '';
+      }
+    } else {
+      this.consultar(localStorage.getItem('usuario'));
+      this.consultaCPF = localStorage.getItem('usuario');
+    }
+  }
+
+  limparDados() {
+    localStorage.removeItem('nome');
+    localStorage.removeItem('cpf');
+    localStorage.removeItem('email');
+    localStorage.removeItem('data_nascimento');
+    localStorage.removeItem('sexo');
+    localStorage.removeItem('senha');
+  }
+
+  getDataAtual() {
+    var today = new Date();
+    var dy = today.getDate();
+    var mt = today.getMonth() + 1;
+    var yr = today.getFullYear();
+    return yr + "-" + mt + "-" + dy;
+  }
+
 }

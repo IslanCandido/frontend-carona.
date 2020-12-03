@@ -48,4 +48,8 @@ export class RotaServiceService {
   public delete(id):Observable<any>{
     return this.http.delete(`http://localhost:8080/rotas/${id}`);
   }
+
+  public enviarMensagem(mensagem: { remetente, destinatario, assunto, corpo }): Observable<any> {
+    return this.http.post("http://localhost:8080/mensagens", mensagem);
+  }
 }

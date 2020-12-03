@@ -27,16 +27,27 @@
         </div>
     </div>
 
-    <div class="form-row" id="consulta">
-        <div class="form-group col-lg-2">
-            <label for="con_usu">CONSULTAR</label>
-            <input [(ngModel)]="consultaCPF" (blur)="consultar($event.target.value)" id="con_usu" name="con_usu" placeholder="cpf do usuário" class="form-control input-md" type="search" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required />
-        </div>
-    </div>
-
     <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-sm-12 col-md-10 col-lg-10">
+        <div class="col-sm-12 col-md-8 col-lg-12" >
             <form id="form" class="center" #frm="ngForm">
+                <div class="form-row" id="consulta">
+                    <div class="form-group col-lg-3">
+                        <input [(ngModel)]="consultaCPF" id="con_usu" name="con_usu" placeholder="cpf do usuário" class="form-control input-md" type="search" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" />
+                    </div>
+                    <div >
+                        <button type="button" (click)="consultar(consultaCPF)" class="btn btn-light">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="form-group col-lg-8">
+                        <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#mensagem">Salvar</button>
+                        <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)" data-toggle="modal" data-target="#mensagem">Remover</button>
+                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                    </div>
+                </div>
                 <div class="form-row">
                     <div class="form-group col-lg-6">
                         <label for="nome">Nome</label>
@@ -57,7 +68,7 @@
                         </div>
                     </div>
                     <div class="form-group col-lg-3">
-                        <label for="dt_nascimento">Nascimento</label>
+                        <label for="dt_nascimento">Dt. Nascimento</label>
                         <input [(ngModel)]="usuario.dt_nascimento" id="dt_nascimento" name="dt_nascimento" placeholder="DD/MM/AAAA" class="form-control input-md" type="date" required />
                     </div>
                 </div>
@@ -68,7 +79,6 @@
                         <select [(ngModel)]="usuario.sexo" id="sexo" name="sexo" class="form-control" required>
                             <option value="Masculino">Masculino</option>
                             <option value="Feminino">Feminino</option>
-                            <option value="Prefiro não dizer">Prefiro não dizer</option>
                         </select>
                     </div>
                     <div class="form-group col-lg-3">
@@ -79,7 +89,7 @@
                         </small>
                     </div>
                     <div class="form-group col-lg-3">
-                        <button type="button" class="btn btn-primary contato" routerLink="/manter-contatos" id="add-con">
+                        <button type="button" class="btn btn-primary contato" (click)="pegarDados()" routerLink="/manter-contatos" id="add-con">
                             <svg width="30px" height="20px" viewBox="0 0 16 16" class="bi bi-telephone-plus-fill"
                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd"
@@ -88,11 +98,6 @@
                             ADICIONAR CONTATO
                         </button>
                     </div>
-                </div>
-                <div class="form-row">
-                    <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#mensagem">Salvar</button>
-                    <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(usuario.id)" data-toggle="modal" data-target="#mensagem">Remover</button>
-                    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
                 </div>
             </form>
         </div>

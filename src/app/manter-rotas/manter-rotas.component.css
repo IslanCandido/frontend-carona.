@@ -1,27 +1,24 @@
 h2 {
     position: relative;
     text-align: center;
-    top: 45px;
-    left: 110px;
 }
 
 #form {
     position: relative;
-    left: 120px;
-    top: -35px;
+    left: 130px;
+    top: 60px;
 }
 
 #consulta {
     position: relative;
-    top: -20px;
-    left: 215px;
+    top: -45px;
+    left: 0px;
 }
 
 .medio {
     position: relative;
-    left: 320px;
-    top: 70px;
-    width: 12%;
+    left: 150px;
+    width: 15%;
     margin: 5px;
 }
 
@@ -33,4 +30,5 @@ h2 {
 #add-cont {
     position: relative;
     top: 32px;
+    width: 100%;
 }

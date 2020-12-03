@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas.component';
-import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginGuardGuard } from './login/login-guard.guard';
 import { LoginComponent } from './login/login.component';
@@ -21,7 +20,7 @@ const routes: Routes = [
   { path: "manter-usuários", component: ManterUsuariosComponent },
   { path: "manter-veículos", component: ManterVeiculosComponent, canActivate: [LoginGuardGuard] },
   { path: "manter-rotas", component: ManterRotasComponent, canActivate: [LoginGuardGuard] },
-  { path: "manter-contatos", component: ManterContatosComponent, canActivate: [LoginGuardGuard] },
+  { path: "manter-contatos", component: ManterContatosComponent},
   { path: "manter-contribuições", component: ManterContribuicoesComponent, canActivate: [LoginGuardGuard] },
   { path: "manter-caronas", component: ManterCaronasComponent, canActivate: [LoginGuardGuard] },
   { path: "confirmar-caronas", component: ConfirmarCaronasComponent, canActivate: [LoginGuardGuard] }
