@@ -1,23 +1,27 @@
 h1 {
     position: relative;
-    top: 40px;
+    text-align: center;
+    top: -150px;
 }
 
 form {
     position: relative;
-    top: 70px;
-    left: 150px;
+    top: 180px;
 }
 
 #usu_cpf {
     position: relative;
-    top: -30px;
+    top: -50px;
+}
+
+.casa{
+    position: relative;
+    width: 80%;
+    height: 110%;
+    top: -150px;
 }
 
 .medio {
     position: relative;
-    top: 40px;
-    left: 170px;
-    width: 15%;
-    margin: 6px;
+    width: 100%;
 }

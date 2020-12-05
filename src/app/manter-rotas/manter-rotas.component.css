@@ -5,21 +5,17 @@ h2 {
 
 #form {
     position: relative;
-    left: 130px;
-    top: 60px;
+    top: 100px;
 }
 
 #consulta {
     position: relative;
-    top: -45px;
-    left: 0px;
+    top: -70px;
 }
 
 .medio {
     position: relative;
-    left: 150px;
-    width: 15%;
-    margin: 5px;
+    width: 100%;
 }
 
 #gerar-ver {

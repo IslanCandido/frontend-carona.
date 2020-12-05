@@ -15,44 +15,66 @@
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-12 text-center mt-5">
-            <h1>Recuperar Conta</h1>
-        </div>
-    </div>
-
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-sm-12 col-md-10 col-lg-10">
             <form id="form" #frm="ngForm">
                 <div class="form-row">
-                    <div class="form-group col-lg-3" id="usu_cpf">
-                        <label for="con_usu">CPF</label>
-                        <input [(ngModel)]="usuario.cpf" (blur)="consultar(usuario.cpf)" id="cpf" name="cpf" placeholder="digite seu cpf" class="form-control input-md" type="search" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required />
+                    <div class="col-sm-8 col-md-8 col-lg-8">
+                        <h1>Recuperar Conta</h1>
+                    </div>
+                    <div class="col-sm-4 col-md-4 col-lg-4">
+                        <button type="button" [routerLink]="['/login']" class="btn btn-info casa">
+                            <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-house-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 3.293l6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+                                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+                            </svg>
+                            
+                        </button>
+                    </div>
+                </div>
+                <div class="form-row" id="usu_cpf">
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <input [(ngModel)]="usuario.cpf" id="cpf" name="cpf" placeholder="digite seu cpf" class="form-control input-md" type="search" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required />
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-lg-3">
+                        <button type="button" (click)="consultar(usuario.cpf)" class="btn btn-light">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <button type="submit" class="btn btn-success medio" (click)="recuperar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Recuperar</button>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <button type="button" class="btn btn-danger medio" [routerLink]="['/login']">Cancelar</button>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-lg-8">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
                         <label for="nome">Usuário</label>
                         <input [(ngModel)]="usuario.nome" autocomplete="off" id="nome" name="nome" type="text" readonly="true" placeholder="Nome do usuário" class="form-control input-md" maxlength="60" required />
                     </div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-lg-4">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <label for="senha">Nova Senha</label>
                         <input [(ngModel)]="usuario.senha" id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20" required />
                         <small id="passwordHelpInline" class="text-muted">
                             Deve ter entre 8 e 20 caracteres.
                         </small>
                     </div>
-                    <div class="form-group col-lg-4">
+                    <div class="col-sm-12 col-md-6 col-lg-6">
                         <label for="senha">Confirme a senha</label>
                         <input [(ngModel)]="confirmarSenha" id="senha" name="senha" type="password" placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20" required />
                     </div>
                 </div>
                 <div class="form-row">
-                    <button type="submit" class="btn btn-success medio" (click)="recuperar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Recuperar</button>
-                    <button type="button" class="btn btn-danger medio" [routerLink]="['/login']">Cancelar</button>
-                    <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                    
                 </div>
             </form>
         </div>

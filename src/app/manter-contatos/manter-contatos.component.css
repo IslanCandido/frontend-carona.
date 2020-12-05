@@ -1,28 +1,24 @@
 h2 {
     position: relative;
-    top: -50px;
+    text-align: center;
+    top: -70px;
 }
 
 #form {
     position: relative;
-    left: 130px;
-    top: 70px;
+    top: 100px;
 }
 
 .table-overflow {
     position: relative;
-    top: 25px;
-    left: -20px;
+    top: 50px;
     max-height: 250px;
-    max-width: 860px;
     overflow-y: auto;
     text-align: center;
 }
 
 .medio {
     position: relative;
-    left: 80px;
-    top: -50px;
-    width: 20%;
-    margin: 5px;
+    width: 100%;
+    top: -70px;
 }

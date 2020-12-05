@@ -28,13 +28,13 @@
     </div>
 
     <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-sm-12 col-md-10 col-lg-12">
+        <div class="col-sm-12 col-md-12 col-lg-10">
             <form id="form" #frm="ngForm">
                 <div class="form-row" id="consulta">
-                    <div class="form-group col-lg-3">
+                    <div class="col-sm-3 col-md-3 col-lg-3">
                         <input [(ngModel)]="consultaPlaca" id="con-vei" name="con-vei" type="search" placeholder="placa do veículo" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md">
                     </div>
-                    <div >
+                    <div class="col-sm-3 col-md-3 col-lg-3">
                         <button type="button" (click)="consultar(consultaPlaca)" class="btn btn-light">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
@@ -42,40 +42,44 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="form-group col-lg-8">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
                         <button type="submit" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Salvar</button>
-                        <button type="button" class="btn btn-danger medio" (click)="excluir(veiculo.id)" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Remover</button>
-                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
                     </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <button type="button" class="btn btn-danger medio" (click)="excluir(veiculo.id)" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Remover</button>
+                    </div>
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                    </div>    
                 </div>
                 <div class="form-row">
-                    <div class="form-group col-lg-3">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
                         <label for="placa">Placa</label>
                         <input [(ngModel)]="veiculo.placa" pattern="^[A-Z]{3}-\d{4}$" id="placa" name="placa" type="text" placeholder="Ex: XXX-0000" minlength="8" maxlength="8" autocomplete="off" class="form-control input-md" required>
                     </div>
-                    <div class="form-group col-lg-3">
-                        <label for="renavam">Renavam</label>
-                        <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo" class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11" required>
-                    </div>
-                    <div class="form-group col-lg-3">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
                         <label for="cpf">Usuário(CPF)</label>
                         <input [(ngModel)]="veiculo.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf" placeholder="EX: XXXXXXXXXXX" autocomplete="off" class="form-control input-md" type="text" minlength="11" maxlength="11" pattern="[0-9]+$" required>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="renavam">Renavam</label>
+                        <input [(ngModel)]="veiculo.renavam" id="renavam" name="renavam" placeholder="Renavam do veículo" class="form-control input-md" autocomplete="off" type="text" minlength="11" maxlength="11" required>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-lg-5">
+                    <div class="col-sm-12 col-md-7 col-lg-7">
                         <label for="modelo">Modelo</label>
                         <input [(ngModel)]="veiculo.modelo" autocomplete="off" id="modelo" name="modelo" type="text" maxlength="40" placeholder="Modelo do veículo" class="form-control input-md" required>
                     </div>
-                    <div class="form-group col-lg-4">
+                    <div class="col-sm-12 col-md-5 col-lg-5">
                         <label for="cor">Cor</label>
                         <input [(ngModel)]="veiculo.cor" autocomplete="off" id="cor" name="cor" maxlength="40" type="text" placeholder="Cor do veículo" class="form-control input-md" required>
                     </div>
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group col-lg-4">
+                    <div class="col-sm-12 col-md-5 col-lg-5">
                         <label for="tipo">Tipo</label>
                         <select [(ngModel)]="veiculo.tipo" id="tipo" name="tipo" class="form-control" required>
                             <option value="Carro">Carro</option>
@@ -85,11 +89,7 @@
                             <option value="Kombi">Kombi</option>
                         </select>
                     </div>
-                    <div class="form-group col-lg-2">
-                        <label for="anoFabricacao">Ano</label>
-                        <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="number" placeholder="EX: 1111" autocomplete="off" pattern="([0-9]{4})" class="form-control input-md" required>
-                    </div>
-                    <div class="form-group col-lg-3">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
                         <label for="capacidade">Capacidade</label>
                         <select [(ngModel)]="veiculo.capacidade" id="capacidade" name="capacidade" class="form-control" required>
                             <option value="1">1</option>
@@ -103,6 +103,10 @@
                             <option value="8">9</option>
                             <option value="10">10</option>
                         </select>
+                    </div>
+                    <div class="col-sm-12 col-md-3 col-lg-3">
+                        <label for="anoFabricacao">Ano</label>
+                        <input [(ngModel)]="veiculo.ano_fabricacao" id="anoFabricacao" name="anoFabricacao" type="number" placeholder="EX: 1111" autocomplete="off" pattern="([0-9]{4})" class="form-control input-md" required>
                     </div>
                 </div>
                 
