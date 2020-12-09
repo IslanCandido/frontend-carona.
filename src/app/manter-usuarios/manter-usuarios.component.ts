@@ -15,8 +15,6 @@ export class ManterUsuariosComponent implements OnInit {
   consultaCPF;
   mensagem;
 
-  cpfAux;
-
   constructor(public router: Router, public usuarioService: UsuarioServiceService) { }
 
   ngOnInit(): void {
@@ -29,14 +27,10 @@ export class ManterUsuariosComponent implements OnInit {
         if (this.usuario.id === null) {
           this.mensagem = 'CPF ja foi cadastrado no sistema!';
         } else {
-          if (this.usuario.cpf !== this.cpfAux) {
-            this.usuarioService.post(this.usuario).subscribe(resultado => {
-              this.limpar();
-              this.mensagem = 'Usuário salvo com sucesso!';
-            });
-          } else {
-            this.mensagem = 'O CPF do usuário não pode ser alterado!';
-          }
+          this.usuarioService.post(this.usuario).subscribe(resultado => {
+            this.limpar();
+            this.mensagem = 'Usuário salvo com sucesso!';
+          });
         }
       } else {
         if (this.isCPF(this.usuario.cpf)) {
@@ -80,7 +74,6 @@ export class ManterUsuariosComponent implements OnInit {
           senha: dados.senha
         };
       });
-      this.cpfAux = this.usuario.cpf;
     } else {
       this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     }
@@ -181,5 +174,4 @@ export class ManterUsuariosComponent implements OnInit {
     var yr = today.getFullYear();
     return yr + "-" + mt + "-" + dy;
   }
-
 }

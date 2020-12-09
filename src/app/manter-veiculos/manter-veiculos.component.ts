@@ -27,8 +27,6 @@ export class ManterVeiculosComponent implements OnInit {
 
   salvar() {
 
-    console.log(this.placaAlterada())
-
     this.veiculoService.getPlacaIgual(this.veiculo.placa).subscribe(p => {
       if (p) {
         if (this.veiculo.id === null) {
@@ -42,14 +40,10 @@ export class ManterVeiculosComponent implements OnInit {
                 if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                   this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                     if (c) {
-                      if (this.placaAlterada) {
                         this.veiculoService.post(this.veiculo).subscribe(resultado => {
                           this.limpar();
                           this.mensagem = 'Veículo salvo com sucesso!';
                         });
-                      } else {
-                        this.mensagem = 'A placa do veículo não pode ser alterada!';
-                      }
                     } else {
                       this.mensagem = 'CPF não existe no sistema!';
                     }
@@ -67,14 +61,10 @@ export class ManterVeiculosComponent implements OnInit {
               if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                 this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                   if (c) {
-                    if (this.placaAlterada) {
                       this.veiculoService.post(this.veiculo).subscribe(resultado => {
                         this.limpar();
                         this.mensagem = 'Veículo salvo com sucesso!';
                       });
-                    } else {
-                      this.mensagem = 'A placa do veículo não pode ser alterada!';
-                    }
                   } else {
                     this.mensagem = 'CPF não existe no sistema!';
                   }
@@ -99,10 +89,10 @@ export class ManterVeiculosComponent implements OnInit {
               if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                 this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                   if (c) {
-                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
-                      this.limpar();
-                      this.mensagem = 'Veículo salvo com sucesso!';
-                    });
+                      this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                        this.limpar();
+                        this.mensagem = 'Veículo salvo com sucesso!';
+                      });
                   } else {
                     this.mensagem = 'CPF não existe no sistema!';
                   }
@@ -120,10 +110,10 @@ export class ManterVeiculosComponent implements OnInit {
             if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
               this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                 if (c) {
-                  this.veiculoService.post(this.veiculo).subscribe(resultado => {
-                    this.limpar();
-                    this.mensagem = 'Veículo salvo com sucesso!';
-                  });
+                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                      this.limpar();
+                      this.mensagem = 'Veículo salvo com sucesso!';
+                    });
                 } else {
                   this.mensagem = 'CPF não existe no sistema!';
                 }
@@ -260,18 +250,6 @@ export class ManterVeiculosComponent implements OnInit {
     if ((resto == 10) || (resto == 11)) resto = 0
     if (resto != parseInt(cpf.substring(10, 11))) return false
     return true
-  }
-
-  placaAlterada(): boolean {
-    if (this.consultaPlaca === '' || this.consultaPlaca === null) {
-      return true;
-    } else {
-      if (this.consultaPlaca !== this.veiculo.placa) {
-        return false;
-      } else {
-        return true;
-      }
-    }
   }
 
 }

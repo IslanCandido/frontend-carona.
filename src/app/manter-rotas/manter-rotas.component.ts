@@ -15,7 +15,7 @@ export class ManterRotasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     };
 
-    mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
 
   rotas;
   veiculos;
@@ -38,7 +38,7 @@ export class ManterRotasComponent implements OnInit {
     if (this.rota.horario.length === 5) {
       this.rota.horario = this.rota.horario + ":00";
     }
-    if(this.rota.verificador === '' || this.rota.verificador === null){
+    if (this.rota.verificador === '' || this.rota.verificador === null) {
       this.rota.verificador = this.gerarVerificador();
     }
 
@@ -49,10 +49,10 @@ export class ManterRotasComponent implements OnInit {
         } else {
           this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
             if (p) {
-              this.rotaService.post(this.rota).subscribe(resultado => {
-                this.limpar();
-                this.notificacao = 'Rota salva com sucesso!';
-              });
+                this.rotaService.post(this.rota).subscribe(resultado => {
+                  this.limpar();
+                  this.notificacao = 'Rota salva com sucesso!';
+                });
             } else {
               this.notificacao = 'Placa não existe no sistema!';
             }
@@ -61,25 +61,25 @@ export class ManterRotasComponent implements OnInit {
       } else {
         this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
           if (p) {
-            this.rotaService.post(this.rota).subscribe(resultado => {
-              this.mensagem = {
-                remetente: 'runsistemadecarona@gmail.com', destinatario: this.rota.veiculo.usuario.email,
-                assunto: 'Código da sua rota',
-                corpo: 'Olá ' + this.rota.veiculo.usuario.nome + '.' +
-                  '\n\nRecentemente você cadastrou uma rota no nosso sistema de carona.' + 
-                  '\nCada rota tem o seu código verificador, e ele é muito importante para que possa alterar ou excluir sua rota futuramente.' +
-                  '\nEsse é o código verificador da sua rota com destino para '+ this.rota.fim +
-                  '\n\n COD: '+ this.rota.verificador
-                  +'.\n\natt: RUN - Sistema de Carona.'
-              }
+              this.rotaService.post(this.rota).subscribe(resultado => {
+                this.mensagem = {
+                  remetente: 'runsistemadecarona@gmail.com', destinatario: this.rota.veiculo.usuario.email,
+                  assunto: 'Código da sua rota',
+                  corpo: 'Olá ' + this.rota.veiculo.usuario.nome + '.' +
+                    '\n\nRecentemente você cadastrou uma rota no nosso sistema de carona.' +
+                    '\nCada rota tem o seu código verificador, e ele é muito importante para que possa alterar ou excluir sua rota futuramente.' +
+                    '\nEsse é o código verificador da sua rota com destino para ' + this.rota.fim +
+                    '\n\n COD: ' + this.rota.verificador
+                    + '.\n\natt: RUN - Sistema de Carona.'
+                }
 
-              this.rotaService.enviarMensagem(this.mensagem).subscribe(r => {
-                this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+                this.rotaService.enviarMensagem(this.mensagem).subscribe(r => {
+                  this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+                });
+
+                this.limpar();
+                this.notificacao = 'Rota salva com sucesso!';
               });
-
-              this.limpar();
-              this.notificacao = 'Rota salva com sucesso!';
-            });
           } else {
             this.notificacao = 'Placa não existe no sistema!';
           }
@@ -165,7 +165,7 @@ export class ManterRotasComponent implements OnInit {
 
   }
 
-  getData(data){
+  getData(data) {
     data = new Date();
     var dy = data.getDate() + 1;
     var mt = data.getMonth() + 1;
@@ -192,22 +192,22 @@ export class ManterRotasComponent implements OnInit {
   }
 
   mostrarDados() {
-      this.rota.data = localStorage.getItem('data');
-      this.rota.horario = localStorage.getItem('hotario');
-      this.rota.veiculo.placa = localStorage.getItem('veiculo');
-      this.rota.inicio = localStorage.getItem('saida');
-      this.rota.fim = localStorage.getItem('destino');
-      this.rota.status = localStorage.getItem('status');
+    this.rota.data = localStorage.getItem('data');
+    this.rota.horario = localStorage.getItem('hotario');
+    this.rota.veiculo.placa = localStorage.getItem('veiculo');
+    this.rota.inicio = localStorage.getItem('saida');
+    this.rota.fim = localStorage.getItem('destino');
+    this.rota.status = localStorage.getItem('status');
 
-      if (localStorage.getItem('veiculo') === null) {
-        this.rota.veiculo.placa = '';
-      }
-      if (localStorage.getItem('saida') === null) {
-        this.rota.inicio = '';
-      }
-      if (localStorage.getItem('destino') === null) {
-        this.rota.fim = '';
-      }
+    if (localStorage.getItem('veiculo') === null) {
+      this.rota.veiculo.placa = '';
+    }
+    if (localStorage.getItem('saida') === null) {
+      this.rota.inicio = '';
+    }
+    if (localStorage.getItem('destino') === null) {
+      this.rota.fim = '';
+    }
   }
 
   limparDados() {
