@@ -22,6 +22,7 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   salvar() {
+    this.pegarDados();
     this.usuarioService.getCpfIgual(this.usuario.cpf).subscribe(r => {
       if (r) {
         if (this.usuario.id === null) {
