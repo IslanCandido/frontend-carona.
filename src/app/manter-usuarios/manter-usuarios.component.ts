@@ -10,7 +10,10 @@ import { UsuarioServiceService } from '../manter-usuarios/usuario-service.servic
 export class ManterUsuariosComponent implements OnInit {
 
   usuario: { id, nome, email, cpf, dt_nascimento, sexo, senha } = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+  contato: { id, tipo, telefone, usuario } = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+  
   usuarios;
+  contatos;
 
   consultaCPF;
   mensagem;
@@ -44,7 +47,6 @@ export class ManterUsuariosComponent implements OnInit {
         }
       }
     });
-
   }
 
   excluir(id) {
