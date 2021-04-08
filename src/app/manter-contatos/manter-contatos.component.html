@@ -4,6 +4,90 @@
     </main>
 </section>
 
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-12 col-lg-10">
+            <form id="form" #frm="ngForm">
+                <div class="form-row" id="consulta">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p-toolbar>
+                            <div class="p-toolbar-group-left">
+                                <h4>Cadastro de Contatos</h4>
+                            </div>
+                            <div class="p-toolbar-group-right">
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-success medio" icon="pi pi-check"
+                                    [disabled]="frm.invalid" (click)="salvar(frm)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-danger medio" icon="pi pi-trash"
+                                    [disabled]="frm.invalid" (click)="excluir(contato.id, frm)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
+                                    (click)="limpar(frm)"></button>
+                            </div>
+                        </p-toolbar>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="tipo">Tipo</label>
+                        <select [(ngModel)]="contato.tipo" pInputText id="tipo" name="tipo" class="form-control"
+                            required>
+                            <option value="Residencial">Residencial</option>
+                            <option value="Celular">Celular</option>
+                            <option value="Serviço">Serviço</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="telefone">Telefone</label>
+                        <br />
+                        <p-inputMask [(ngModel)]="contato.telefone" id="telefone" name="telefone" mask="(99)99999-9999"
+                            autocomplete="off" styleClass="form-control input-md" placeholder="(XX)XXXXX-XXXX" required>
+                        </p-inputMask>
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="Nome">CPF(Usuário)</label>
+                        <br />
+                        <p-inputMask [(ngModel)]="contato.usuario.cpf" (blur)="consultarUsuario($event.target.value)"
+                            title="cpf" id="cpf" name="cpf" mask="999.999.999-99" unmask="true" autocomplete="off"
+                            styleClass="form-control input-md" placeholder="Digite seu cpf" required>
+                        </p-inputMask>
+                    </div>
+                </div>
+
+                <div class="form-row" id="table">
+                    <p-table [value]="contatos" [paginator]="true" [rows]="5" [responsive]="true" selectionMode="single"
+                        [(selection)]="contato">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th scope="col">Tipo</th>
+                                <th scope="col">Telefone</th>
+                                <th scope="col">Usuário</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-contato>
+                            <tr [pSelectableRow]="contato">
+                                <td> {{ contato.tipo }}</td>
+                                <td> {{ contato.telefone }}</td>
+                                <td> {{ contato.usuario.nome }}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="contatos.length">
+                                    Nenhum contato cadastrado!
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -16,71 +100,6 @@
             <div class="modal-body">
                 <p>{{mensagem}}</p>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-sm-12 col-md-12 col-lg-10">
-            <form id="form" #frm="ngForm">
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <h2>Cadastro de Contatos</h2>
-                    </div>
-                    <div class="col-sm-4 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-success medio" (click)="salvar()" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Salvar</button>
-                    </div>
-                    <div class="col-sm-4 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-danger medio" (click)="excluir(contato.id)" [disabled]="frm.invalid" data-toggle="modal" data-target="#mensagem">Remover</button>
-                    </div>
-                    <div class="col-sm-4 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="tipo">Tipo</label>
-                        <select [(ngModel)]="contato.tipo" id="tipo" name="tipo" class="form-control" required>
-                            <option value="Residencial">Residencial</option>
-                            <option value="Celular">Celular</option>
-                            <option value="Fixo">Fixo</option>
-                            <option value="Serviço">Serviço</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="telefone">Telefone</label>
-                        <input [(ngModel)]="contato.telefone" id="telefone" name="telefone" type="tel" placeholder="(XX)XXXXX-XXXX" minlength="8" maxlength="15" autocomplete="off" class="form-control input-md" required>
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="Nome">CPF(Usuário)</label>
-                        <input [(ngModel)]="contato.usuario.cpf" (blur)="consultarUsuario($event.target.value)" id="cpf" name="cpf" placeholder="EX: XXXXXXXXXXX" class="form-control input-md" type="text" autocomplete="off" minlength="11" maxlength="11" pattern="[0-9]+$" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="table-overflow">
-                            <table class="table table-bordered-sm table-hover table-active" id="tabela">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th scope="col">Tipo</th>
-                                        <th scope="col">Telefone</th>
-                                        <th scope="col">Usuário</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let contato of contatos" (click)="consultar(contato.id)">
-                                        <td> {{ contato.tipo }}</td>
-                                        <td> {{ contato.telefone }}</td>
-                                        <td> {{ contato.usuario.nome }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 </div>

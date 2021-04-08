@@ -34,7 +34,9 @@ export class ManterRotasComponent implements OnInit {
     this.consultarVeiculo(this.rota.veiculo.placa);
   }
 
-  salvar() {
+  salvar(form) {
+    this.consultarVeiculo(this.rota.veiculo.placa);
+    console.log(this.rota);
     if (this.rota.horario.length === 5) {
       this.rota.horario = this.rota.horario + ":00";
     }
@@ -49,10 +51,10 @@ export class ManterRotasComponent implements OnInit {
         } else {
           this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
             if (p) {
-                this.rotaService.post(this.rota).subscribe(resultado => {
-                  this.limpar();
-                  this.notificacao = 'Rota salva com sucesso!';
-                });
+              this.rotaService.post(this.rota).subscribe(resultado => {
+                this.limpar(form);
+                this.notificacao = 'Rota salva com sucesso!';
+              });
             } else {
               this.notificacao = 'Placa não existe no sistema!';
             }
@@ -61,25 +63,25 @@ export class ManterRotasComponent implements OnInit {
       } else {
         this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
           if (p) {
-              this.rotaService.post(this.rota).subscribe(resultado => {
-                this.mensagem = {
-                  remetente: 'runsistemadecarona@gmail.com', destinatario: this.rota.veiculo.usuario.email,
-                  assunto: 'Código da sua rota',
-                  corpo: 'Olá ' + this.rota.veiculo.usuario.nome + '.' +
-                    '\n\nRecentemente você cadastrou uma rota no nosso sistema de carona.' +
-                    '\nCada rota tem o seu código verificador, e ele é muito importante para que possa alterar ou excluir sua rota futuramente.' +
-                    '\nEsse é o código verificador da sua rota com destino para ' + this.rota.fim +
-                    '\n\n COD: ' + this.rota.verificador
-                    + '.\n\natt: RUN - Sistema de Carona.'
-                }
+            this.rotaService.post(this.rota).subscribe(resultado => {
+              this.mensagem = {
+                remetente: 'runsistemadecarona@gmail.com', destinatario: this.rota.veiculo.usuario.email,
+                assunto: 'Código da sua rota',
+                corpo: 'Olá ' + this.rota.veiculo.usuario.nome + '.' +
+                  '\n\nRecentemente você cadastrou uma rota no nosso sistema de carona.' +
+                  '\nCada rota tem o seu código verificador, e ele é muito importante para que possa alterar ou excluir sua rota futuramente.' +
+                  '\nEsse é o código verificador da sua rota com destino para ' + this.rota.fim +
+                  '\n\n COD: ' + this.rota.verificador
+                  + '.\n\natt: RUN - Sistema de Carona.'
+              }
 
-                this.rotaService.enviarMensagem(this.mensagem).subscribe(r => {
-                  this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
-                });
-
-                this.limpar();
-                this.notificacao = 'Rota salva com sucesso!';
+              this.rotaService.enviarMensagem(this.mensagem).subscribe(r => {
+                this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
               });
+
+              this.limpar(form);
+              this.notificacao = 'Rota salva com sucesso!';
+            });
           } else {
             this.notificacao = 'Placa não existe no sistema!';
           }
@@ -88,9 +90,9 @@ export class ManterRotasComponent implements OnInit {
     });
   }
 
-  excluir(id) {
+  excluir(id, form) {
     this.rotaService.delete(id).subscribe(resultado => {
-      this.limpar();
+      this.limpar(form);
       this.notificacao = 'Rota removida com sucesso!';
     });
     this.notificacao = 'Rota não pode ser removida!';
@@ -138,9 +140,11 @@ export class ManterRotasComponent implements OnInit {
     } else {
       this.rota.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: "", tipo: "", capacidade: "", usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
     }
+    console.log(this.rota.veiculo);
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.rota = {
       id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
       veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },

@@ -19,17 +19,17 @@ export class ManterContribuicoesComponent implements OnInit {
     this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
   }
 
-  salvar() {
+  salvar(form) {
     this.contribuicoesService.post(this.contribuicao).subscribe(resultado => {
-      this.limpar();
+      this.limpar(form);
       this.mensagem = 'Contribuição salva com sucesso!';
     });
 
   }
 
-  excluir(id) {
+  excluir(id, form) {
     this.contribuicoesService.delete(id).subscribe(resultado => {
-      this.limpar();
+      this.limpar(form);
       this.mensagem = 'Contribuição removida com sucesso!';
     });
     this.mensagem = 'Contribuição não pode ser removida!';
@@ -45,9 +45,9 @@ export class ManterContribuicoesComponent implements OnInit {
     });
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.contribuicao = { id: null, tipo: "", valor: "" };
     this.contribuicoesService.get().subscribe(resultado => { this.contribuicoes = resultado });
   }
-
 }

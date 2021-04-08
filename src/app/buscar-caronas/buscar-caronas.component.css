@@ -1,11 +1,11 @@
-form {
+#consulta{
     position: relative;
-    top: 100px;
+    margin-top: 20px;
 }
 
-#usu_cpf {
+#table {
     position: relative;
-    top: -50px;
+    top: 50px;
 }
 
 .medio {

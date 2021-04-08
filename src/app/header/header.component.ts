@@ -13,7 +13,7 @@ export class HeaderComponent implements OnInit {
   }
 
   fechar(){
-    localStorage.setItem('usuario', '');
+    localStorage.removeItem('usuario');
     localStorage.removeItem('nome');
     localStorage.removeItem('cpf');
     localStorage.removeItem('email');

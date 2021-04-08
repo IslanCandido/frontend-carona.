@@ -23,36 +23,26 @@ export class ManterCaronasComponent implements OnInit {
   usuarios
   contribuicoes
 
-  consultaDestino;
   consultaCarona;
-
   informacao;
 
   constructor(private caronaService: CaronaServiceService) { }
 
   ngOnInit(): void {
-    this.caronaService.getRotasDisponiveis("Disponivel", "2050-01-01").subscribe(resultado => { this.rotas = resultado });
+    
     this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
 
     this.consultarUsuario(localStorage.getItem('usuario'));
+    this.consultarRota(localStorage.getItem('verificadorRotaSelecionada'));
 
     if (this.carona.situacao == "") {
       this.carona.situacao = "Em andamento";
     }
-
     this.mostrarDados();
   }
 
-  consultarDestino(destino) {
-    if (this.consultaDestino == "") {
-      this.caronaService.getRotasDisponiveis("Disponivel", "2050-01-01").subscribe(resultado => { this.rotas = resultado });
-    } else {
-      this.caronaService.getRotasPesquisada("Disponivel", destino, "2050-01-01").subscribe(resultado => { this.rotas = resultado });
-    }
-  }
-
-  salvar() {
+  salvar(form) {
     if (this.carona.horario_aproximado.length === 5) {
       this.carona.horario_aproximado = this.carona.horario_aproximado + ":00";
     }
@@ -69,7 +59,7 @@ export class ManterCaronasComponent implements OnInit {
               this.informacao = 'Não é possivel fazer um pedido de carona para a sua rota!';
             } else {
               this.caronaService.post(this.carona).subscribe(resultado => {
-                this.limpar();
+                this.limpar(form);
                 this.informacao = 'Pedido de carona salva com sucesso!';
               });
             }
@@ -96,7 +86,7 @@ export class ManterCaronasComponent implements OnInit {
                 this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
               });
 
-              this.limpar();
+              this.limpar(form);
               this.informacao = 'Pedido de carona salva com sucesso!';
             });
           }
@@ -105,7 +95,7 @@ export class ManterCaronasComponent implements OnInit {
     });
   }
 
-  excluir(id) {
+  excluir(id, form) {
     this.caronaService.delete(id).subscribe(resultado => {
 
       if (this.carona.situacao == "Carona confirmada") {
@@ -125,7 +115,7 @@ export class ManterCaronasComponent implements OnInit {
       } else {
         this.informacao = 'Pedido de carona foi removido!';
       }
-      this.limpar();
+      this.limpar(form);
     });
     this.informacao = 'Pedido de carona não pode ser removido!';
   }
@@ -191,7 +181,8 @@ export class ManterCaronasComponent implements OnInit {
     }
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.carona = {
       id: null, horario_aproximado: '', ponto_encontro: '', acompanhantes: '', situacao: '', observacao: '',
       rota: { id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "", veiculo: null, contribuicao: null },
@@ -201,10 +192,10 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.getRotasDisponiveis("Disponivel", "2050-01-01").subscribe(resultado => { this.rotas = resultado });
     this.consultarUsuario(localStorage.getItem('usuario'));
 
-    this.consultaDestino = '';
     this.consultaCarona = '';
     this.carona.situacao = "Em andamento";
     this.limparDados();
+    this.carona.rota.verificador = localStorage.getItem('verificadorRotaSelecionada');
   }
 
   pegarDados() {
@@ -216,21 +207,21 @@ export class ManterCaronasComponent implements OnInit {
   }
 
   mostrarDados() {
-      this.carona.rota.verificador = localStorage.getItem('rota');
-      this.carona.acompanhantes = localStorage.getItem('acompanhantes');
-      this.carona.contribuicao.id = localStorage.getItem('contribuicao');
-      this.carona.horario_aproximado = localStorage.getItem('hora');
-      this.carona.ponto_encontro = localStorage.getItem('encontro');
+    this.carona.rota.verificador = localStorage.getItem('rota');
+    this.carona.acompanhantes = localStorage.getItem('acompanhantes');
+    this.carona.contribuicao.id = localStorage.getItem('contribuicao');
+    this.carona.horario_aproximado = localStorage.getItem('hora');
+    this.carona.ponto_encontro = localStorage.getItem('encontro');
 
-      if (localStorage.getItem('rota') === null) {
-        this.carona.rota.verificador = '';
-      }
-      if (localStorage.getItem('acompanhantes') === null) {
-        this.carona.acompanhantes = '';
-      }
-      if (localStorage.getItem('encontro') === null) {
-        this.carona.ponto_encontro = '';
-      }
+    if (localStorage.getItem('rota') === null) {
+      this.carona.rota.verificador = '';
+    }
+    if (localStorage.getItem('acompanhantes') === null) {
+      this.carona.acompanhantes = '';
+    }
+    if (localStorage.getItem('encontro') === null) {
+      this.carona.ponto_encontro = '';
+    }
   }
 
   limparDados() {
@@ -240,5 +231,4 @@ export class ManterCaronasComponent implements OnInit {
     localStorage.removeItem('hora');
     localStorage.removeItem('encontro');
   }
-
 }

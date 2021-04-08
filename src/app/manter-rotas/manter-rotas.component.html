@@ -4,6 +4,117 @@
     </main>
 </section>
 
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-12 col-lg-10">
+            <form id="form" #frm="ngForm">
+                <div class="form-row" id="consulta">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p-toolbar>
+                            <div class="p-toolbar-group-left">
+                                <input [(ngModel)]="consultaCodVer" pInputText id="con_rota" name="con_rota" type="TEXT"
+                                    autocomplete="off" placeholder="código verificador rota" minlength="8" maxlength="8"
+                                    styleClass="form-control input-md">
+
+                                <button pButton type="button" (click)="consultar(consultaCodVer)"
+                                    class="p-button-rounded p-button-text p-button-plain p-button-secondary"
+                                    icon="pi pi-search">
+                                </button>
+                            </div>
+                            <div class="p-toolbar-group-right">
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-success medio" icon="pi pi-check"
+                                    [disabled]="frm.invalid" (click)="salvar(frm)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-danger medio" icon="pi pi-trash"
+                                    [disabled]="frm.invalid" (click)="excluir(rota.id, frm)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
+                                    (click)="limpar(frm)"></button>
+                            </div>
+                        </p-toolbar>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="data">Data</label>
+                        <input [(ngModel)]="rota.data" pInputText id="data" name="data" placeholder="DD/MM/AAAA"
+                            class="form-control input-md" autocomplete="off" type="date" minlength="10" maxlength="10"
+                            required />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="horario">Horário</label>
+                        <input [(ngModel)]="rota.horario" pInputText id="horario" name="horario" placeholder="00:00:00"
+                            class="form-control input-md" autocomplete="off" type="time" step="0" required />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="placa">Veiculo(Placa)</label>
+                        <br />
+                        <p-inputMask [(ngModel)]="rota.veiculo.placa" (blur)="consultarVeiculo(rota.veiculo.placa)"
+                            id="placa" name="placa" mask="aaa-9999" placeholder="Placa do veículo" autocomplete="off"
+                            styleClass="form-control input-md" required>
+                        </p-inputMask>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label for="pontoEncontro">Saída</label>
+                        <input [(ngModel)]="rota.inicio" id="pontoEncontro" name="pontoEncontro" type="text"
+                            minlength="10" maxlength="100" autocomplete="off" pInputText
+                            placeholder="endereço, ponto de referencia e cidade da sua saída"
+                            class="form-control input-md" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label for="localDestino">Destino</label>
+                        <input [(ngModel)]="rota.fim" id="localDestino" name="localDestino" type="text" minlength="10"
+                            maxlength="100" autocomplete="off" pInputText
+                            placeholder="endereço, ponto de referencia e cidade do seu destino"
+                            class="form-control input-md" required />
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-2 col-lg-2" id="posi-veri">
+                        <label for="verificador">Verificador</label>
+                        <input [(ngModel)]="rota.verificador" readonly=“true” pInputText autocomplete="off"
+                            id="verificador" name="verificador" type="text" class="form-control input-md" required />
+                    </div>
+                    <div class="col-sm-12 col-md-4 col-lg-4">
+                        <label for="status">Status</label>
+                        <select [(ngModel)]="rota.status" id="status" pInputText name="status" class="form-control"
+                            required>
+                            <option value="Disponivel">Disponivel</option>
+                            <option value="Indisponivel">Indisponivel</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-8 col-md-5 col-lg-5">
+                        <label for="contribuicao">Contribuição</label>
+                        <select [(ngModel)]="rota.contribuicao.id" pInputText id="contribuicao" name="contribuicao"
+                            class="form-control" required>
+                            <option *ngFor="let contribuicao of contribuicoes" value="{{ contribuicao.id }}">{{
+                                contribuicao.tipo }}
+                                -
+                                {{ contribuicao.valor }}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4 col-md-1 col-lg-1">
+                        <button pButton type="button" (click)="pegarDados()" class="p-button-outlined p-button-info"
+                            icon="pi pi-plus-circle" routerLink="/manter-contribuições" id="add-cont">
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -16,104 +127,6 @@
             <div class="modal-body">
                 <p>{{notificacao}}</p>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-12 text-center mt-5">
-            <h2>Cadastro de Rotas</h2>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-sm-12 col-md-12 col-lg-10">
-            <form id="form" #frm="ngForm">
-                <div class="form-row" id="consulta">
-                    <div class="col-sm-3 col-md-3 col-lg-3">
-                        <input [(ngModel)]="consultaCodVer" id="con_rota" name="con_rota" type="search" autocomplete="off" placeholder="código verificador da rota" minlength="8" maxlength="8" class="form-control input-md">
-                    </div>
-                    <div class="col-sm-3 col-md-3 col-lg-3">
-                        <button type="button" (click)="consultar(consultaCodVer)" class="btn btn-light">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-                                <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-lg-2">
-                        <button type="submit" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#mensagem">Salvar</button>
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(rota.id)" data-toggle="modal" data-target="#mensagem">Remover</button>
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="data">Data</label>
-                        <input [(ngModel)]="rota.data" id="data" name="data" placeholder="DD/MM/AAAA" class="form-control input-md" type="date" minlength="10" maxlength="10" required />
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="horario">Horário</label>
-                        <input [(ngModel)]="rota.horario" id="horario" name="horario" placeholder="00:00:00" class="form-control input-md" autocomplete="off" type="time" step="0" required />
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="placa">Veiculo(Placa)</label>
-                        <input [(ngModel)]="rota.veiculo.placa" (blur)="consultarVeiculo($event.target.value)" pattern="^[A-Z]{3}-\d{4}$" id="placa" autocomplete="off" name="placa" type="text" placeholder="XXX-0000" minlength="8" maxlength="8" class="form-control input-md" required
-                        />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <label for="pontoEncontro">Saída</label>
-                        <input [(ngModel)]="rota.inicio" id="pontoEncontro" name="pontoEncontro" type="text" minlength="10" maxlength="100" autocomplete="off" placeholder="endereço, ponto de referencia e cidade da sua saída" class="form-control input-md" required />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <label for="localDestino">Destino</label>
-                        <input [(ngModel)]="rota.fim" id="localDestino" name="localDestino" type="text" minlength="10" maxlength="100" autocomplete="off" placeholder="endereço, ponto de referencia e cidade do seu destino" class="form-control input-md" required />
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-2 col-lg-2" id="posi-veri">
-                        <label for="verificador">Verificador</label>
-                        <input [(ngModel)]="rota.verificador" readonly=“true” autocomplete="off" id="verificador" name="verificador" type="text" class="form-control input-md" required />
-                    </div>
-                    <div class="col-sm-12 col-md-4 col-lg-4">
-                        <label for="status">Status</label>
-                        <select [(ngModel)]="rota.status" id="status" name="status" class="form-control" required>
-                            <option value="Disponivel">Disponivel</option>
-                            <option value="Indisponivel">Indisponivel</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-8 col-md-5 col-lg-5">
-                        <label for="contribuicao">Contribuição</label>
-                        <select [(ngModel)]="rota.contribuicao.id" id="contribuicao" name="contribuicao" class="form-control" required>
-                            <option *ngFor="let contribuicao of contribuicoes" value="{{ contribuicao.id }}">{{ contribuicao.tipo }}
-                                -
-                                {{ contribuicao.valor }}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4 col-md-1 col-lg-1">
-                        <button type="button" class="btn btn-info" (click)="pegarDados()" routerLink="/manter-contribuições" id="add-cont">
-                            <svg width="32px" height="22px" viewBox="0 0 16 16" class="bi bi-plus-circle" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                <path fill-rule="evenodd"
-                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                
-            </form>
         </div>
     </div>
 </div>

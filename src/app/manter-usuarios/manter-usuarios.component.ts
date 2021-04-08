@@ -1,3 +1,4 @@
+import { formatCurrency } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsuarioServiceService } from '../manter-usuarios/usuario-service.service';
@@ -11,12 +12,14 @@ export class ManterUsuariosComponent implements OnInit {
 
   usuario: { id, nome, email, cpf, dt_nascimento, sexo, senha } = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
   contato: { id, tipo, telefone, usuario } = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
-  
+
   usuarios;
   contatos;
 
   consultaCPF;
   mensagem;
+
+  flagButtonContatos;
 
   constructor(public router: Router, public usuarioService: UsuarioServiceService) { }
 
@@ -24,7 +27,7 @@ export class ManterUsuariosComponent implements OnInit {
     this.mostrarDados();
   }
 
-  salvar() {
+  salvar(form) {
     this.pegarDados();
     this.usuarioService.getCpfIgual(this.usuario.cpf).subscribe(r => {
       if (r) {
@@ -32,14 +35,14 @@ export class ManterUsuariosComponent implements OnInit {
           this.mensagem = 'CPF ja foi cadastrado no sistema!';
         } else {
           this.usuarioService.post(this.usuario).subscribe(resultado => {
-            this.limpar();
+            this.limpar(form);
             this.mensagem = 'Usuário salvo com sucesso!';
           });
         }
       } else {
         if (this.isCPF(this.usuario.cpf)) {
           this.usuarioService.post(this.usuario).subscribe(resultado => {
-            this.limpar();
+            this.limpar(form);
             this.mensagem = 'Usuário salvo com sucesso!';
           });
         } else {
@@ -49,15 +52,15 @@ export class ManterUsuariosComponent implements OnInit {
     });
   }
 
-  excluir(id) {
+  excluir(id, form) {
     this.usuarioService.delete(id).subscribe(resultado => {
       if (localStorage.getItem('usuario') === this.usuario.cpf) {
-        this.limpar();
+        this.limpar(form);
         this.mensagem = 'Usuário removido!';
 
         localStorage.setItem('usuario', '');
       } else {
-        this.limpar();
+        this.limpar(form);
         this.mensagem = 'Usuário removido!';
       }
     });
@@ -65,8 +68,11 @@ export class ManterUsuariosComponent implements OnInit {
   }
 
   consultar(cpf) {
-    if (cpf !== '' || cpf.lenght != 9) {
-      this.usuarioService.getByCpf(cpf).subscribe(dados => {
+    this.usuarioService.getByCpf(cpf).subscribe(dados => {
+      if (!dados) {
+        this.mensagem = "Usuário não encontrado!";
+        this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+      } else {
         this.usuario = {
           id: dados.id,
           nome: dados.nome,
@@ -76,13 +82,12 @@ export class ManterUsuariosComponent implements OnInit {
           sexo: dados.sexo,
           senha: dados.senha
         };
-      });
-    } else {
-      this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
-    }
+      }
+    });
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
     this.consultaCPF = '';
     this.consultar(localStorage.getItem('usuario'));
@@ -136,6 +141,9 @@ export class ManterUsuariosComponent implements OnInit {
 
   mostrarDados() {
     if (localStorage.getItem('usuario') === '') {
+      //Esconder botão de contato
+      this.flagButtonContatos = true;
+
       this.usuario.nome = localStorage.getItem('nome');
       this.usuario.cpf = localStorage.getItem('cpf');
       this.usuario.email = localStorage.getItem('email');
@@ -158,6 +166,7 @@ export class ManterUsuariosComponent implements OnInit {
     } else {
       this.consultar(localStorage.getItem('usuario'));
       this.consultaCPF = localStorage.getItem('usuario');
+      this.flagButtonContatos = false;
     }
   }
 

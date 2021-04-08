@@ -1,7 +1,6 @@
-h2 {
+#consulta {
     position: relative;
-    text-align: center;
-    top: -70px;
+    top: -50px;
 }
 
 #form {
@@ -9,16 +8,13 @@ h2 {
     top: 100px;
 }
 
-.table-overflow {
+#table {
     position: relative;
     top: 50px;
-    max-height: 250px;
-    overflow-y: auto;
-    text-align: center;
 }
 
 .medio {
     position: relative;
-    width: 100%;
-    top: -70px;
+    margin-left: 10px; 
+    width: 40px;
 }

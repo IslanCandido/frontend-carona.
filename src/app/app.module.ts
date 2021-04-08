@@ -17,6 +17,19 @@ import { ManterCaronasComponent } from './manter-caronas/manter-caronas.componen
 import { ConfirmarCaronasComponent } from './confirmar-caronas/confirmar-caronas.component';
 import { LoginGuardGuard } from './login/login-guard.guard';
 import { RecuperarContaComponent } from './recuperar-conta/recuperar-conta.component';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextModule } from 'primeng/inputtext';
+import { PasswordModule } from 'primeng/password';
+import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { ColorPickerModule } from 'primeng/colorpicker';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SliderModule } from 'primeng/slider';
+import { BuscarCaronasComponent } from './buscar-caronas/buscar-caronas.component';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
   declarations: [
@@ -31,13 +44,26 @@ import { RecuperarContaComponent } from './recuperar-conta/recuperar-conta.compo
     ManterContribuicoesComponent,
     ManterCaronasComponent,
     ConfirmarCaronasComponent,
-    RecuperarContaComponent
+    RecuperarContaComponent,
+    BuscarCaronasComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    InputMaskModule,
+    InputTextModule,
+    PasswordModule,
+    DropdownModule,
+    ToolbarModule,
+    ButtonModule,
+    RadioButtonModule,
+    InputNumberModule,
+    ColorPickerModule,
+    BrowserAnimationsModule,
+    SliderModule,
+    TableModule
   ],
   providers: [LoginGuardGuard],
   bootstrap: [AppComponent]

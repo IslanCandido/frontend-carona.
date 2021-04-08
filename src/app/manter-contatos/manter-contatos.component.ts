@@ -20,16 +20,16 @@ export class ManterContatosComponent implements OnInit {
   ngOnInit(): void {
     this.contatoService.getContatos(localStorage.getItem('usuario')).subscribe(resultado => { this.contatos = resultado });
     this.contatoService.getUsuarios().subscribe(resultado => { this.usuarios = resultado })
-    
+
     this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
-  salvar() {
+  salvar(form) {
     if (this.isCPF(this.contato.usuario.cpf)) {
       this.contatoService.getCpfExiste(this.contato.usuario.cpf).subscribe(r => {
         if (r) {
           this.contatoService.post(this.contato).subscribe(resultado => {
-            this.limpar();
+            this.limpar(form);
             this.mensagem = 'Contato salvo com sucesso!';
           });
         } else {
@@ -41,9 +41,9 @@ export class ManterContatosComponent implements OnInit {
     }
   }
 
-  excluir(id) {
+  excluir(id, form) {
     this.contatoService.delete(id).subscribe(resultado => {
-      this.limpar();
+      this.limpar(form);
       this.mensagem = 'Contato removido com sucesso!';
     });
     this.mensagem = 'Contato não pode ser removido!';
@@ -80,7 +80,8 @@ export class ManterContatosComponent implements OnInit {
     }
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.contato = {
       id: null, tipo: "", telefone: "",
       usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }

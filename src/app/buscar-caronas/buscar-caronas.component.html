@@ -1,0 +1,64 @@
+<section>
+    <main>
+        <app-header></app-header>
+    </main>
+</section>
+
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="form-row" id="consulta">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <p-toolbar>
+                        <div class="p-toolbar-group-left">
+                            <input [(ngModel)]="consultaDestino" pInputText id="con-destino" name="con-destino"
+                                placeholder="pesquisar destino" class="form-control input-md" maxlength="100"
+                                autocomplete="off">
+                            <button pButton type="button" (click)="consultarDestino(consultaDestino)"
+                                class="p-button-rounded p-button-text p-button-plain p-button-secondary"
+                                icon="pi pi-search">
+                            </button>
+                        </div>
+                        <div class="p-toolbar-group-right">
+                            <button pButton type="button"
+                                class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
+                                (click)="limpar()"></button>
+                        </div>
+                    </p-toolbar>
+                </div>
+            </div>
+            <div class="form-row" id="table">
+                <p-table [value]="rotas" [paginator]="true" [rows]="10" [responsive]="true" selectionMode="single"
+                    [(selection)]="carona.rota">
+                    <ng-template pTemplate="caption">
+                        Rotas Disponíveis para carona
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th scope="col">Data</th>
+                            <th scope="col">Partida</th>
+                            <th scope="col">Destino</th>
+                            <th scope="col">Contribuição</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rota>
+                        <tr [pSelectableRow]="rota" (click)="consultarRota(rota.verificador)"
+                            routerLink="/manter-caronas">
+                            <td>{{ rota.data | date:"dd/MM/yyyy" }} - {{ rota.horario }}</td>
+                            <td>{{ rota.inicio }}</td>
+                            <td>{{ rota.fim }}</td>
+                            <td>{{ rota.contribuicao.tipo }} - {{ rota.contribuicao.valor }}</td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage" let-columns>
+                        <tr>
+                            <td [attr.colspan]="rotas.length">
+                                Nenhuma rota encontrada!
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

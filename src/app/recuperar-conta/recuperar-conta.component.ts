@@ -21,7 +21,7 @@ export class RecuperarContaComponent implements OnInit {
   }
 
 
-  recuperar() {
+  recuperar(form) {
     if (this.usuario.senha === this.confirmarSenha) {
       this.recuperarContaService.post(this.usuario).subscribe(resultado => {
         this.mensagem = {
@@ -30,7 +30,7 @@ export class RecuperarContaComponent implements OnInit {
           corpo: 'Olá ' + this.usuario.nome + '\n\nAviso: A recuperação da sua conta foi feita com sucesso!\natt: RUN - Sistema de Carona'
         }
         this.informacao = 'Conta recuperada com sucesso!';
-        this.limpar();
+        this.limpar(form);
 
         this.recuperarContaService.enviarMensagem(this.mensagem).subscribe(r => {
           this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
@@ -60,8 +60,8 @@ export class RecuperarContaComponent implements OnInit {
 
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
   }
-
 }

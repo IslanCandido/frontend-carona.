@@ -3,44 +3,38 @@
         <app-header></app-header>
     </main>
 </section>
-<div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>{{mensagem}}</p>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="container">
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-sm-12 col-md-10 col-lg-10">
             <form id="form" #frm="ngForm">
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
-                        <h2>Cadastro de Contribuições</h2>
-                    </div>
-                    <div class="col-sm-4 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="salvar()" data-toggle="modal" data-target="#mensagem">Salvar</button>
-                    </div>
-                    <div class="col-sm-4 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="excluir(contribuicao.id)" data-toggle="modal" data-target="#mensagem">Remover</button>
-                    </div>
-                    <div class="col-sm-4 col-md-2 col-lg-2">
-                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
+                <div class="form-row" id="consulta">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p-toolbar>
+                            <div class="p-toolbar-group-left">
+                                <h4>Cadastro de Contribuições</h4>
+                            </div>
+                            <div class="p-toolbar-group-right">
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-success medio" icon="pi pi-check"
+                                    [disabled]="frm.invalid" (click)="salvar(frm)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-danger medio" icon="pi pi-trash"
+                                    [disabled]="frm.invalid" (click)="excluir(contribuicao.id, frm)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
+                                    (click)="limpar(frm)"></button>
+                            </div>
+                        </p-toolbar>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="col-sm-12 col-md-5 col-lg-5">
                         <label for="tipo">Tipo</label>
-                        <select id="tipo" name="tipo" class="form-control" [(ngModel)]="contribuicao.tipo" required>
+                        <select id="tipo" pInputText name="tipo" class="form-control" [(ngModel)]="contribuicao.tipo"
+                            required>
                             <option value="Dinheiro">Dinheiro</option>
                             <option value="Cartão">Cartão</option>
                             <option value="Dinheiro e Cartão">Dinheiro e Cartão</option>
@@ -50,32 +44,52 @@
                     </div>
                     <div class="col-sm-12 col-md-7 col-lg-7">
                         <label for="valor">Valor</label>
-                        <input id="valor" name="valor" autocomplete="off" maxlength="60" [(ngModel)]="contribuicao.valor" placeholder="valor/descrição da contribuição" class="form-control input-md" type="text" required>
+                        <input id="valor" pInputText name="valor" autocomplete="off" maxlength="60"
+                            [(ngModel)]="contribuicao.valor" placeholder="valor/descrição da contribuição"
+                            class="form-control input-md" type="text" required>
                     </div>
                 </div>
-
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="table-overflow">
-                            <table class="table table-bordered-sm table-hover table-active" id="tabela">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th scope="col">Tipo</th>
-                                        <th scope="col">Valor</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let contribuicao of contribuicoes" (click)="consultar(contribuicao.id)">
-                                        <td> {{ contribuicao.tipo }}</td>
-                                        <td> {{ contribuicao.valor }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="form-row" id="table">
+                    <p-table [value]="contribuicoes" [paginator]="true" [rows]="5" [responsive]="true"
+                        selectionMode="single" [(selection)]="contribuicao">
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th scope="Tipo">Tipo</th>
+                                <th scope="Valor">Valor</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-contribuicao>
+                            <tr [pSelectableRow]="contribuicao">
+                                <td> {{ contribuicao.tipo }}</td>
+                                <td> {{ contribuicao.valor }}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="contribuicoes.length">
+                                    Nenhuma contribuição cadastrada!
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
                 </div>
             </form>
         </div>
     </div>
 
+    <div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mensagem...</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{mensagem}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

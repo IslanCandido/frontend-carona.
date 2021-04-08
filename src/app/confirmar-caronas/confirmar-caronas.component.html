@@ -4,6 +4,88 @@
     </main>
 </section>
 
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <form id="form" #frm="ngForm">
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <p-toolbar>
+                            <div class="p-toolbar-group-left">
+                                <h5>Confirmar Caronas</h5>
+                            </div>
+                            <div class="p-toolbar-group-right">
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-success medio" icon="pi pi-check"
+                                    [disabled]="frm.invalid" (click)="confirmar()" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-danger medio" icon="pi pi-trash"
+                                    [disabled]="frm.invalid" (click)="cancelar(carona.id)" data-toggle="modal"
+                                    data-target="#mensagem"></button>
+
+                                <button pButton type="button"
+                                    class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
+                                    (click)="limpar()"></button>
+                            </div>
+                        </p-toolbar>
+                    </div>
+                </div>
+                <div class="form-row" id="table">
+                    <p-table [value]="caronas" [paginator]="true" [rows]="10" [responsive]="true" selectionMode="single"
+                        [(selection)]="carona">
+                        <ng-template pTemplate="caption">
+                            Caronas Registradas
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th scope="col">Data</th>
+                                <th scope="col">Rota</th>
+                                <th scope="col">Ponto Encontro</th>
+                                <th scope="col">Acompanhantes</th>
+                                <th scope="col">Contribuição</th>
+                                <th scope="col">Usuário</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-carona>
+                            <tr [pSelectableRow]="carona" (click)="consultar(carona.id)">
+                                <td>{{ carona.rota.data | date:"dd/MM/yyyy" }} - {{ carona.horario_aproximado }}
+                                </td>
+                                <td>{{ carona.rota.verificador }}</td>
+                                <td>{{ carona.ponto_encontro }}</td>
+                                <td>{{ carona.acompanhantes }}</td>
+                                <td>{{ carona.contribuicao.tipo }} - {{ carona.contribuicao.valor }}</td>
+                                <td>{{ carona.usuario.nome }}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="caronas.length">
+                                    Nenhuma carona encontrada!
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+                <div class="form-row" id="formulario">
+                    <div class="col-sm-2 col-md-2 col-lg-2">
+                        <label for="codCarona">Carona</label>
+                        <input [(ngModel)]="carona.rota.verificador" id="codCarona" name="codCarona" readonly=“true”
+                            type="text" class="form-control input-md" required>
+                    </div>
+                    <div class="col-sm-10 col-md-10 col-lg-10">
+                        <label for="observacao">Observação</label>
+                        <input [(ngModel)]="carona.observacao" pInputText autocomplete="off" id="observacao"
+                            name="observacao" type="text" minlength="1" maxlength="100" class="form-control input-md">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -16,73 +98,6 @@
             <div class="modal-body">
                 <p>{{informacao}}</p>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row">
-        <div class="col-12 text-center mt-5">
-            <h2>Caronas Registradas</h2>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <form id="form" #frm="ngForm">
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <div class="table-overflow">
-                            <table class="table table-bordered table-active" id="tabela">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th scope="col">Data</th>
-                                        <th scope="col">Rota</th>
-                                        <th scope="col">Horário</th>
-                                        <th scope="col">Ponto Encontro</th>
-                                        <th scope="col">Acompanhantes</th>
-                                        <th scope="col">Contribuição</th>
-                                        <th scope="col">Usuário</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let carona of caronas" (click)="consultar(carona.id)">
-                                        <td>{{ carona.rota.data | date:"dd/MM/yyyy" }}</td>
-                                        <td>{{ carona.rota.verificador }}</td>
-                                        <td>{{ carona.horario_aproximado }}</td>
-                                        <td>{{ carona.ponto_encontro }}</td>
-                                        <td>{{ carona.acompanhantes }}</td>
-                                        <td>{{ carona.contribuicao.tipo }} - {{ carona.contribuicao.valor }}</td>
-                                        <td>{{ carona.usuario.cpf }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="col-sm-3 col-md-3 col-lg-3">
-                        <label for="codCarona">Carona</label>
-                        <input [(ngModel)]="carona.id" id="codCarona" name="codCarona" readonly=“true” type="text" class="form-control input-md" required>
-                    </div>
-                    <div class="col-sm-9 col-md-9 col-lg-9">
-                        <label for="observacao">Observação</label>
-                        <input [(ngModel)]="carona.observacao" autocomplete="off" id="observacao" name="observacao" type="text" minlength="1" maxlength="100" class="form-control input-md">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-2 col-md-2 col-lg-2" style="margin: 10px;">
-                        <button type="button" class="btn btn-success medio" [disabled]="frm.invalid" (click)="confirmar()" data-toggle="modal" data-target="#mensagem">Confirmar</button>
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-lg-2" style="margin: 10px;">
-                        <button type="button" class="btn btn-danger medio" [disabled]="frm.invalid" (click)="cancelar(carona.id)" data-toggle="modal" data-target="#mensagem">Cancelar</button>
-                    </div>
-                    <div class="col-sm-2 col-md-2 col-lg-2" style="margin: 10px;">
-                        <button type="button" class="btn btn-secondary medio" (click)="limpar()">Limpar</button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 </div>

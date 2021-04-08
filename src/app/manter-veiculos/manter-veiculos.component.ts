@@ -25,8 +25,7 @@ export class ManterVeiculosComponent implements OnInit {
     this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
-  salvar() {
-
+  salvar(form) {
     this.veiculoService.getPlacaIgual(this.veiculo.placa).subscribe(p => {
       if (p) {
         if (this.veiculo.id === null) {
@@ -40,10 +39,10 @@ export class ManterVeiculosComponent implements OnInit {
                 if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                   this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                     if (c) {
-                        this.veiculoService.post(this.veiculo).subscribe(resultado => {
-                          this.limpar();
-                          this.mensagem = 'Veículo salvo com sucesso!';
-                        });
+                      this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                        this.limpar(form);
+                        this.mensagem = 'Veículo salvo com sucesso!';
+                      });
                     } else {
                       this.mensagem = 'CPF não existe no sistema!';
                     }
@@ -61,10 +60,10 @@ export class ManterVeiculosComponent implements OnInit {
               if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                 this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                   if (c) {
-                      this.veiculoService.post(this.veiculo).subscribe(resultado => {
-                        this.limpar();
-                        this.mensagem = 'Veículo salvo com sucesso!';
-                      });
+                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                      this.limpar(form);
+                      this.mensagem = 'Veículo salvo com sucesso!';
+                    });
                   } else {
                     this.mensagem = 'CPF não existe no sistema!';
                   }
@@ -89,10 +88,10 @@ export class ManterVeiculosComponent implements OnInit {
               if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                 this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                   if (c) {
-                      this.veiculoService.post(this.veiculo).subscribe(resultado => {
-                        this.limpar();
-                        this.mensagem = 'Veículo salvo com sucesso!';
-                      });
+                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                      this.limpar(form);
+                      this.mensagem = 'Veículo salvo com sucesso!';
+                    });
                   } else {
                     this.mensagem = 'CPF não existe no sistema!';
                   }
@@ -110,10 +109,10 @@ export class ManterVeiculosComponent implements OnInit {
             if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
               this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                 if (c) {
-                    this.veiculoService.post(this.veiculo).subscribe(resultado => {
-                      this.limpar();
-                      this.mensagem = 'Veículo salvo com sucesso!';
-                    });
+                  this.veiculoService.post(this.veiculo).subscribe(resultado => {
+                    this.limpar(form);
+                    this.mensagem = 'Veículo salvo com sucesso!';
+                  });
                 } else {
                   this.mensagem = 'CPF não existe no sistema!';
                 }
@@ -132,9 +131,9 @@ export class ManterVeiculosComponent implements OnInit {
     });
   }
 
-  excluir(id) {
+  excluir(id, form) {
     this.veiculoService.delete(id).subscribe(resultado => {
-      this.limpar();
+      this.limpar(form);
       this.mensagem = 'Veículo removido com sucesso!';
     });
     this.mensagem = 'Veículo não pode ser removido!';
@@ -180,7 +179,8 @@ export class ManterVeiculosComponent implements OnInit {
     }
   }
 
-  limpar() {
+  limpar(form) {
+    form.reset();
     this.veiculo = {
       id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null,
       usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }
@@ -188,7 +188,6 @@ export class ManterVeiculosComponent implements OnInit {
     this.consultaPlaca = '';
     this.consultarUsuario(localStorage.getItem('usuario'));
   }
-
 
   isRenavam(renavam) {
     var renavamSemDigito = renavam.substring(0, 10);
