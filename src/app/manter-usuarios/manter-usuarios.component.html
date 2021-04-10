@@ -13,8 +13,7 @@
                         <p-toolbar>
                             <div class="p-toolbar-group-left">
                                 <p-inputMask [(ngModel)]="consultaCPF" id="con_usu" name="con_usu" mask="999.999.999-99"
-                                    placeholder="cpf do usuário" autocomplete="off" styleClass="form-control input-md"
-                                    unmask="true">
+                                    placeholder="cpf do usuário" autocomplete="off" styleClass="form-control input-md">
                                 </p-inputMask>
                                 <button pButton type="button" (click)="consultar(consultaCPF)"
                                     class="p-button-rounded p-button-text p-button-plain p-button-secondary"
@@ -48,8 +47,7 @@
                         <label for="cpf">CPF</label>
                         <br />
                         <p-inputMask [(ngModel)]="usuario.cpf" title="cpf" id="cpf" name="cpf" mask="999.999.999-99"
-                            unmask="true" styleClass="form-control input-md" autocomplete="off"
-                            placeholder="Digite seu cpf" required>
+                            styleClass="form-control input-md" autocomplete="off" placeholder="Digite seu cpf" required>
                         </p-inputMask>
                     </div>
                 </div>
@@ -91,8 +89,8 @@
                     </div>
                     <div class="col-sm-12 col-md-5 col-lg-5">
                         <button type="button" pButton class="p-button-outlined p-button-primary contato"
-                            [disabled]="frm.invalid" (click)="salvar(frm)" icon="pi pi-phone" routerLink="/manter-contatos"
-                            id="add-con">
+                            [disabled]="frm.invalid" (click)="salvar(frm)" icon="pi pi-phone"
+                            routerLink="/manter-contatos" id="add-con">
                             Adicionar Contato
                         </button>
                     </div>
