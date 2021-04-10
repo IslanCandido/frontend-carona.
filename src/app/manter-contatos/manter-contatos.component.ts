@@ -61,8 +61,6 @@ export class ManterContatosComponent implements OnInit {
   }
 
   consultarUsuario(cpf) {
-    cpf = cpf.replace(/\D/g, '');
-
     if (cpf != null && cpf !== '') {
       this.contatoService.getByCpf(cpf).subscribe(dados => {
         this.contato.usuario = {

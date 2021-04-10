@@ -160,8 +160,6 @@ export class ManterVeiculosComponent implements OnInit {
   }
 
   consultarUsuario(cpf) {
-    cpf = cpf.replace(/\D/g, '');
-
     if (cpf != null && cpf !== '') {
       this.veiculoService.getByCpf(cpf).subscribe(dados => {
         this.veiculo.usuario = {

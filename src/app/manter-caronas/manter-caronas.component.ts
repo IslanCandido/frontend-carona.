@@ -162,8 +162,6 @@ export class ManterCaronasComponent implements OnInit {
   }
 
   consultarUsuario(cpf) {
-    cpf = cpf.replace(/\D/g, '');
-
     if (cpf != null && cpf !== '') {
       this.caronaService.getByCpf(cpf).subscribe(dados => {
         this.carona.usuario = {
