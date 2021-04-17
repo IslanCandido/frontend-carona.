@@ -1,3 +1,4 @@
+import { MessageService } from 'primeng/api';
 import { IfStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.service'
@@ -5,7 +6,8 @@ import { VeiculoServiceService } from '../manter-veiculos/veiculo-service.servic
 @Component({
   selector: 'app-manter-veiculos',
   templateUrl: './manter-veiculos.component.html',
-  styleUrls: ['./manter-veiculos.component.css']
+  styleUrls: ['./manter-veiculos.component.css'],
+  providers: [MessageService]
 })
 export class ManterVeiculosComponent implements OnInit {
 
@@ -16,43 +18,46 @@ export class ManterVeiculosComponent implements OnInit {
   usuarios;
 
   consultaPlaca;
-  mensagem;
 
-  constructor(private veiculoService: VeiculoServiceService) { }
+  constructor(private veiculoService: VeiculoServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.veiculoService.getUsuarios().subscribe(resultado => { this.usuarios = resultado })
     this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
+
   salvar(form) {
     this.veiculoService.getPlacaIgual(this.veiculo.placa).subscribe(p => {
       if (p) {
         if (this.veiculo.id === null) {
-          this.mensagem = 'Placa ja foi cadastrada no sistema!';
+          this.mensagem('warn', 'Atenção!', 'Placa ja foi cadastrado no sistema.');
         } else {
           this.veiculoService.getRenavamIgual(this.veiculo.renavam).subscribe(r => {
             if (r) {
               if (this.veiculo.id === null) {
-                this.mensagem = 'Renavam ja foi cadastrado no sistema!';
+                this.mensagem('warn', 'Atenção!', 'Renavam ja foi cadastrado no sistema.');
               } else {
                 if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                   this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                     if (c) {
                       this.veiculoService.post(this.veiculo).subscribe(resultado => {
                         this.limpar(form);
-                        this.mensagem = 'Veículo salvo com sucesso!';
+                        this.mensagem('success', 'Sucesso!', 'Veículo salvo.');
                       });
                     } else {
-                      this.mensagem = 'CPF não existe no sistema!';
+                      this.mensagem('warn', 'Atenção!', 'CPF não existe no sistema!');
                     }
                   });
                 } else {
                   if (!this.isRenavam(this.veiculo.renavam)) {
-                    this.mensagem = 'Renavam inválido!';
+                    this.mensagem('error', 'Erro!', 'Renavam inválido.');
                   }
                   if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                    this.mensagem = 'CPF inválido!';
+                    this.mensagem('error', 'Erro!', 'CPF inválido.');
                   }
                 }
               }
@@ -62,18 +67,18 @@ export class ManterVeiculosComponent implements OnInit {
                   if (c) {
                     this.veiculoService.post(this.veiculo).subscribe(resultado => {
                       this.limpar(form);
-                      this.mensagem = 'Veículo salvo com sucesso!';
+                      this.mensagem('success', 'Sucesso!', 'Veículo salvo.');
                     });
                   } else {
-                    this.mensagem = 'CPF não existe no sistema!';
+                    this.mensagem('warn', 'Atenção!', 'CPF não existe no sistema!');
                   }
                 });
               } else {
                 if (!this.isRenavam(this.veiculo.renavam)) {
-                  this.mensagem = 'Renavam inválido!';
+                  this.mensagem('error', 'Erro!', 'Renavam inválido.');
                 }
                 if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                  this.mensagem = 'CPF inválido!';
+                  this.mensagem('error', 'Erro!', 'CPF inválido.');
                 }
               }
             }
@@ -83,25 +88,25 @@ export class ManterVeiculosComponent implements OnInit {
         this.veiculoService.getRenavamIgual(this.veiculo.renavam).subscribe(r => {
           if (r) {
             if (this.veiculo.id === null) {
-              this.mensagem = 'Renavam ja foi cadastrado no sistema!';
+              this.mensagem('warn', 'Atenção!', 'Renavam ja foi cadastrado no sistema.');
             } else {
               if (this.isRenavam(this.veiculo.renavam) && this.isCPF(this.veiculo.usuario.cpf)) {
                 this.veiculoService.getCpfExiste(this.veiculo.usuario.cpf).subscribe(c => {
                   if (c) {
                     this.veiculoService.post(this.veiculo).subscribe(resultado => {
                       this.limpar(form);
-                      this.mensagem = 'Veículo salvo com sucesso!';
+                      this.mensagem('success', 'Sucesso!', 'Veículo salvo.');
                     });
                   } else {
-                    this.mensagem = 'CPF não existe no sistema!';
+                    this.mensagem('warn', 'Atenção!', 'CPF não existe no sistema!');
                   }
                 });
               } else {
                 if (!this.isRenavam(this.veiculo.renavam)) {
-                  this.mensagem = 'Renavam inválido!';
+                  this.mensagem('error', 'Erro!', 'Renavam inválido.');
                 }
                 if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                  this.mensagem = 'CPF inválido!';
+                  this.mensagem('error', 'Erro!', 'CPF inválido.');
                 }
               }
             }
@@ -111,18 +116,18 @@ export class ManterVeiculosComponent implements OnInit {
                 if (c) {
                   this.veiculoService.post(this.veiculo).subscribe(resultado => {
                     this.limpar(form);
-                    this.mensagem = 'Veículo salvo com sucesso!';
+                    this.mensagem('success', 'Sucesso!', 'Veículo salvo.');
                   });
                 } else {
-                  this.mensagem = 'CPF não existe no sistema!';
+                  this.mensagem('warn', 'Atenção!', 'CPF não existe no sistema!');
                 }
               });
             } else {
               if (!this.isRenavam(this.veiculo.renavam)) {
-                this.mensagem = 'Renavam inválido!';
+                this.mensagem('error', 'Erro!', 'Renavam inválido.');
               }
               if (!this.isCPF(this.veiculo.usuario.cpf)) {
-                this.mensagem = 'CPF inválido!';
+                this.mensagem('error', 'Erro!', 'CPF inválido.');
               }
             }
           }
@@ -134,28 +139,30 @@ export class ManterVeiculosComponent implements OnInit {
   excluir(id, form) {
     this.veiculoService.delete(id).subscribe(resultado => {
       this.limpar(form);
-      this.mensagem = 'Veículo removido com sucesso!';
+      this.mensagem('success', 'Sucesso!', 'Usuário removido.');
     });
-    this.mensagem = 'Veículo não pode ser removido!';
   }
 
   consultar(placa) {
     if (placa != null && placa !== '') {
       this.veiculoService.getByPlaca(placa).subscribe(dados => {
-        this.veiculo = {
-          id: dados.id,
-          placa: dados.placa,
-          renavam: dados.renavam,
-          modelo: dados.modelo,
-          cor: dados.cor,
-          ano_fabricacao: dados.ano_fabricacao,
-          tipo: dados.tipo,
-          capacidade: dados.capacidade,
-          usuario: dados.usuario
-        };
+        if (!dados) {
+          this.mensagem('info', 'Atenção!', 'Veículo não encontrado.');
+          this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: "", tipo: "", capacidade: "", usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+        } else {
+          this.veiculo = {
+            id: dados.id,
+            placa: dados.placa,
+            renavam: dados.renavam,
+            modelo: dados.modelo,
+            cor: dados.cor,
+            ano_fabricacao: dados.ano_fabricacao,
+            tipo: dados.tipo,
+            capacidade: dados.capacidade,
+            usuario: dados.usuario
+          };
+        }
       });
-    } else {
-      this.veiculo = { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: "", tipo: "", capacidade: "", usuario: { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
     }
   }
 

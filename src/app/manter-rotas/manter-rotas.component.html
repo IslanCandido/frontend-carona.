@@ -24,13 +24,11 @@
                             <div class="p-toolbar-group-right">
                                 <button pButton type="button"
                                     class="p-button-raised p-button-rounded p-button-success medio" icon="pi pi-check"
-                                    [disabled]="frm.invalid" (click)="salvar(frm)" data-toggle="modal"
-                                    data-target="#mensagem"></button>
+                                    [disabled]="frm.invalid" (click)="salvar(frm)"></button>
 
                                 <button pButton type="button"
                                     class="p-button-raised p-button-rounded p-button-danger medio" icon="pi pi-trash"
-                                    [disabled]="frm.invalid" (click)="excluir(rota.id, frm)" data-toggle="modal"
-                                    data-target="#mensagem"></button>
+                                    [disabled]="frm.invalid" (click)="excluir(rota.id, frm)"></button>
 
                                 <button pButton type="button"
                                     class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
@@ -114,19 +112,4 @@
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="mensagem" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Mensagem...</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>{{notificacao}}</p>
-            </div>
-        </div>
-    </div>
-</div>
+<p-toast position="top-right"></p-toast>

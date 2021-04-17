@@ -1,10 +1,12 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { CaronaServiceService } from '../manter-caronas/carona-service.service';
 
 @Component({
   selector: 'app-confirmar-caronas',
   templateUrl: './confirmar-caronas.component.html',
-  styleUrls: ['./confirmar-caronas.component.css']
+  styleUrls: ['./confirmar-caronas.component.css'],
+  providers: [MessageService]
 })
 export class ConfirmarCaronasComponent implements OnInit {
 
@@ -21,14 +23,16 @@ export class ConfirmarCaronasComponent implements OnInit {
   usuarios;
   contribuicoes;
 
-  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+  email: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
 
-  informacao;
-
-  constructor(private caronaService: CaronaServiceService) { }
+  constructor(private caronaService: CaronaServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.caronaService.getCaronasEmAndamento(localStorage.getItem('usuario'), "Em andamento").subscribe(resultado => { this.caronas = resultado });
+  }
+
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 
   confirmar() {
@@ -39,7 +43,7 @@ export class ConfirmarCaronasComponent implements OnInit {
     }
 
     this.caronaService.post(this.carona).subscribe(resultado => {
-      this.mensagem = {
+      this.email = {
         remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.usuario.email,
         assunto: 'Pedido de Carona Confirmado',
         corpo: 'Olá ' + this.carona.usuario.nome + '.' +
@@ -49,10 +53,10 @@ export class ConfirmarCaronasComponent implements OnInit {
       }
 
       this.limpar();
-      this.informacao = 'Pedido de carona confirmado com sucesso!';
+      this.mensagem('success', 'Sucesso!', 'Pedido de carona confirmado.');
 
-      this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
-        this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+      this.caronaService.enviarMensagem(this.email).subscribe(r => {
+        this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
       });
     });
   }
@@ -63,7 +67,7 @@ export class ConfirmarCaronasComponent implements OnInit {
     }
 
     this.caronaService.delete(id).subscribe(resultado => {
-      this.mensagem = {
+      this.email = {
         remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.usuario.email,
         assunto: 'Pedido de Carona Cancelado',
         corpo: 'Olá ' + this.carona.usuario.nome + '.' +
@@ -73,13 +77,12 @@ export class ConfirmarCaronasComponent implements OnInit {
       }
 
       this.limpar();
-      this.informacao = 'Pedido de carona cancelado com sucesso!';
+      this.mensagem('success', 'Sucesso!', 'Pedido de carona cancelado.');
 
-      this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
-        this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+      this.caronaService.enviarMensagem(this.email).subscribe(r => {
+        this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
       });
     });
-    this.informacao = 'Pedido de carona não pode ser cancelada!';
   }
 
   consultar(id) {
@@ -95,7 +98,6 @@ export class ConfirmarCaronasComponent implements OnInit {
         usuario: dados.usuario,
         contribuicao: dados.contribuicao
       };
-      console.log(this.carona.usuario.email);
     });
   }
 

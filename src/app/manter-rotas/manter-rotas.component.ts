@@ -1,10 +1,12 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { RotaServiceService } from '../manter-rotas/rota-service.service';
 
 @Component({
   selector: 'app-manter-rotas',
   templateUrl: './manter-rotas.component.html',
-  styleUrls: ['./manter-rotas.component.css']
+  styleUrls: ['./manter-rotas.component.css'],
+  providers: [MessageService]
 })
 export class ManterRotasComponent implements OnInit {
 
@@ -15,16 +17,15 @@ export class ManterRotasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     };
 
-  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+  email: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
 
   rotas;
   veiculos;
   contribuicoes;
 
   consultaCodVer;
-  notificacao;
 
-  constructor(private rotaService: RotaServiceService) { }
+  constructor(private rotaService: RotaServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.rotaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
@@ -32,6 +33,10 @@ export class ManterRotasComponent implements OnInit {
     this.gerarVerificador();
     this.mostrarDados();
     this.consultarVeiculo(this.rota.veiculo.placa);
+  }
+
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 
   salvar(form) {
@@ -47,16 +52,17 @@ export class ManterRotasComponent implements OnInit {
     this.rotaService.getVerificadorIgual(this.rota.verificador).subscribe(r => {
       if (r) {
         if (this.rota.id === null) {
-          this.notificacao = 'Código Verificador ja está sendo usado em outra rota!';
+          this.mensagem('warn', 'Atenção!', 'Código Verificador ja está sendo usado em outra rota.');
+
         } else {
           this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
             if (p) {
               this.rotaService.post(this.rota).subscribe(resultado => {
                 this.limpar(form);
-                this.notificacao = 'Rota salva com sucesso!';
+                this.mensagem('success', 'Sucesso!', 'Rota salva.');
               });
             } else {
-              this.notificacao = 'Placa não existe no sistema!';
+              this.mensagem('warn', 'Atenção!', 'Placa não existe no sistema!');
             }
           });
         }
@@ -64,7 +70,7 @@ export class ManterRotasComponent implements OnInit {
         this.rotaService.getPlacaExiste(this.rota.veiculo.placa).subscribe(p => {
           if (p) {
             this.rotaService.post(this.rota).subscribe(resultado => {
-              this.mensagem = {
+              this.email = {
                 remetente: 'runsistemadecarona@gmail.com', destinatario: this.rota.veiculo.usuario.email,
                 assunto: 'Código da sua rota',
                 corpo: 'Olá ' + this.rota.veiculo.usuario.nome + '.' +
@@ -75,15 +81,15 @@ export class ManterRotasComponent implements OnInit {
                   + '.\n\natt: RUN - Sistema de Carona.'
               }
 
-              this.rotaService.enviarMensagem(this.mensagem).subscribe(r => {
-                this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+              this.rotaService.enviarMensagem(this.email).subscribe(r => {
+                this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
               });
 
               this.limpar(form);
-              this.notificacao = 'Rota salva com sucesso!';
+              this.mensagem('success', 'Sucesso!', 'Rota salva.');
             });
           } else {
-            this.notificacao = 'Placa não existe no sistema!';
+            this.mensagem('warn', 'Atenção!', 'Placa não existe no sistema!');
           }
         });
       }
@@ -93,32 +99,35 @@ export class ManterRotasComponent implements OnInit {
   excluir(id, form) {
     this.rotaService.delete(id).subscribe(resultado => {
       this.limpar(form);
-      this.notificacao = 'Rota removida com sucesso!';
+      this.mensagem('success', 'Sucesso!', 'Rota removida.');
     });
-    this.notificacao = 'Rota não pode ser removida!';
   }
 
   consultar(verificador) {
     if (verificador != null && verificador !== '') {
       this.rotaService.getByVerificador(verificador).subscribe(dados => {
-        this.rota = {
-          id: dados.id,
-          data: dados.data,
-          horario: dados.horario,
-          inicio: dados.inicio,
-          fim: dados.fim,
-          status: dados.status,
-          verificador: dados.verificador,
-          veiculo: dados.veiculo,
-          contribuicao: dados.contribuicao
-        };
+        if (!dados) {
+          this.mensagem('info', 'Atenção!', 'Rota não encontrada.');
+          this.rota = {
+            id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
+            veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
+            contribuicao: { id: null, tipo: "", valor: "" }
+          };
+        } else {
+          this.rota = {
+            id: dados.id,
+            data: dados.data,
+            horario: dados.horario,
+            inicio: dados.inicio,
+            fim: dados.fim,
+            status: dados.status,
+            verificador: dados.verificador,
+            veiculo: dados.veiculo,
+            contribuicao: dados.contribuicao
+          };
+        }
+
       });
-    } else {
-      this.rota = {
-        id: null, data: "", horario: "", inicio: "", fim: "", status: "", verificador: "",
-        veiculo: { id: null, placa: "", renavam: "", modelo: "", cor: "", ano_fabricacao: null, tipo: "", capacidade: null, usuario: null },
-        contribuicao: { id: null, tipo: "", valor: "" }
-      };
     }
   }
 

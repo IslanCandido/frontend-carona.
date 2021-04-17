@@ -1,22 +1,28 @@
 import { keyframes } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { UsuarioServiceService } from '../manter-usuarios/usuario-service.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  providers: [MessageService]
 })
 export class LoginComponent implements OnInit {
 
   usu: { cpf, senha } = { cpf: "", senha: "" };
 
-  mensagem;
-
-  constructor(private router: Router, private usuarioService: UsuarioServiceService) { }
+  constructor(private router: Router,
+    private usuarioService: UsuarioServiceService,
+    private messageService: MessageService) { }
 
   ngOnInit(): void {
+  }
+
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
   }
 
   login() {
@@ -24,14 +30,12 @@ export class LoginComponent implements OnInit {
       if (r) {
         localStorage.setItem('usuario', this.usu.cpf);
         this.router.navigate(['/home']);
-        this.mensagem = '';
       } else {
-        this.mensagem = 'Usuário ou senha incorretos!';
-        alert(this.mensagem);
+        this.mensagem('error', 'Erro!', 'Usuário ou senha incorretos.');
       }
     });
-  }   
-  
+  }
+
   registrar() {
     localStorage.setItem('usuario', '');
   }

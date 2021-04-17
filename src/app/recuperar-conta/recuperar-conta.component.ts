@@ -1,49 +1,56 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { RecuperarContaService } from '../recuperar-conta/recuperar-conta-service.service';
 
 @Component({
   selector: 'app-recuperar-conta',
   templateUrl: './recuperar-conta.component.html',
-  styleUrls: ['./recuperar-conta.component.css']
+  styleUrls: ['./recuperar-conta.component.css'],
+  providers: [MessageService]
 })
 export class RecuperarContaComponent implements OnInit {
 
   usuario: { id, nome, email, cpf, dt_nascimento, sexo, senha } = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
 
-  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+  email: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
 
   confirmarSenha;
-  informacao;
 
-  constructor(public recuperarContaService: RecuperarContaService) { }
+  constructor(public recuperarContaService: RecuperarContaService, private messageService: MessageService) { }
 
   ngOnInit(): void {
   }
 
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
 
   recuperar(form) {
     if (this.usuario.senha === this.confirmarSenha) {
       this.recuperarContaService.post(this.usuario).subscribe(resultado => {
-        this.mensagem = {
+        this.email = {
           remetente: 'runsistemadecarona@gmail.com', destinatario: this.usuario.email,
           assunto: 'Recuperação de Conta realizada!',
           corpo: 'Olá ' + this.usuario.nome + '\n\nAviso: A recuperação da sua conta foi feita com sucesso!\natt: RUN - Sistema de Carona'
         }
-        this.informacao = 'Conta recuperada com sucesso!';
+        this.mensagem('success', 'Sucesso!', 'Conta recuperada.');
         this.limpar(form);
 
-        this.recuperarContaService.enviarMensagem(this.mensagem).subscribe(r => {
-          this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+        this.recuperarContaService.enviarMensagem(this.email).subscribe(r => {
+          this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
         });
       });
     } else {
-      this.informacao = "Senhas são incompativeis!";
+      this.mensagem('error', 'Erro!', 'Senhas são incompativeis.');
     }
   }
 
   consultar(cpf) {
-    if (cpf !== '' || cpf.lenght != 9) {
-      this.recuperarContaService.getByCpf(cpf).subscribe(dados => {
+    this.recuperarContaService.getByCpf(cpf).subscribe(dados => {
+      if (!dados) {
+        this.mensagem('info', 'Atenção!', 'Usuário não encontrado.');
+        this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
+      } else {
         this.usuario = {
           id: dados.id,
           nome: dados.nome,
@@ -51,13 +58,10 @@ export class RecuperarContaComponent implements OnInit {
           cpf: dados.cpf,
           dt_nascimento: dados.dt_nascimento,
           sexo: dados.sexo,
-          senha: ''
+          senha: dados.senha
         };
-      });
-    } else {
-      this.usuario = { id: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" };
-    }
-
+      }
+    });
   }
 
   limpar(form) {

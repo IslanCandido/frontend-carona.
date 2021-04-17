@@ -1,21 +1,24 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { ContatoServiceService } from '../manter-contatos/contato-service.service';
 
 @Component({
   selector: 'app-manter-contatos',
   templateUrl: './manter-contatos.component.html',
-  styleUrls: ['./manter-contatos.component.css']
+  styleUrls: ['./manter-contatos.component.css'],
+  providers: [MessageService]
 })
 export class ManterContatosComponent implements OnInit {
 
-  contato: { id, tipo, telefone, usuario } = { id: null, tipo: "", telefone: "", usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" } };
+  contato: { id, tipo, telefone, usuario } = {
+    id: null, tipo: "", telefone: "",
+    usuario: { id_usu: null, nome: "", email: "", cpf: "", dt_nascimento: "", sexo: "", senha: "" }
+  };
 
   contatos;
   usuarios;
 
-  mensagem;
-
-  constructor(private contatoService: ContatoServiceService) { }
+  constructor(private contatoService: ContatoServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
     this.contatoService.getContatos(localStorage.getItem('usuario')).subscribe(resultado => { this.contatos = resultado });
@@ -24,29 +27,32 @@ export class ManterContatosComponent implements OnInit {
     this.consultarUsuario(localStorage.getItem('usuario'));
   }
 
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
+
   salvar(form) {
     if (this.isCPF(this.contato.usuario.cpf)) {
       this.contatoService.getCpfExiste(this.contato.usuario.cpf).subscribe(r => {
         if (r) {
           this.contatoService.post(this.contato).subscribe(resultado => {
             this.limpar(form);
-            this.mensagem = 'Contato salvo com sucesso!';
+            this.mensagem('success', 'Sucesso!', 'Contato salvo.');
           });
         } else {
-          this.mensagem = 'CPF não existe no sistema!';
+          this.mensagem('warn', 'Atenção!', 'CPF não existe no sistema!');
         }
       });
     } else {
-      this.mensagem = 'CPF inválido!';
+      this.mensagem('error', 'Erro!', 'CPF inválido.');
     }
   }
 
   excluir(id, form) {
     this.contatoService.delete(id).subscribe(resultado => {
       this.limpar(form);
-      this.mensagem = 'Contato removido com sucesso!';
+      this.mensagem('success', 'Sucesso!', 'Contato removido.');
     });
-    this.mensagem = 'Contato não pode ser removido!';
   }
 
   consultar(id) {

@@ -1,10 +1,12 @@
+import { MessageService } from 'primeng/api';
 import { Component, OnInit } from '@angular/core';
 import { CaronaServiceService } from '../manter-caronas/carona-service.service';
 
 @Component({
   selector: 'app-manter-caronas',
   templateUrl: './manter-caronas.component.html',
-  styleUrls: ['./manter-caronas.component.css']
+  styleUrls: ['./manter-caronas.component.css'],
+  providers: [MessageService]
 })
 export class ManterCaronasComponent implements OnInit {
 
@@ -16,7 +18,7 @@ export class ManterCaronasComponent implements OnInit {
       contribuicao: { id: null, tipo: "", valor: "" }
     };
 
-  mensagem: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+  email: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
 
   caronas
   rotas
@@ -24,12 +26,11 @@ export class ManterCaronasComponent implements OnInit {
   contribuicoes
 
   consultaCarona;
-  informacao;
 
-  constructor(private caronaService: CaronaServiceService) { }
+  constructor(private caronaService: CaronaServiceService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    
+
     this.caronaService.getUsuarios().subscribe(resultado => { this.usuarios = resultado });
     this.caronaService.getContribuicoes().subscribe(resultado => { this.contribuicoes = resultado });
 
@@ -42,6 +43,11 @@ export class ManterCaronasComponent implements OnInit {
     this.mostrarDados();
   }
 
+  mensagem(severity, summary, detail) {
+    this.messageService.add({ severity: severity, summary: summary, detail: detail });
+  }
+
+
   salvar(form) {
     if (this.carona.horario_aproximado.length === 5) {
       this.carona.horario_aproximado = this.carona.horario_aproximado + ":00";
@@ -50,31 +56,31 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.verificarCarona(this.carona.rota.verificador, this.carona.usuario.cpf).subscribe(r => {
       if (r) {
         if (this.carona.id === null) {
-          this.informacao = 'Pedido de Carona já foi feito por esse usuário!';
+          this.mensagem('warn', 'Atenção!', 'Pedido de Carona já foi feito por esse usuário.');
         } else {
           if (this.carona.situacao == "Carona confirmada") {
-            this.informacao = 'Pedido de carona já foi confirmado, então não pode mais ser alterado!';
+            this.mensagem('warn', 'Atenção!', 'Pedido de carona já foi confirmado, então não pode mais ser alterado.');
           } else {
             if (this.carona.usuario.cpf === this.carona.rota.veiculo.usuario.cpf) {
-              this.informacao = 'Não é possivel fazer um pedido de carona para a sua rota!';
+              this.mensagem('error', 'Erro!', 'Não é possivel fazer um pedido de carona para a sua rota.');
             } else {
               this.caronaService.post(this.carona).subscribe(resultado => {
                 this.limpar(form);
-                this.informacao = 'Pedido de carona salva com sucesso!';
+                this.mensagem('success', 'Sucesso!', 'Pedido de carona salvo');
               });
             }
           }
         }
       } else {
         if (this.carona.situacao == "Carona confirmada") {
-          this.informacao = 'Pedido de carona já foi confirmado, então não pode mais ser alterado!';
+          this.mensagem('warn', 'Atenção!', 'Pedido de carona já foi confirmado, então não pode mais ser alterado.');
         } else {
 
           if (this.carona.usuario.cpf === this.carona.rota.veiculo.usuario.cpf) {
-            this.informacao = 'Não é possivel fazer um pedido de carona para a sua rota!';
+            this.mensagem('error', 'Erro!', 'Não é possivel fazer um pedido de carona para a sua rota.');
           } else {
             this.caronaService.post(this.carona).subscribe(resultado => {
-              this.mensagem = {
+              this.email = {
                 remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.rota.veiculo.usuario.email,
                 assunto: 'Novo Pedido de Carona',
                 corpo: 'Olá ' + this.carona.rota.veiculo.usuario.nome + '.' +
@@ -82,12 +88,12 @@ export class ManterCaronasComponent implements OnInit {
                   + this.carona.rota.fim + '.\n\natt: RUN - Sistema de Carona'
               }
 
-              this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
-                this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+              this.caronaService.enviarMensagem(this.email).subscribe(r => {
+                this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
               });
 
               this.limpar(form);
-              this.informacao = 'Pedido de carona salva com sucesso!';
+              this.mensagem('success', 'Sucesso!', 'Pedido de carona salvo');
             });
           }
         }
@@ -99,9 +105,9 @@ export class ManterCaronasComponent implements OnInit {
     this.caronaService.delete(id).subscribe(resultado => {
 
       if (this.carona.situacao == "Carona confirmada") {
-        this.informacao = 'Como o seu pedido já havia sido confirmado,\n a exclusão dele faz com que ele seja cancelado automaticamente';
+        this.mensagem('warn', 'Atenção!', 'Como o seu pedido já havia sido confirmado,\n a exclusão dele faz com que ele seja cancelado automaticamente.');
 
-        this.mensagem = {
+        this.email = {
           remetente: 'runsistemadecarona@gmail.com', destinatario: this.carona.rota.veiculo.usuario.email + '.',
           assunto: 'Carona Cancelada pelo passageiro',
           corpo: 'Olá ' + this.carona.rota.veiculo.usuario.nome +
@@ -109,32 +115,35 @@ export class ManterCaronasComponent implements OnInit {
             + this.carona.rota.fim + '.\n\natt: RUN - Sistema de Carona'
         }
 
-        this.caronaService.enviarMensagem(this.mensagem).subscribe(r => {
-          this.mensagem = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+        this.caronaService.enviarMensagem(this.email).subscribe(r => {
+          this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
         });
       } else {
-        this.informacao = 'Pedido de carona foi removido!';
+        this.mensagem('success', 'Sucesso!', 'Pedido de carona removido.');
+
       }
       this.limpar(form);
     });
-    this.informacao = 'Pedido de carona não pode ser removido!';
   }
 
   consultarCarona(verificador) {
     this.caronaService.getCarona(verificador, localStorage.getItem('usuario')).subscribe(dados => {
-      this.carona = {
-        id: dados.id,
-        horario_aproximado: dados.horario_aproximado,
-        ponto_encontro: dados.ponto_encontro,
-        acompanhantes: dados.acompanhantes,
-        situacao: dados.situacao,
-        observacao: dados.observacao,
-        rota: dados.rota,
-        usuario: dados.usuario,
-        contribuicao: dados.contribuicao
-      };
+      if (!dados) {
+        this.mensagem('info', 'Atenção!', 'Pedido de Carona não encontrado.');
+      } else {
+        this.carona = {
+          id: dados.id,
+          horario_aproximado: dados.horario_aproximado,
+          ponto_encontro: dados.ponto_encontro,
+          acompanhantes: dados.acompanhantes,
+          situacao: dados.situacao,
+          observacao: dados.observacao,
+          rota: dados.rota,
+          usuario: dados.usuario,
+          contribuicao: dados.contribuicao
+        };
+      }
     });
-    console.log(this.carona);
   }
 
   consultarRota(verificador) {
