@@ -58,7 +58,7 @@ export class RecuperarContaComponent implements OnInit {
           cpf: dados.cpf,
           dt_nascimento: dados.dt_nascimento,
           sexo: dados.sexo,
-          senha: dados.senha
+          senha: ""
         };
       }
     });
