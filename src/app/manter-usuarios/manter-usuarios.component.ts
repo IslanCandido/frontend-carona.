@@ -55,6 +55,8 @@ export class ManterUsuariosComponent implements OnInit {
         }
       }
     });
+    localStorage.setItem('usuario', this.usuario.cpf);
+    this.usuarioService.getByCpf(localStorage.getItem('usuario'));
   }
 
   excluir(id, form) {
