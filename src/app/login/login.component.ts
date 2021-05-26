@@ -14,6 +14,11 @@ export class LoginComponent implements OnInit {
 
   usu: { cpf, senha } = { cpf: "", senha: "" };
 
+  email: { remetente, destinatario, assunto, corpo } = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+
+  descEmail = '';
+  flagDialog: boolean = false;
+
   constructor(private router: Router,
     private usuarioService: UsuarioServiceService,
     private messageService: MessageService) { }
@@ -38,5 +43,22 @@ export class LoginComponent implements OnInit {
 
   registrar() {
     localStorage.setItem('usuario', '');
+  }
+
+  recuperar() {
+    this.email = {
+      remetente: 'runsistemadecarona@gmail.com', destinatario: this.descEmail,
+      assunto: 'Recuperação de Conta.',
+      corpo: 'Alguém, espero que você, solicitou a redefinição da senha da sua conta RUN - Sistema de carona.\n\n'
+        + 'Se você não realizou essa solicitação, pode ignorar este e-mail com segurança.\n'
+        + 'Caso contrário, clique no link abaixo para concluir o processo.\n\n'
+        + 'http://localhost:4200/recuperar-conta'
+    }
+    this.mensagem('info', 'Informação!', 'Email Enviado.');
+    this.descEmail = '';
+
+    this.usuarioService.enviarMensagem(this.email).subscribe(r => {
+      this.email = { remetente: '', destinatario: '', assunto: '', corpo: '' };
+    });
   }
 }

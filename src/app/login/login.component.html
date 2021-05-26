@@ -15,24 +15,26 @@
                             <div class="login-form">
                                 <div class="form-group">
                                     <p-inputMask [(ngModel)]="usu.cpf" title="usuario" id="usuario" name="usuario"
-                                        mask="999.999.999-99" styleClass="form-control login-field"
-                                        autocomplete="off" placeholder="Digite seu cpf" required>
+                                        mask="999.999.999-99" styleClass="form-control login-field" autocomplete="off"
+                                        placeholder="Digite seu cpf" required>
                                     </p-inputMask>
                                     <label class="login-field-icon fui-user" for="login-name"></label>
                                 </div>
 
                                 <div class="form-group">
                                     <input [(ngModel)]="usu.senha" pInputText type="password"
-                                        class="form-control login-field" name="login-pass" placeholder="Digite sua senha"
-                                        minlength="8" maxlength="20" id="login-pass" required>
+                                        class="form-control login-field" name="login-pass"
+                                        placeholder="Digite sua senha" minlength="8" maxlength="20" id="login-pass"
+                                        required>
                                     <label class="login-field-icon fui-lock" for="login-pass"></label>
 
-                                    <p-button label="Esqueceu a senha?" [routerLink]="['/recuperar-conta']"
-                                    styleClass="p-button-link"></p-button>
+                                    <p-button label="Esqueceu a senha?" (click)="flagDialog = true"
+                                        styleClass="p-button-link"></p-button>
                                 </div>
 
-                                <button pButton pRipple label="Entrar" style="margin-top: 20px;" class="p-button-primary btn-lg btn-block"
-                                    (click)="login()" [disabled]="frm.invalid"></button>
+                                <button pButton pRipple label="Entrar" style="margin-top: 20px;"
+                                    class="p-button-primary btn-lg btn-block" (click)="login()"
+                                    [disabled]="frm.invalid"></button>
                                 <button pButton pRipple label="Me Registrar" class="p-button-secondary btn-lg btn-block"
                                     (click)="registrar()" [routerLink]="['/manter-usuários']"></button>
                             </div>
@@ -43,4 +45,30 @@
         </div>
     </div>
 </div>
+
+<p-dialog [(visible)]="flagDialog" header="Recuperação de Conta" breakpoints="{'860px': '65vw', '540px': '90vw'}"
+    [style]="{width: '40vw'}">
+    <div class="container">
+        <div class="row justify-content-center mt-5 mb-5">
+            <div class="col-sm-10 col-md-10 col-lg-10">
+                <form id="form" #form="ngForm">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <label for="email">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                            <input [(ngModel)]="descEmail" pInputText id="email" name="email" class="form-control"
+                                placeholder="email@email.com" autocomplete="off" type="text"
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" maxlength="100" required email />
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-9 col-md-9 col-lg-9">
+                <button pButton label="Redefinir Conta" style="margin-top: 30px;"
+                    class="p-button-primary btn-lg btn-block" (click)="recuperar()" [disabled]="form.invalid"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+
 <p-toast position="top-right"></p-toast>

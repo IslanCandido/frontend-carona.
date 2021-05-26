@@ -1,61 +1,43 @@
 <div class="container">
-    <h1 style="margin-top: 25px; text-align: center;">Recuperação de Conta</h1>
+    <h3 style="margin-top: 50px; text-align: center;">Redifinir Senha</h3>
     <div class="row justify-content-center mt-5 mb-5">
-        <div class="col-sm-12 col-md-10 col-lg-10">
+        <div class="col-sm-10 col-md-6 col-lg-6">
             <form id="form" #frm="ngForm">
-                <div class="form-row" id="usu_cpf">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <p-toolbar>
-                            <div class="p-toolbar-group-left">
-                                <p-inputMask [(ngModel)]="usuario.cpf" id="cpf" name="cpf" mask="999.999.999-99"
-                                    placeholder="digite seu cpf" styleClass="form-control input-md" autocomplete="off">
-                                </p-inputMask>
-                                <button pButton type="button" (click)="consultar(usuario.cpf)"
-                                    class="p-button-rounded p-button-text p-button-plain p-button-secondary"
-                                    icon="pi pi-search">
-                                </button>
-                            </div>
-                            <div class="p-toolbar-group-right">
-                                <button pButton type="button"
-                                    class="p-button-raised p-button-rounded p-button-success medio" icon="pi pi-check"
-                                    [disabled]="frm.invalid" (click)="recuperar(frm)"></button>
-                                <button pButton type="button"
-                                    class="p-button-raised p-button-rounded p-button-danger medio" icon="pi pi-trash"
-                                    [disabled]="frm.invalid" [routerLink]="['/login']"></button>
-                                <button pButton type="button"
-                                    class="p-button-raised p-button-rounded p-button-secondary medio" icon="pi pi-times"
-                                    (click)="limpar(frm)"></button>
-                                <button pButton type="button"
-                                    class="p-button-raised p-button-rounded p-button-info medio" icon="pi pi-home"
-                                    [routerLink]="['/login']"></button>
-                            </div>
-                        </p-toolbar>
-                    </div>
-                </div>
                 <div class="form-row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                        <label for="nome">Usuário</label>
-                        <input [(ngModel)]="usuario.nome" pInputText autocomplete="off" id="nome" name="nome"
-                            type="text" readonly="true" placeholder="Nome do usuário" class="form-control input-md"
-                            maxlength="60" required />
+                    <div class="col-sm-11 col-md-11 col-lg-11">
+                        <label for="cpf">Buscar Conta</label>
+                        <br />
+                        <p-inputMask [(ngModel)]="usuario.cpf" id="cpf" name="cpf" mask="999.999.999-99"
+                            placeholder="digite seu cpf" styleClass="form-control input-md" autocomplete="off">
+                        </p-inputMask>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="col-sm-1 col-md-1 col-lg-1" style="margin-top: 30px;">
+                        <button pButton type="button" (click)="consultar(usuario.cpf)"
+                            class="p-button-rounded p-button-text p-button-plain p-button-dark" icon="pi pi-search">
+                        </button>
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 50px;">
+                        <label for="senha">Nome</label>
+                        <input [(ngModel)]="usuario.nome" pInputText id="nome" name="nome" type="text"
+                            class="form-control input-md" readonly="true" required />
+                    </div>
+                    <div class="col-sm-12 col-md-12 col-lg-12">
                         <label for="senha">Nova Senha</label>
                         <input [(ngModel)]="usuario.senha" pInputText id="senha" name="senha" type="password"
                             placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20"
                             required />
-                        <small id="passwordHelpInline" class="text-muted">
-                            Deve ter entre 8 e 20 caracteres.
-                        </small>
                     </div>
-                    <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
                         <label for="senha">Confirme a senha</label>
                         <input [(ngModel)]="confirmarSenha" pInputText id="senha" name="senha" type="password"
-                            placeholder="senha de acesso" class="form-control input-md" minlength="8" maxlength="20"
+                            placeholder="confirmar senha" class="form-control input-md" minlength="8" maxlength="20"
                             required />
                     </div>
+                </div>
+                <div class="form-row" style="margin-top: 30px;">
+                    <button pButton pRipple label="Redefinir" style="margin-top: 20px;"
+                        class="p-button-primary btn-lg btn-block medio" (click)="recuperar(frm)"
+                        [disabled]="frm.invalid"></button>
                 </div>
             </form>
         </div>

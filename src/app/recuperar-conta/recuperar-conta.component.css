@@ -1,6 +1,6 @@
 form {
     position: relative;
-    top: 100px;
+    top: 25px;
 }
 
 #usu_cpf {
@@ -10,6 +10,6 @@ form {
 
 .medio {
     position: relative;
-    margin-left: 10px; 
-    width: 40px;
+    align-items: center;
+    height: 50px;
 }

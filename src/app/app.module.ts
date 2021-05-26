@@ -31,6 +31,7 @@ import { SliderModule } from 'primeng/slider';
 import { BuscarCaronasComponent } from './buscar-caronas/buscar-caronas.component';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import {DialogModule} from 'primeng/dialog';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ToastModule } from 'primeng/toast';
     BrowserAnimationsModule,
     SliderModule,
     TableModule,
-    ToastModule
+    ToastModule,
+    DialogModule
   ],
   providers: [LoginGuardGuard],
   bootstrap: [AppComponent]

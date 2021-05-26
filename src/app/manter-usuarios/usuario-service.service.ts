@@ -32,4 +32,8 @@ export class UsuarioServiceService {
   public autenticar(cpf, senha): Observable<any> {
     return this.http.get(`http://localhost:8080/usuarios/autenticar/${cpf}/${senha}`);
   }
+  
+  public enviarMensagem(mensagem: { remetente, destinatario, assunto, corpo }): Observable<any> {
+    return this.http.post("http://localhost:8080/mensagens", mensagem);
+  }
 }

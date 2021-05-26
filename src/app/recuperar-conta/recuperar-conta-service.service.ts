@@ -15,11 +15,11 @@ export class RecuperarContaService {
     return this.http.post("http://localhost:8080/mensagens", mensagem);
   }
 
-  public post(usuarios: {id, nome, email, cpf, dt_nascimento, sexo, senha}) : Observable<any>{
+  public post(usuarios: { id, nome, email, cpf, dt_nascimento, sexo, senha }): Observable<any> {
     return this.http.post("http://localhost:8080/usuarios", usuarios);
   }
 
-  public getByCpf(cpf):Observable<any>{
+  public getByCpf(cpf): Observable<any> {
     return this.http.get(`http://localhost:8080/usuarios/${cpf}`);
   }
 
